@@ -1,0 +1,5 @@
+{
+    "require": {
+        "pixel418/markdownify": "2.1.*"
+    }
+}

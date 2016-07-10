@@ -1,0 +1,42 @@
+{
+  "last_modified": "2016-06-11T20:42:46+0000",
+  "last_uuid": 2,
+  "members": {
+    "guest": {
+      "username": "guest",
+      "avatar_file": "avatars\/guest.jpg",
+      "role": "guest",
+      "member_since": "2016-06-10T14:01:02+00:00"
+    },
+    "user0": {
+      "uuid": 0,
+      "username": "user0",
+      "password_hash": "$2y$10$gmXQbmjg9J2Xr93lhFAa3OE.4WxW5dEBZA8vY1Zq8jgmWkQk8EH8i",
+      "email": "user0@mymail.com",
+      "avatar_file": "575c2098b05a32.07199748.jpg",
+      "is_banned": false,
+      "role": "admin",
+      "member_since": "2016-06-10T14:01:02+00:00"
+    },
+    "user1": {
+      "uuid": 1,
+      "username": "user1",
+      "password_hash": "$2y$10$WjVADbqj\/6\/vILSxw7tgCOrkZV7T8GJZF0SENvY42SYTR0JJGE4nW",
+      "email": "user1@mymail.com",
+      "avatar_file": "575c2227000377.52115779.jpg",
+      "is_banned": false,
+      "role": "member",
+      "member_since": "2016-06-11T13:13:05+00:00"
+    },
+    "user2": {
+      "uuid": 2,
+      "username": "user2",
+      "password_hash": "$2y$10$I.y5LLvjPdiwQRvzuDXkGOmVzGAdUkYQYNXPNQmDCPgTPzNUCPlB.",
+      "email": "user2@mymail.com",
+      "avatar_file": "avatars\/avatar_575c77c6a825e0.18998138.jpg",
+      "is_banned": false,
+      "role": "member",
+      "member_since": "2016-06-11T20:42:46+0000"
+    }
+  }
+}

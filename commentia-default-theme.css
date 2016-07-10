@@ -1,0 +1,75 @@
+/* The Commentia CSS file used for theming the comment section */
+.commentia-comments_container * {
+  margin: 0;
+}
+.commentia-comments_container {
+  background: #ededed;
+  padding: 4px;
+  overflow: auto;
+}
+.commentia-comment {
+  border-left: 8px solid #ccc;
+  border-radius: 12px;
+  padding-left: 4px;
+}
+.commentia-comment_by {
+  font-size: 0.8em;
+  float: left;
+  margin: 2px;
+}
+.commentia-comment_timestamp {
+  font-size: 0.8em;
+  float: left;
+  margin: 2px 5px;
+}
+.commentia-comment_content {
+  clear: both;
+  margin: 0 0 15px;
+  padding: 2px;
+  border-width: 2px 0 0;
+  border-color: #ccc;
+  border-style: solid;
+}
+.commentia-edit_area {
+  display: none;
+  clear: both;
+  margin: 0 0 15px;
+  padding: 2px;
+  border-width: 2px 0 0;
+  border-color: #ccc;
+  border-style: solid;
+}
+.commentia-edit_area textarea {
+  width: 100%;
+  margin: 2px;
+}
+.commentia-comment_content p {
+  margin-top: 10px;
+}
+.commentia-comment_content h1, .commentia-comment_content h2, .commentia-comment_content h3, .commentia-comment_content h4, .commentia-comment_content h5, .commentia-comment_content h6 {
+  margin: 15px 2px 5px;
+}
+.commentia-comment_content blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  padding-left: 8px;
+  border-left: 4px solid #888;
+}
+.commentia-comment_controls {
+  margin: 6px;
+}
+.commentia-comment_controls a {
+  margin: 0 4px 0 0;
+}
+.commentia-new_comment_area {
+  margin: 2px;
+}
+.commentia-new_comment_area h4 {
+  margin: 15px 2px 5px;
+}
+.commentia-new_comment_area #comment-box {
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+}
