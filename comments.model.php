@@ -88,7 +88,7 @@ class Comments {
     }
 
     if ($_SESSION['member_is_logged_in']) {
-      $html .= ('<div class="commentia-new_comment_area">' . "\n" . '<h4>' . $lexicon->getPhrase("titles", "new_comment") . '</h4>' . "\n" . '<textarea id="comment-box" onkeyup="autoGrow(this);"></textarea>' . "\n" . '<button id="post-comment-button" onclick="postNewComment(this);">' . $lexicon->getPhrase("comment_controls", "publish") . '</button>' . "\n" . "</div>" . "\n");
+      $html .= ('<div class="commentia-new_comment_area">' . "\n" . '<h4>' . $lexicon->getPhrase("titles", "new_comment") . '</h4>' . "\n" . '<textarea id="comment-box" oninput="autoGrow(this);"></textarea>' . "\n" . '<button id="post-comment-button" onclick="postNewComment(this);">' . $lexicon->getPhrase("comment_controls", "publish") . '</button>' . "\n" . "</div>" . "\n");
     }
 
     if (!$is_ajax_request) {
@@ -98,7 +98,7 @@ class Comments {
     return $html;
   }
 
-  public function createNewComment($content, $username, $creator_uuid, $reply_path) {
+  public function createNewComment($content, $username, $reply_path) {
     $ucid = $this->comments_global['last_ucid'] + 1;
     $comment_post_path =& $this->comments['comments'];
 
@@ -117,7 +117,6 @@ class Comments {
     $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
     $comment_post_path["ucid-$ucid"]['content'] = $this->md_to_html->text( urldecode("$content") );
     $comment_post_path["ucid-$ucid"]['timestamp'] = date(DateTime::ISO8601);
-    $comment_post_path["ucid-$ucid"]['creator_uuid'] = $creator_uuid;
     $comment_post_path["ucid-$ucid"]['creator_username'] = $username;
     $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
     $comment_post_path["ucid-$ucid"]['reply_path'] = ( isset($reply_path) && !empty($reply_path) ? $reply_path . "-$ucid" : "$ucid" );
