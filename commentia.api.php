@@ -77,8 +77,7 @@ if ( isset($_POST['pageid'])
 
   if ( ( ($action === 'reply')
   || ($action === 'postNewComment')  )
-  && isset($_POST['content'])
-  && isset($_POST['username']) ) {
+  && isset($_POST['content'])) {
     $content = $_POST['content'];
     $username = $_SESSION['member_username'];
     $creator_uuid = $commentia->getMemberData($username, "uuid");
@@ -104,21 +103,5 @@ if ( isset($_POST['pageid'])
     $ucid = $_POST['ucid'];
     $reply_path = $_POST['reply_path'];
     $commentia->deleteComment($ucid, $reply_path);
-  }
-}
-
-if ( isset($_POST['action']) ) {
-  $action = $_POST['action'];
-
-  if ( ($action === 'loginMember')
-  && isset($_POST['username'])
-  && isset($_POST['password']) ) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $commentia->loginMember($username, $password);
-  }
-
-  if ( ($action === 'logoutMember') ) {
-    $commentia->logoutMember();
   }
 }
