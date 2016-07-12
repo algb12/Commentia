@@ -81,7 +81,7 @@ if ( isset($_POST['pageid'])
   && isset($_POST['username']) ) {
     $content = $_POST['content'];
     $username = $_SESSION['member_username'];
-    $creator_uuid = $commentia->getMemberData("user0", "uuid");
+    $creator_uuid = $commentia->getMemberData($username, "uuid");
     $reply_path = $_POST['reply_path'];
     $commentia->createNewComment($content, $username, $creator_uuid, $reply_path);
   }
