@@ -37,8 +37,8 @@ class commentiaController {
     return $this->comments->displayComments($is_ajax_request);
   }
 
-  public function createNewComment($content, $username, $creator_uuid, $reply_path) {
-    return $this->comments->createNewComment($content, $username, $creator_uuid, $reply_path);
+  public function createNewComment($content, $reply_path) {
+    return $this->comments->createNewComment($content, $reply_path);
   }
 
   public function editComment($ucid, $reply_path, $content) {
