@@ -80,7 +80,7 @@ if ( isset($_POST['pageid'])
   && isset($_POST['content'])
   && isset($_POST['username']) ) {
     $content = $_POST['content'];
-    $username = $_POST['username'];
+    $username = $_SESSION['member_username'];
     $creator_uuid = $commentia->getMemberData("user0", "uuid");
     $reply_path = $_POST['reply_path'];
     $commentia->createNewComment($content, $username, $creator_uuid, $reply_path);
