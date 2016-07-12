@@ -7,10 +7,17 @@
   padding: 4px;
   overflow: auto;
 }
+.commentia-comments_container textarea {
+  min-height: 50px;
+  max-height: 800px;
+  width: 100%;
+  box-sizing: border-box;
+}
 .commentia-comment {
   border-left: 8px solid #ccc;
   border-radius: 12px;
-  padding-left: 4px;
+  margin: 4px 2px 2px 2px;
+  padding: 4px 4px 0 4px;
 }
 .commentia-comment_by {
   font-size: 0.8em;
@@ -68,8 +75,9 @@
 .commentia-new_comment_area h4 {
   margin: 15px 2px 5px;
 }
-.commentia-new_comment_area #comment-box {
+#comment-box {
+  min-height: 50px;
+  max-height: 800px;
   width: 100%;
-  max-width: 800px;
   box-sizing: border-box;
 }

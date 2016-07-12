@@ -83,11 +83,8 @@ class Members {
   }
 
   public function createNewMember($username, $password, $email, $member_type, $avatar_file) {
-    $last_uuid = $this->members['last_uuid'];
-    $uuid = $last_uuid + 1;
     $this->members['members']["$username"] = array();
     $this->members['members']["$username"]['username'] = $username;
-    $this->members['members']["$username"]['uuid'] = $uuid;
     $this->members['members']["$username"]['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
     $this->members['members']["$username"]['email'] = $email;
     $this->members['members']["$username"]['username'] = $username;
@@ -96,7 +93,6 @@ class Members {
     $this->members['members']["$username"]['role'] = $member_type;
     $this->members['members']["$username"]['member_since'] = date(DateTime::ISO8601);
     $this->members['last_modified'] = date(DateTime::ISO8601);
-    $this->members['last_uuid'] = $uuid;
     $this->updateMembers($this->members_json);
   }
 
