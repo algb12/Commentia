@@ -67,7 +67,7 @@ Now, there should be a working instance of Commentia on any page, if the previou
 
 To display the comments section and login form, use the following code:
 
-```php
+```html
 <?=$commentia->displayComments();?>
 <?=$commentia->displayAuthForm();?>
 ```
