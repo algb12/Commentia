@@ -115,7 +115,7 @@ class Comments {
 
     $comment_post_path["ucid-$ucid"] = array();
     $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
-    $comment_post_path["ucid-$ucid"]['content'] = $this->md_to_html->text( urldecode("$content") );
+    $comment_post_path["ucid-$ucid"]['content'] = $this->md_to_html->text( htmlspecialchars( urldecode("$content") ) );
     $comment_post_path["ucid-$ucid"]['timestamp'] = date(DateTime::ISO8601);
     $comment_post_path["ucid-$ucid"]['creator_username'] = $username;
     $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
