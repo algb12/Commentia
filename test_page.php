@@ -8,27 +8,22 @@ error_reporting(-1);
   $commentia = new commentiaController($pageid);
 ?>
 
-<html lang="en" data-pageid="<?php echo $pageid; // Pass page-id as data-attribute to html-tag ?>">
+<html lang="en" data-pageid="<?=$pageid;?>">
 <head>
   <meta charset="UTF-8">
   <title>Commentia - A lightweight, no DB comment system</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Commentia AJAX-script + CSS for comments section -->
-  <script src="commentia.js" charset="utf-8"></script>
-  <link rel="stylesheet" href="commentia-default-theme.css" media="screen" charset="utf-8">
+  <script src="commentia.js"></script>
+  <link href="commentia-default-theme.css" rel="stylesheet">
 </head>
 
 <body>
   <h3>Comments:</h3>
   <hr>
   <div>
-    <?php
-      // Display the comments html element
-      echo $commentia->displayComments();
-
-      // Display authentication form
-      echo $commentia->displayAuthForm();
-    ?>
+    <?=$commentia->displayComments();?>
+    <?=$commentia->displayAuthForm();?>
   </div>
   <!-- Debug (will be removed) -->
   <button type="button" name="refreshComments" onclick="refreshComments()">Refresh comments</button>
