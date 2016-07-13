@@ -1,10 +1,10 @@
-# Definition for MVC structure of Commentia#
+# Commentia – Documentation
 
 Commentia is a plug-in which adds a comment functionality to any webpage, and does not require any database. It is flat file, uses JSON files to store data, and only requires PHP, GD and the JSON module for PHP (both, GD and php-json usually come preinstalled by default).
 
 You may wonder, what is the point of a comment plugin, if CMSes with commenting functionality already exist? Some people prefer to have a static website without any CMS, and still want commenting functionality. This plugin caters for these kinds of people.
 
-The following content describes the planned MVC structure of Commentia, to ensure extendability and adaptability for future changes and implementations of the plugin, and the easy and hassle-free integration into websites:
+The following is a short documentation for Commentia, serving as a quick getting started guide, and providing some technical background to its technical workings:
 
 ## Installation
 
