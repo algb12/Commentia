@@ -5,15 +5,10 @@ session_start();
 class Roles {
 
   public function memberHasUsername($creator_username) {
-    if ($creator_username === $_SESSION['member_username']) {
-      return true;
-    }
+    return $creator_username === $_SESSION['member_username'];
   }
 
   public function memberIsAdmin() {
-    if ($_SESSION['member_role'] === "admin") {
-      return true;
-    }
+    return $_SESSION['member_role'] === 'admin';
   }
-
 }
