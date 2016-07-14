@@ -7,71 +7,82 @@
 // Last updated: 14th of July 2016
 
 // Load config file
-require_once("config.php");
+require_once 'config.php';
 
 // Members model
-require_once("MembersModel.php");
+require_once 'MembersModel.php';
 
 // Comments model
-require_once("CommentsModel.php");
+require_once 'CommentsModel.php';
 
-class CommentiaController {
+class CommentiaController
+{
+    public $members;
+    public $comments;
+    public $params = array();
 
-  public $members;
-  public $comments;
-  public $params = array();
+    public function __construct($pageid)
+    {
+        if (isset($pageid)) {
+            $this->comments = new Comments(JSON_FILE_COMMENTS, $pageid);
+        }
+        $this->members = new Members(JSON_FILE_MEMBERS);
 
-  public function __construct($pageid) {
-    if ( isset($pageid) ) {
-      $this->comments = new Comments(JSON_FILE_COMMENTS, $pageid);
+        $this->params = array();
+        foreach ($_GET as $key => $value) {
+            $this->params[$key] = $value;
+        }
+
+        session_start();
     }
-    $this->members = new Members(JSON_FILE_MEMBERS);
 
-    $this->params = array();
-    foreach ($_GET as $key=>$value) {
-      $this->params[$key] = $value;
+    public function displayComments($is_ajax_request)
+    {
+        return $this->comments->displayComments($is_ajax_request);
     }
 
-    session_start();
-  }
+    public function createNewComment($content, $reply_path)
+    {
+        return $this->comments->createNewComment($content, $reply_path);
+    }
 
-  public function displayComments($is_ajax_request) {
-    return $this->comments->displayComments($is_ajax_request);
-  }
+    public function editComment($ucid, $reply_path, $content)
+    {
+        return $this->comments->editComment($ucid, $reply_path, $content);
+    }
 
-  public function createNewComment($content, $reply_path) {
-    return $this->comments->createNewComment($content, $reply_path);
-  }
+    public function deleteComment($ucid, $reply_path)
+    {
+        return $this->comments->deleteComment($ucid, $reply_path);
+    }
 
-  public function editComment($ucid, $reply_path, $content) {
-    return $this->comments->editComment($ucid, $reply_path, $content);
-  }
+    public function getCommentMarkdown($ucid, $reply_path)
+    {
+        return $this->comments->getCommentMarkdown($ucid, $reply_path);
+    }
 
-  public function deleteComment($ucid, $reply_path) {
-    return $this->comments->deleteComment($ucid, $reply_path);
-  }
+    public function getCommentData($ucid, $reply_path, $entry)
+    {
+        return $this->comments->getCommentData($ucid, $reply_path, $entry);
+    }
 
-  public function getCommentMarkdown($ucid, $reply_path) {
-    return $this->comments->getCommentMarkdown($ucid, $reply_path);
-  }
+    public function getMemberData($username, $entry)
+    {
+        return $this->members->getMemberData($username, $entry);
+    }
 
-  public function getCommentData($ucid, $reply_path, $entry) {
-    return $this->comments->getCommentData($ucid, $reply_path, $entry);
-  }
+    public function loginMember($username, $password)
+    {
+        return $this->members->loginMember($username, $password);
+    }
 
-  public function getMemberData($username, $entry) {
-    return $this->members->getMemberData($username, $entry);
-  }
+    public function logoutMember()
+    {
+        return $this->members->logoutMember();
+    }
 
-  public function loginMember($username, $password) {
-    return $this->members->loginMember($username, $password);
-  }
-
-  public function logoutMember() {
-    return $this->members->logoutMember();
-  }
-
-  public function displayAuthForm() {
-    return $this->members->displayAuthForm();
-  }
+    public function displayAuthForm()
+    {
+        return $this->members->displayAuthForm();
+    }
 }
