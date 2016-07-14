@@ -4,24 +4,22 @@
 // This should be the ONLY entry point directly from a website.
 // Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated.
 // Author: Alexander Gilburg
-// Last updated: 7th of July 2016
-
-session_start();
+// Last updated: 14th of July 2016
 
 // Require the controller
-require_once("commentia.controller.php");
+require_once("CommentiaController.php");
 
 // Instantiate the controller
 if ( isset($_GET['pageid']) ) {
-  $commentia = new commentiaController($_GET['pageid']);
+  $commentia = new CommentiaController($_GET['pageid']);
 } else if ( isset($_POST['pageid']) ) {
-  $commentia = new commentiaController($_POST['pageid']);
+  $commentia = new CommentiaController($_POST['pageid']);
 } else {
-  $commentia = new commentiaController();
+  $commentia = new CommentiaController();
 }
 
 // Require member roles
-require_once("members.roles.php");
+require_once("MembersRoles.php");
 
 $roles = new Roles();
 

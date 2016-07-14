@@ -1,4 +1,4 @@
-var api = "commentia.api.php";
+var api = "api.php";
 var pageid = document.getElementsByTagName("html")[0].getAttribute("data-pageid");
 
 function httpRequest() {

@@ -23,9 +23,9 @@ Then, modify your template to have the following code at the top of the page:
 ```php
 <?php
   // Include and initiate Commentia with unique page-id
-  require_once('/path/to/commentia.controller.php');
+  require_once('/path/to/CommentiaController.php');
   $pageid = $x;
-  $commentia = new commentiaController($pageid);
+  $commentia = new CommentiaController($pageid);
 ?>
 ```
 

@@ -1,5 +1,10 @@
 <?php
 
+// Comments model
+// This file contains the comments-related methods
+// Author: Alexander Gilburg
+// Last updated: 14th of July 2016
+
 // Markdown to HTML by Parsedown
 require_once("vendor/parsedown/Parsedown.php");
 
@@ -7,10 +12,10 @@ require_once("vendor/parsedown/Parsedown.php");
 require_once("vendor/autoload.php");
 
 // Lexicon class for phrase translations
-require_once("commentia.lexica.php");
+require_once("Lexicon.php");
 
 // Member roles
-require_once("members.roles.php");
+require_once("MembersRoles.php");
 
 class Comments {
   public $comments_json = "data/comments.json";
@@ -29,13 +34,11 @@ class Comments {
       $this->comments_json = $comments_json;
     }
     if ( !file_exists($this->comments_json) ) {
-      die("Error: Comments JSON file not found.");
+      exit("Error: Comments JSON file not found.");
     }
     $this->comments_global = json_decode( file_get_contents("$this->comments_json"), true );
     $this->pageid = $pageid;
     $this->comments =& $this->comments_global["pageid-$this->pageid"];
-
-    session_start();
   }
 
   public function displayComments($is_ajax_request) {
@@ -180,7 +183,7 @@ class Comments {
 
   private function updateComments($comments_json) {
     if ( !is_writable( dirname($comments_json) ) ) {
-      die("Error: Directory not writable.");
+      exit("Error: Directory not writable.");
     }
 
     $fp = fopen($comments_json, 'w+');

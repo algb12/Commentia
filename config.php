@@ -2,9 +2,9 @@
 
 // Commentia config
 // These are the settings to be adjusted by the webmaster.
-// Member role settings can be found in the members.roles.php file
+// Member role settings can be found in the MembersRoles.php file
 // Author: Alexander Gilburg
-// Last updated: 10th of July 2016
+// Last updated: 14th of July 2016
 
 
 // Locale for language to be used by lexicon

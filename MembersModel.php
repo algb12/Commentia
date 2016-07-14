@@ -1,10 +1,15 @@
 <?php
 
+// Members model
+// This file contains the members-related methods
+// Author: Alexander Gilburg
+// Last updated: 14th of July 2016
+
 // Auth function compatibility library under PHP v5.5.0
 require_once("vendor/password_compat/password.php");
 
 // Lexicon class for phrase translations
-require_once("commentia.lexica.php");
+require_once("Lexicon.php");
 
 class Members {
   public $members_json = "data/members.json";
@@ -15,16 +20,14 @@ class Members {
       $this->members_json = $members_json;
     }
     if ( !file_exists($this->members_json) ) {
-      die("Error: Members JSON file not found.");
+      exit("Error: Members JSON file not found.");
     }
     $this->members = json_decode( file_get_contents("$this->members_json"), true );
-
-    session_start();
   }
 
   private function generateAvatarThumbnail($avatar_file, $avatar_width, $avatar_height) {
     if ( !getimagesize($avatar_file) ) {
-      die('File "'.$avatar_file.'" not found.');
+      exit('File "'.$avatar_file.'" not found.');
     }
     switch ( strtolower( pathinfo( $avatar_file, PATHINFO_EXTENSION ) ) ) {
       case 'jpeg':
@@ -41,7 +44,7 @@ class Members {
       break;
 
       default:
-        die('File "'.$avatar_file.'" is not valid jpg, png or gif image.');
+        exit('File "'.$avatar_file.'" is not valid jpg, png or gif image.');
       break;
     }
 
@@ -113,7 +116,7 @@ class Members {
 
   private function updateMembers($members_json) {
     if ( !is_writable( dirname($members_json) ) ) {
-      die("Error: Directory not writable.");
+      exit("Error: Directory not writable.");
     }
 
     $fp = fopen($members_json, 'w+');
@@ -159,13 +162,13 @@ class Members {
     $lexicon = new Lexicon("en_US");
 
     if ($_SESSION['member_is_logged_in']) {
-      $html = '<form class="commentia-logout-form" action="commentia.api.php" method="POST">
+      $html = '<form class="commentia-logout-form" action="api.php" method="POST">
         <input type="hidden" name="action" value="logoutMember">
         <input type="submit" name="log-out" value="Log out">
       </form>';
       $html .= '<p>Logged in as ' . $_SESSION['member_username'] . ' with role ' . $_SESSION['member_role'] . '</p>';
     } else {
-      $html = '<form class="commentia-login-form" action="commentia.api.php" method="POST">
+      $html = '<form class="commentia-login-form" action="api.php" method="POST">
         <table>
           <tbody>
             <tr>

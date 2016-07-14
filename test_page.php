@@ -3,9 +3,9 @@
 <?php
 error_reporting(-1);
   // Include and initiate Commentia with unique page-id
-  include 'commentia.controller.php';
+  include 'CommentiaController.php';
   $pageid = 0;
-  $commentia = new commentiaController($pageid);
+  $commentia = new CommentiaController($pageid);
 ?>
 
 <html lang="en" data-pageid="<?=$pageid;?>">

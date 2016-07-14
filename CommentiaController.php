@@ -4,18 +4,18 @@
 // This file routes the functions to the relevant classes/controls the program flow.
 // It contains a blueprint of every publically accessible function.
 // Author: Alexander Gilburg
-// Last updated: 7th of July 2016
+// Last updated: 14th of July 2016
 
 // Load config file
-require_once("commentia.config.php");
+require_once("config.php");
 
 // Members model
-require_once("members.model.php");
+require_once("MembersModel.php");
 
 // Comments model
-require_once("comments.model.php");
+require_once("CommentsModel.php");
 
-class commentiaController {
+class CommentiaController {
 
   public $members;
   public $comments;
@@ -31,6 +31,8 @@ class commentiaController {
     foreach ($_GET as $key=>$value) {
       $this->params[$key] = $value;
     }
+
+    session_start();
   }
 
   public function displayComments($is_ajax_request) {
