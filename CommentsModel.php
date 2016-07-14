@@ -36,7 +36,7 @@ class Comments
             $this->comments_json = $comments_json;
         }
         if (!file_exists($this->comments_json)) {
-            exit('Error: Comments JSON file not found.');
+            file_put_contents($this->comments_json, '');
         }
         $this->comments_global = json_decode(file_get_contents($this->comments_json), true);
         $this->pageid = $pageid;
@@ -105,9 +105,14 @@ class Comments
         return $html;
     }
 
-    public function createNewComment($content, $username, $reply_path)
+    public function createNewComment($content, $reply_path)
     {
-        $ucid = $this->comments_global['last_ucid'] + 1;
+        if ($this->comments_global['last_ucid'] !== '') {
+            $ucid = $this->comments_global['last_ucid'] + 1;
+        } else {
+            $ucid = 0;
+        }
+
         $comment_post_path = &$this->comments['comments'];
 
         if (isset($reply_path) && ($reply_path !== '')) {
@@ -125,11 +130,11 @@ class Comments
         $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
         $comment_post_path["ucid-$ucid"]['content'] = $this->md_to_html->text(htmlspecialchars(urldecode("$content")));
         $comment_post_path["ucid-$ucid"]['timestamp'] = date(DateTime::ISO8601);
-        $comment_post_path["ucid-$ucid"]['creator_username'] = $username;
+        $comment_post_path["ucid-$ucid"]['creator_username'] = $_SESSION['member_username'];
         $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
         $comment_post_path["ucid-$ucid"]['reply_path'] = (isset($reply_path) && !empty($reply_path) ? $reply_path."-$ucid" : "$ucid");
 
-        $this->comments_global['last_ucid'] += 1;
+        $this->comments_global['last_ucid'] = $ucid;
         $this->comments_global['last_modified'] = date(DateTime::ISO8601);
 
     // echo json_encode($this->comments_global);

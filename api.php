@@ -76,9 +76,9 @@ if (isset($_POST['pageid'])
   || ($action === 'postNewComment'))
   && isset($_POST['content'])) {
         $content = $_POST['content'];
-        $username = $_SESSION['member_username'];
         $reply_path = $_POST['reply_path'];
-        $commentia->createNewComment($content, $username, $reply_path);
+
+        $commentia->createNewComment($content, $reply_path);
     }
 
     if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], $_POST['reply_path'], 'creator_username'))

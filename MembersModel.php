@@ -22,7 +22,7 @@ class Members
             $this->members_json = $members_json;
         }
         if (!file_exists($this->members_json)) {
-            exit('Error: Members JSON file not found.');
+            file_put_contents($this->members_json, '');
         }
         $this->members = json_decode(file_get_contents($this->members_json), true);
     }
