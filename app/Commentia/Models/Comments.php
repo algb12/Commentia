@@ -62,19 +62,19 @@ class Comments
             global $roles;
             foreach ($comment as $comment_data) {
                 $html .= ('<div class="commentia-comment"'.'data-ucid="'.$comment_data['ucid'].'"'.'data-reply-path="'.$comment_data['reply_path'].'">'."\n");
-                $html .= ('<p class="commentia-comment_by">'.$lexicon->getPhrase('comment_info', 'comment_by').' '.($comment_data['creator_username']).', </p>'."\n");
+                $html .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
                 $datetime = DateTime::createFromFormat(DateTime::ISO8601, $comment_data['timestamp']);
-                $html .= ('<p class="commentia-comment_timestamp">'.$lexicon->getPhrase('comment_info', 'posted_at').' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
+                $html .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
                 $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
                 $html .= ('<div class="commentia-edit_area"></div>'."\n");
 
                 if (!$comment_data['is_deleted']) {
                     if ($_SESSION['member_is_logged_in']) {
                         $html .= ('<p class="commentia-comment_controls">
-            <a href="javascript:void(0)" onclick="showReplyArea(this)">'.$lexicon->getPhrase('comment_controls', 'reply').'</a>');
+            <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
                         if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
-                            $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.$lexicon->getPhrase('comment_controls', 'edit').'</a>');
-                            $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.$lexicon->getPhrase('comment_controls', 'delete').'</a>');
+                            $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
+                            $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
                         }
                         $html .= ('</p>'."\n");
                     }
@@ -93,7 +93,7 @@ class Comments
         }
 
         if ($_SESSION['member_is_logged_in']) {
-            $html .= ('<div class="commentia-new_comment_area">'."\n".'<h4>'.$lexicon->getPhrase('titles', 'new_comment').'</h4>'."\n".'<textarea id="comment-box" oninput="autoGrow(this);"></textarea>'."\n".'<button id="post-comment-button" onclick="postNewComment(this);">'.$lexicon->getPhrase('comment_controls', 'publish').'</button>'."\n".'</div>'."\n");
+            $html .= ('<div class="commentia-new_comment_area">'."\n".'<h4>'.TITLES_NEW_COMMENT.'</h4>'."\n".'<textarea id="comment-box" oninput="autoGrow(this);"></textarea>'."\n".'<button id="post-comment-button" onclick="postNewComment(this);">'.COMMENT_CONTROLS_PUBLISH.'</button>'."\n".'</div>'."\n");
         }
 
         if (!$is_ajax_request) {

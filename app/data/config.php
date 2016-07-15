@@ -9,7 +9,7 @@
 # Locale for language to be used by lexicon
 # English (USA): en_US
 # German (Germany): de_DE
-define('LEX_LOCALE', 'en_US');
+define('LEX_LOCALE', 'fr_FR');
 
 # Relative path to JSON file containing comments
 define('JSON_FILE_COMMENTS', 'app/data/comments.example.json');

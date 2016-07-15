@@ -10,10 +10,13 @@ namespace Commentia\Controllers;
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
+require_once __DIR__.'/../../data/config.php';
+
 use Commentia\Models\Comments;
 use Commentia\Models\Members;
+use Commentia\Lexicon\Lexicon;
 
-require_once __DIR__.'/../../data/config.php';
+Lexicon::load(LEX_LOCALE);
 
 class CommentiaController
 {

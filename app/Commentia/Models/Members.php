@@ -165,28 +165,30 @@ class Members
         $lexicon = new Lexicon('en_US');
 
         if ($_SESSION['member_is_logged_in']) {
-            $html = '<form class="commentia-logout-form" action="api.php" method="POST">
-        <input type="hidden" name="action" value="logoutMember">
-        <input type="submit" name="log-out" value="Log out">
-      </form>';
-            $html .= '<p>Logged in as '.$_SESSION['member_username'].' with role '.$_SESSION['member_role'].'</p>';
+            $html = '
+            <form class="commentia-logout-form" action="api.php" method="POST">
+                <input type="hidden" name="action" value="logoutMember">
+                <input type="submit" name="log-out" value="'.AUTH_FORM_BUTTONS_LOG_OUT.'">
+            </form>
+            <p>Logged in as '.$_SESSION['member_username'].' with role '.$_SESSION['member_role'].'</p>';
         } else {
-            $html = '<form class="commentia-login-form" action="api.php" method="POST">
-        <table>
-          <tbody>
-            <tr>
-              <td>Username:</td>
-              <td><input type="text" name="username"></td>
-            </tr>
-            <tr>
-              <td>Password:</td>
-              <td><input type="password" name="password"></td>
-            </tr>
-          </tbody>
-        </table>
-        <input type="hidden" name="action" value="loginMember">
-        <input type="submit" name="log-in" value="Log in">
-      </form>';
+            $html = '
+            <form class="commentia-login-form" action="api.php" method="POST">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>'.AUTH_FORM_LABELS_USERNAME.'</td>
+                            <td><input type="text" name="username"></td>
+                        </tr>
+                        <tr>
+                            <td>'.AUTH_FORM_LABELS_PASSWORD.'</td>
+                            <td><input type="password" name="password"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" name="action" value="loginMember">
+                <input type="submit" name="log-in" value="'.AUTH_FORM_BUTTONS_LOG_IN.'">
+            </form>';
         }
         $html .= '<p>'.$_SESSION['login_error_msg'].'</p>';
         $_SESSION['login_error_msg'] = '';

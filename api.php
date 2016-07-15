@@ -27,7 +27,7 @@ if (isset($_GET['pageid'])) {
     $commentia = new CommentiaController();
 }
 
-file_put_contents("pageid.txt", $pageid);
+file_put_contents('pageid.txt', $pageid);
 
 // Require member roles
 use Commentia\Roles\Roles;
