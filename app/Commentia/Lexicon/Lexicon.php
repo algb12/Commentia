@@ -4,7 +4,7 @@
 # Format: $phrases['locale']['category_name']['phrase_name'] = 'localized_phrase';
 # Call constructor of Lexicon class with locale as argument, then get phrase with getPhrase($category, $object)
 # Author: Alexander Gilburg
-# Last updated: 14th of July 2016
+# Last updated: 15th of July 2016
 
 namespace Commentia\Lexicon;
 

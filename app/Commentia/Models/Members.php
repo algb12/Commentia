@@ -3,7 +3,7 @@
 # Members model
 # This file contains the members-related methods
 # Author: Alexander Gilburg
-# Last updated: 14th of July 2016
+# Last updated: 15th of July 2016
 
 namespace Commentia\Models;
 
@@ -191,16 +191,15 @@ class Members
         $html .= '<p>'.$_SESSION['login_error_msg'].'</p>';
         $_SESSION['login_error_msg'] = '';
 
-        if (isset($_SERVER['HTTPS']) &&
-        ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1) ||
-        isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
-        $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-            $protocol = 'https:#';
-        } else {
-            $protocol = 'http:#';
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $isSecure = true;
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
         }
+        $REQUEST_PROTOCOL = $isSecure ? 'https' : 'http';
 
-        $_SESSION['log_in_page'] = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+        $_SESSION['log_in_page'] = $REQUEST_PROTOCOL.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 
         return $html;
     }

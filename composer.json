@@ -1,7 +1,8 @@
 {
     "require": {
         "pixel418/markdownify": "2.1.*",
-        "erusev/parsedown": "^1.6"
+        "erusev/parsedown": "^1.6",
+        "ircmaxell/password-compat": "^1.0"
     },
     "autoload": {
         "psr-4": {

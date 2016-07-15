@@ -9,7 +9,7 @@ ini_set('html_errors', 1);
 // This should be the ONLY entry point directly from a website.
 // Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated.
 // Author: Alexander Gilburg
-// Last updated: 14th of July 2016
+// Last updated: 15th of July 2016
 
 require_once 'vendor/autoload.php';
 

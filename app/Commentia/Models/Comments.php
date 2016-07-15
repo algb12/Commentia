@@ -3,7 +3,7 @@
 # Comments model
 # This file contains the comments-related methods
 # Author: Alexander Gilburg
-# Last updated: 14th of July 2016
+# Last updated: 15th of July 2016
 
 namespace Commentia\Models;
 

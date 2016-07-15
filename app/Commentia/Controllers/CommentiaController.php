@@ -1,27 +1,19 @@
 <?php
 
-// Commentia controller
-// This file routes the functions to the relevant classes/controls the program flow.
-// It contains a blueprint of every publically accessible function.
-// Author: Alexander Gilburg
-// Last updated: 14th of July 2016
+# Commentia controller
+# This file routes the functions to the relevant classes/controls the program flow.
+# It contains a blueprint of every publically accessible function.
+# Author: Alexander Gilburg
+# Last updated: 15th of July 2016
 
 namespace Commentia\Controllers;
 
-// Require the autoloader
-require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__.'/../../../vendor/autoload.php';
 
 use Commentia\Models\Comments;
 use Commentia\Models\Members;
 
-// Load config file
-require_once __DIR__ . '/../../data/config.php';
-
-// // Members model
-// require_once 'MembersModel.php';
-//
-// // Comments model
-// require_once 'CommentsModel.php';
+require_once __DIR__.'/../../data/config.php';
 
 class CommentiaController
 {
