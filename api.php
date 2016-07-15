@@ -1,10 +1,5 @@
 <?php
 
-error_reporting(E_STRICT);
-ini_set('error_reporting', -1);
-ini_set('display_errors', 1);
-ini_set('html_errors', 1);
-
 // Commentia API
 // This should be the ONLY entry point directly from a website.
 // Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated.
@@ -26,8 +21,6 @@ if (isset($_GET['pageid'])) {
 } else {
     $commentia = new CommentiaController();
 }
-
-file_put_contents('pageid.txt', $pageid);
 
 // Require member roles
 use Commentia\Roles\Roles;

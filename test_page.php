@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 
 <?php
+
+  // Disable these 4 lines if you don't want error-reporting
   error_reporting(E_STRICT);
   ini_set('error_reporting', -1);
   ini_set('display_errors', 1);
   ini_set('html_errors', 1);
 
-  use Commentia\Controllers\CommentiaController;
-
   require 'vendor/autoload.php';
+
+  use Commentia\Controllers\CommentiaController;
 
   // Include and initiate Commentia with unique page-id
   $pageid = 0;

@@ -1,4 +1,4 @@
-var api = "api.php";
+var window.commentia.APIURL = window.commentia.URL || "api.php";
 var pageid = document.getElementsByTagName("html")[0].getAttribute("data-pageid");
 
 function httpRequest() {
@@ -23,7 +23,7 @@ function httpRequest() {
 
 function refreshComments() {
     var comments_section = document.getElementById("comments_pageid-" + pageid);
-    var url = api + "?pageid=" + pageid + "&action=display";
+    var url = window.commentia.APIURL + "?pageid=" + pageid + "&action=display";
 
     var http_request = httpRequest();
 
@@ -98,7 +98,7 @@ function postReply(caller) {
     var content = encodeURI(document.getElementById(reply_box_id).value);
     var params = "pageid=" + pageid + "&action=reply&content=" + content + "&reply_path=" + reply_path + "&username=user0";
 
-    console.log("POST request to: " + api + " with params: " + params);
+    console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
     var http_request = httpRequest();
 
@@ -110,7 +110,7 @@ function postReply(caller) {
         }
     }
 
-    http_request.open("POST", api, true);
+    http_request.open("POST", window.commentia.APIURL, true);
     http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http_request.send(params);
 }
@@ -124,7 +124,7 @@ function postNewComment(caller) {
 
     var http_request = httpRequest();
 
-    console.log("POST request to: " + api + " with params: " + params);
+    console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
     http_request.onreadystatechange = function() {
 
@@ -134,7 +134,7 @@ function postNewComment(caller) {
         }
     }
 
-    http_request.open("POST", api, true);
+    http_request.open("POST", window.commentia.APIURL, true);
     http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http_request.send(params);
 }
@@ -148,7 +148,7 @@ function deleteComment(caller) {
 
         var params = "pageid=" + pageid + "&action=delete&ucid=" + ucid + "&reply_path=" + reply_path;
 
-        console.log("POST request to: " + api + " with params: " + params);
+        console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
         var http_request = httpRequest();
 
@@ -160,7 +160,7 @@ function deleteComment(caller) {
             }
         }
 
-        http_request.open("POST", api, true);
+        http_request.open("POST", window.commentia.APIURL, true);
         http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http_request.send(params);
     }
@@ -184,7 +184,7 @@ function showEditArea(caller) {
         edit_box.setAttribute('id', edit_box_id);
         edit_box.setAttribute('oninput', "autoGrow(this);");
 
-        var url = api + "?pageid=" + pageid + "&action=getCommentMarkdown&ucid=" + ucid + "&reply_path=" + reply_path;
+        var url = window.commentia.APIURL + "?pageid=" + pageid + "&action=getCommentMarkdown&ucid=" + ucid + "&reply_path=" + reply_path;
         var http_request = httpRequest();
 
         console.log("GET request to: " + url);
@@ -240,7 +240,7 @@ function editComment(caller) {
 
     var http_request = httpRequest();
 
-    console.log("POST request to: " + api + " with params: " + params);
+    console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
     http_request.onreadystatechange = function() {
 
@@ -250,7 +250,7 @@ function editComment(caller) {
         }
     }
 
-    http_request.open("POST", api, true);
+    http_request.open("POST", window.commentia.APIURL, true);
     http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http_request.send(params);
 }
