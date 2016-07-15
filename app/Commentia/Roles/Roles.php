@@ -5,6 +5,8 @@
 // Author: Alexander Gilburg
 // Last updated: 14th of July 2016
 
+namespace Commentia\Roles;
+
 class Roles
 {
     public function memberHasUsername($creator_username)

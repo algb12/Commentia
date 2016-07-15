@@ -12,7 +12,7 @@
 define('LEX_LOCALE', 'en_US');
 
 // Relative path to JSON file containing comments
-define('JSON_FILE_COMMENTS', 'data/comments.example.json');
+define('JSON_FILE_COMMENTS', 'app/data/comments.example.json');
 
 // Relative path to JSON file containing members
-define('JSON_FILE_MEMBERS', 'data/members.example.json');
+define('JSON_FILE_MEMBERS', 'app/data/members.example.json');

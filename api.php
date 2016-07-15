@@ -1,25 +1,36 @@
 <?php
 
+error_reporting(E_STRICT);
+ini_set('error_reporting', -1);
+ini_set('display_errors', 1);
+ini_set('html_errors', 1);
+
 // Commentia API
 // This should be the ONLY entry point directly from a website.
 // Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated.
 // Author: Alexander Gilburg
 // Last updated: 14th of July 2016
 
+require_once 'vendor/autoload.php';
+
 // Require the controller
-require_once 'CommentiaController.php';
+use Commentia\Controllers\CommentiaController;
 
 // Instantiate the controller
 if (isset($_GET['pageid'])) {
     $commentia = new CommentiaController($_GET['pageid']);
+    $pageid = $_GET['pageid'];
 } elseif (isset($_POST['pageid'])) {
     $commentia = new CommentiaController($_POST['pageid']);
+    $pageid = $_POST['pageid'];
 } else {
     $commentia = new CommentiaController();
 }
 
+file_put_contents("pageid.txt", $pageid);
+
 // Require member roles
-require_once 'MembersRoles.php';
+use Commentia\Roles\Roles;
 
 $roles = new Roles();
 
@@ -45,8 +56,7 @@ if (isset($_GET['pageid'])
     $action = $_GET['action'];
 
     if ($action === 'display') {
-        $is_ajax_request = true;
-        echo $commentia->displayComments($is_ajax_request);
+        echo $commentia->displayComments();
     }
 }
 

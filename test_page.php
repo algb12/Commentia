@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 
 <?php
-error_reporting(-1);
+  error_reporting(E_STRICT);
+  ini_set('error_reporting', -1);
+  ini_set('display_errors', 1);
+  ini_set('html_errors', 1);
+
+  use Commentia\Controllers\CommentiaController;
+
+  require 'vendor/autoload.php';
+
   // Include and initiate Commentia with unique page-id
-  include 'CommentiaController.php';
   $pageid = 0;
   $commentia = new CommentiaController($pageid);
 ?>
@@ -14,15 +21,15 @@ error_reporting(-1);
   <title>Commentia - A lightweight, no DB comment system</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Commentia AJAX-script + CSS for comments section -->
-  <script src="commentia.js"></script>
-  <link href="commentia-default-theme.css" rel="stylesheet">
+  <script src="assets/commentia.js"></script>
+  <link href="assets/commentia-default-theme.css" rel="stylesheet">
 </head>
 
 <body>
   <h3>Comments:</h3>
   <hr>
   <div>
-    <?=$commentia->displayComments();?>
+    <?=$commentia->displayComments(false);?>
     <?=$commentia->displayAuthForm();?>
   </div>
   <!-- Debug (will be removed) -->

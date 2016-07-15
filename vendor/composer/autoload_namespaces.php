@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Test\\Markdownify' => array($vendorDir . '/pixel418/markdownify/test'),
+    'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Markdownify' => array($vendorDir . '/pixel418/markdownify/src'),
 );

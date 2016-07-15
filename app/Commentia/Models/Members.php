@@ -1,19 +1,20 @@
 <?php
 
-// Members model
-// This file contains the members-related methods
-// Author: Alexander Gilburg
-// Last updated: 14th of July 2016
+# Members model
+# This file contains the members-related methods
+# Author: Alexander Gilburg
+# Last updated: 14th of July 2016
 
-// Auth function compatibility library under PHP v5.5.0
-require_once 'vendor/password_compat/password.php';
+namespace Commentia\Models;
 
-// Lexicon class for phrase translations
-require_once 'Lexicon.php';
+use Commentia\Lexicon\Lexicon;
+
+# # Auth function compatibility library under PHP v5.5.0
+# require_once 'vendor/password_compat/password.php';
 
 class Members
 {
-    public $members_json = 'data/members.json';
+    public $members_json = 'app/data/members.json';
     public $members = array();
 
     public function __construct($members_json)
@@ -60,23 +61,20 @@ class Members
         $avatar_aspect = $avatar_width / $avatar_height;
 
         if ($original_aspect >= $avatar_aspect) {
-            // If image a.r. wider than thumbnail a.r.
-      $new_height = $avatar_height;
+            $new_height = $avatar_height;
             $new_width = $width / ($height / $avatar_height);
         } else {
-            // If thumbnail a.r. wider than image a.r.
-      $new_width = $avatar_width;
+            $new_width = $avatar_width;
             $new_height = $height / ($width / $avatar_width);
         }
 
         $avatar = imagecreatetruecolor($avatar_width, $avatar_height);
 
-    // Resize and crop
-    imagecopyresampled(
+        imagecopyresampled(
       $avatar,
       $image,
-      0 - ($new_width - $avatar_width) / 2, // Center image horizontally
-      0 - ($new_height - $avatar_height) / 2, // Center image vertically
+      0 - ($new_width - $avatar_width) / 2, # Center image horizontally
+      0 - ($new_height - $avatar_height) / 2, # Center image vertically
       0, 0,
       $new_width, $new_height,
       $width, $height
@@ -132,8 +130,6 @@ class Members
         }
         flock($fp, LOCK_UN);
         fclose($fp);
-    // Is below very slow with many concurrent requests?
-    // file_put_contents( $members_json, json_encode($this->members), LOCK_EX );
     }
 
     public function loginMember($username, $password)
@@ -193,17 +189,16 @@ class Members
       </form>';
         }
         $html .= '<p>'.$_SESSION['login_error_msg'].'</p>';
-        unset($_SESSION['login_error_msg']);
+        $_SESSION['login_error_msg'] = '';
 
-    // Set the protocol (HTTP or HTTPS)
-    if (isset($_SERVER['HTTPS']) &&
+        if (isset($_SERVER['HTTPS']) &&
         ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1) ||
         isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
         $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-        $protocol = 'https://';
-    } else {
-        $protocol = 'http://';
-    }
+            $protocol = 'https:#';
+        } else {
+            $protocol = 'http:#';
+        }
 
         $_SESSION['log_in_page'] = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 

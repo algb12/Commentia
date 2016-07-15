@@ -6,14 +6,22 @@
 // Author: Alexander Gilburg
 // Last updated: 14th of July 2016
 
+namespace Commentia\Controllers;
+
+// Require the autoloader
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use Commentia\Models\Comments;
+use Commentia\Models\Members;
+
 // Load config file
-require_once 'config.php';
+require_once __DIR__ . '/../../data/config.php';
 
-// Members model
-require_once 'MembersModel.php';
-
-// Comments model
-require_once 'CommentsModel.php';
+// // Members model
+// require_once 'MembersModel.php';
+//
+// // Comments model
+// require_once 'CommentsModel.php';
 
 class CommentiaController
 {

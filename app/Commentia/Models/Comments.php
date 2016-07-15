@@ -1,25 +1,21 @@
 <?php
 
-// Comments model
-// This file contains the comments-related methods
-// Author: Alexander Gilburg
-// Last updated: 14th of July 2016
+# Comments model
+# This file contains the comments-related methods
+# Author: Alexander Gilburg
+# Last updated: 14th of July 2016
 
-// Markdown to HTML by Parsedown
-require_once 'vendor/parsedown/Parsedown.php';
+namespace Commentia\Models;
 
-// Composer's autoload
-require_once 'vendor/autoload.php';
-
-// Lexicon class for phrase translations
-require_once 'Lexicon.php';
-
-// Member roles
-require_once 'MembersRoles.php';
+use Parsedown;
+use Markdownify\Converter;
+use Commentia\Lexicon\Lexicon;
+use Commentia\Roles\Roles;
+use DateTime;
 
 class Comments
 {
-    public $comments_json = 'data/comments.json';
+    public $comments_json = 'app/data/comments.json';
     public $comments = array();
     public $comments_global = array();
     public $pageid;
@@ -30,7 +26,7 @@ class Comments
     {
         $this->md_to_html = new Parsedown();
 
-        $this->html_to_md = new Markdownify\Converter();
+        $this->html_to_md = new Converter();
 
         if (!empty($comments_json)) {
             $this->comments_json = $comments_json;
@@ -41,6 +37,8 @@ class Comments
         $this->comments_global = json_decode(file_get_contents($this->comments_json), true);
         $this->pageid = $pageid;
         $this->comments = &$this->comments_global["pageid-$this->pageid"];
+
+        date_default_timezone_set('UTC');
     }
 
     public function displayComments($is_ajax_request)
@@ -57,39 +55,39 @@ class Comments
             $html .= ('<div class="commentia-comments_container" id="comments_pageid-'.$this->pageid.'">'."\n");
         }
 
-        function iterateCommentData($comment, $lexicon)
+        function iterateCommentData($comment)
         {
             global $html;
             global $lexicon;
             global $roles;
-      // $lexicon = new Lexicon("en_US");
-      foreach ($comment as $comment_data) {
-          $html .= ('<div class="commentia-comment"'.'data-ucid="'.$comment_data['ucid'].'"'.'data-reply-path="'.$comment_data['reply_path'].'">'."\n");
-          $html .= ('<p class="commentia-comment_by">'.$lexicon->getPhrase('comment_info', 'comment_by').' '.($comment_data['creator_username']).', </p>'."\n");
-          $datetime = DateTime::createFromFormat(DateTime::ISO8601, $comment_data['timestamp']);
-          $html .= ('<p class="commentia-comment_timestamp">'.$lexicon->getPhrase('comment_info', 'posted_at').' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
-          $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
-          $html .= ('<div class="commentia-edit_area"></div>'."\n");
+            foreach ($comment as $comment_data) {
+                $html .= ('<div class="commentia-comment"'.'data-ucid="'.$comment_data['ucid'].'"'.'data-reply-path="'.$comment_data['reply_path'].'">'."\n");
+                $html .= ('<p class="commentia-comment_by">'.$lexicon->getPhrase('comment_info', 'comment_by').' '.($comment_data['creator_username']).', </p>'."\n");
+                $datetime = DateTime::createFromFormat(DateTime::ISO8601, $comment_data['timestamp']);
+                $html .= ('<p class="commentia-comment_timestamp">'.$lexicon->getPhrase('comment_info', 'posted_at').' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
+                $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
+                $html .= ('<div class="commentia-edit_area"></div>'."\n");
 
-          if (!$comment_data['is_deleted']) {
-              if ($_SESSION['member_is_logged_in']) {
-                  $html .= ('<p class="commentia-comment_controls">
+                if (!$comment_data['is_deleted']) {
+                    if ($_SESSION['member_is_logged_in']) {
+                        $html .= ('<p class="commentia-comment_controls">
             <a href="javascript:void(0)" onclick="showReplyArea(this)">'.$lexicon->getPhrase('comment_controls', 'reply').'</a>');
-                  if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
-                      $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.$lexicon->getPhrase('comment_controls', 'edit').'</a>');
-                      $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.$lexicon->getPhrase('comment_controls', 'delete').'</a>');
-                  }
-                  $html .= ('</p>'."\n");
-              }
-          }
+                        if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
+                            $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.$lexicon->getPhrase('comment_controls', 'edit').'</a>');
+                            $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.$lexicon->getPhrase('comment_controls', 'delete').'</a>');
+                        }
+                        $html .= ('</p>'."\n");
+                    }
+                }
 
-          $html .= ('<div class="commentia-reply_area"></div>'."\n");
-          if (isset($comment_data['replies'])) {
-              iterateCommentData($comment_data['replies']);
-          }
-          $html .= ('</div>'."\n");
-      }
+                $html .= ('<div class="commentia-reply_area"></div>'."\n");
+                if (isset($comment_data['replies'])) {
+                    iterateCommentData($comment_data['replies']);
+                }
+                $html .= ('</div>'."\n");
+            }
         }
+
         foreach ($this->comments as $comment) {
             iterateCommentData($comment);
         }
@@ -137,8 +135,7 @@ class Comments
         $this->comments_global['last_ucid'] = $ucid;
         $this->comments_global['last_modified'] = date(DateTime::ISO8601);
 
-    // echo json_encode($this->comments_global);
-    $this->updateComments($this->comments_json);
+        $this->updateComments($this->comments_json);
     }
 
     public function editComment($ucid, $reply_path, $content)
@@ -210,8 +207,5 @@ class Comments
         }
         flock($fp, LOCK_UN);
         fclose($fp);
-
-    // Is below very slow with many concurrent requests?
-    // file_put_contents( $comments_json, json_encode($this->comments_global), LOCK_EX );
     }
 }
