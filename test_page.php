@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 <?php
-
   // Disable these 4 lines if you don't want error-reporting
   error_reporting(E_STRICT);
   ini_set('error_reporting', -1);
   ini_set('display_errors', 1);
   ini_set('html_errors', 1);
 
+  // Composer's autoload
   require 'vendor/autoload.php';
 
   use Commentia\Controllers\CommentiaController;
@@ -17,7 +17,7 @@
   $commentia = new CommentiaController($pageid);
 ?>
 
-<html lang="en" data-pageid="<?=$pageid;?>">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Commentia - A lightweight, no DB comment system</title>

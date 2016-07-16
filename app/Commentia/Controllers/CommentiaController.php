@@ -1,10 +1,10 @@
 <?php
 
-# Commentia controller
-# This file routes the functions to the relevant classes/controls the program flow.
-# It contains a blueprint of every publically accessible function.
-# Author: Alexander Gilburg
-# Last updated: 15th of July 2016
+// Commentia controller
+// This file routes the functions to the relevant classes/controls the program flow.
+// It contains a blueprint of every publically accessible function.
+// Author: Alexander Gilburg
+// Last updated: 15th of July 2016
 
 namespace Commentia\Controllers;
 
@@ -26,6 +26,8 @@ class CommentiaController
 
     public function __construct($pageid)
     {
+        session_start();
+
         if (isset($pageid)) {
             $this->comments = new Comments(JSON_FILE_COMMENTS, $pageid);
         }
@@ -36,7 +38,7 @@ class CommentiaController
             $this->params[$key] = $value;
         }
 
-        session_start();
+        $_SESSION['pageid'] = $pageid;
     }
 
     public function displayComments($is_ajax_request)

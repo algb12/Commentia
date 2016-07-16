@@ -6,18 +6,20 @@
 // Author: Alexander Gilburg
 // Last updated: 15th of July 2016
 
+session_start();
+
 require_once 'vendor/autoload.php';
 
 // Require the controller
 use Commentia\Controllers\CommentiaController;
 
 // Instantiate the controller
-if (isset($_GET['pageid'])) {
-    $commentia = new CommentiaController($_GET['pageid']);
-    $pageid = $_GET['pageid'];
-} elseif (isset($_POST['pageid'])) {
-    $commentia = new CommentiaController($_POST['pageid']);
-    $pageid = $_POST['pageid'];
+if (isset($_SESSION['pageid'])) {
+    $commentia = new CommentiaController($_SESSION['pageid']);
+    $pageid = $_SESSION['pageid'];
+} elseif (isset($_SESSION['pageid'])) {
+    $commentia = new CommentiaController($_SESSION['pageid']);
+    $pageid = $_SESSION['pageid'];
 } else {
     $commentia = new CommentiaController();
 }
@@ -43,9 +45,9 @@ if (isset($_POST['action'])) {
     }
 }
 
-if (isset($_GET['pageid'])
+if (isset($_SESSION['pageid'])
 && isset($_GET['action'])) {
-    $pageid = $_GET['pageid'];
+    $pageid = $_SESSION['pageid'];
     $action = $_GET['action'];
 
     if ($action === 'display') {
@@ -58,9 +60,9 @@ if (!$_SESSION['member_is_logged_in']) {
     return 0;
 }
 
-if (isset($_GET['pageid'])
+if (isset($_SESSION['pageid'])
 && isset($_GET['action'])) {
-    $pageid = $_GET['pageid'];
+    $pageid = $_SESSION['pageid'];
     $action = $_GET['action'];
 
     if (($action === 'getCommentMarkdown') && isset($_GET['ucid'])) {
@@ -70,9 +72,9 @@ if (isset($_GET['pageid'])
     }
 }
 
-if (isset($_POST['pageid'])
+if (isset($_SESSION['pageid'])
 && isset($_POST['action'])) {
-    $pageid = $_POST['pageid'];
+    $pageid = $_SESSION['pageid'];
     $action = $_POST['action'];
 
     if ((($action === 'reply')

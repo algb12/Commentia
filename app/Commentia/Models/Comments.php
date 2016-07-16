@@ -1,9 +1,9 @@
 <?php
 
-# Comments model
-# This file contains the comments-related methods
-# Author: Alexander Gilburg
-# Last updated: 15th of July 2016
+// Comments model
+// This file contains the comments-related methods
+// Author: Alexander Gilburg
+// Last updated: 15th of July 2016
 
 namespace Commentia\Models;
 

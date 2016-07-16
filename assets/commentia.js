@@ -1,4 +1,5 @@
-var window.commentia.APIURL = window.commentia.URL || "api.php";
+window.commentia = {};
+window.commentia.APIURL = window.commentia.URL || "api.php";
 var pageid = document.getElementsByTagName("html")[0].getAttribute("data-pageid");
 
 function httpRequest() {
