@@ -8,6 +8,8 @@
 
 session_start();
 
+$_SESSION['member_is_logged_in'] = true;
+
 require_once 'vendor/autoload.php';
 
 // Require the controller
@@ -53,19 +55,17 @@ if (isset($_SESSION['pageid'])
     if ($action === 'display') {
         echo $commentia->displayComments();
     }
-}
 
-// This statement disabled functions bellow for non-lo
-if (!$_SESSION['member_is_logged_in']) {
-    return 0;
-}
+    if ($action === 'getPhrase'
+    && $_SESSION['member_is_logged_in']) {
+        if (isset($_GET['phrase'])) {
+            echo $commentia->getPhrase($_GET['phrase']);
+        }
+    }
 
-if (isset($_SESSION['pageid'])
-&& isset($_GET['action'])) {
-    $pageid = $_SESSION['pageid'];
-    $action = $_GET['action'];
-
-    if (($action === 'getCommentMarkdown') && isset($_GET['ucid'])) {
+    if (($action === 'getCommentMarkdown')
+    && isset($_GET['ucid'])
+    && $_SESSION['member_is_logged_in']) {
         $ucid = $_GET['ucid'];
         $reply_path = $_GET['reply_path'];
         echo $commentia->getCommentMarkdown($ucid, $reply_path);
@@ -73,7 +73,8 @@ if (isset($_SESSION['pageid'])
 }
 
 if (isset($_SESSION['pageid'])
-&& isset($_POST['action'])) {
+&& isset($_POST['action'])
+&& $_SESSION['member_is_logged_in']) {
     $pageid = $_SESSION['pageid'];
     $action = $_POST['action'];
 
