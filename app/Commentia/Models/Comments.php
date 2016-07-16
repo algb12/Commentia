@@ -61,7 +61,7 @@ class Comments
             global $lexicon;
             global $roles;
             foreach ($comment as $comment_data) {
-                $html .= ('<div class="commentia-comment"'.'data-ucid="'.$comment_data['ucid'].'"'.'data-reply-path="'.$comment_data['reply_path'].'">'."\n");
+                $html .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'"'.' data-reply-path="'.$comment_data['reply_path'].'">'."\n");
                 $html .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
                 $datetime = DateTime::createFromFormat(DateTime::ISO8601, $comment_data['timestamp']);
                 $html .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
