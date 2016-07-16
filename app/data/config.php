@@ -7,9 +7,8 @@
 // Last updated: 15th of July 2016
 
 // Locale for language to be used by lexicon
-// English (USA): en_US
-// German (Germany): de_DE
-define('LEX_LOCALE', 'en_US');
+// Available languages are in the /app/Commentia/Lexicon/locale directory
+define('LEX_LOCALE', 'en-US');
 
 // Relative path to JSON file containing comments
 define('JSON_FILE_COMMENTS', 'app/data/comments.example.json');

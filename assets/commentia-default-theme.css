@@ -64,8 +64,8 @@
     border-color: #ccc;
     border-style: solid;
 }
-.commentia-edit_area button {
-    width: auto;
+.commentia-edit_area button, .commentia-reply_area button {
+    width: auto !important;
     margin: 4px;
 }
 .commentia-edit_area textarea {

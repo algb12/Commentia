@@ -1,6 +1,5 @@
 window.commentia = {};
 window.commentia.APIURL = window.commentia.URL || "api.php";
-var pageid = document.getElementsByTagName("html")[0].getAttribute("data-pageid");
 
 function httpRequest() {
     try {
@@ -23,8 +22,8 @@ function httpRequest() {
 }
 
 function refreshComments() {
-    var comments_section = document.getElementById("comments_pageid-" + pageid);
-    var url = window.commentia.APIURL + "?pageid=" + pageid + "&action=display";
+    var comments_section = document.getElementById("comments-container");
+    var url = window.commentia.APIURL + "?action=display";
 
     var http_request = httpRequest();
 
@@ -95,9 +94,9 @@ function postReply(caller) {
     var reply_path = comment.getAttribute('data-reply-path');
     var reply_box_id = 'reply-box-' + ucid;
 
-    var comments_section = document.getElementById("comments_pageid-" + pageid);
+    var comments_section = document.getElementById("comments-container");
     var content = encodeURI(document.getElementById(reply_box_id).value);
-    var params = "pageid=" + pageid + "&action=reply&content=" + content + "&reply_path=" + reply_path + "&username=user0";
+    var params = "action=reply&content=" + content + "&reply_path=" + reply_path + "&username=user0";
 
     console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
@@ -119,9 +118,9 @@ function postReply(caller) {
 function postNewComment(caller) {
     var comment_box_id = 'comment-box';
 
-    var comments_section = document.getElementById("comments_pageid-" + pageid);
+    var comments_section = document.getElementById("comments-container");
     var content = encodeURI(document.getElementById(comment_box_id).value);
-    var params = "pageid=" + pageid + "&action=postNewComment&content=" + content + "&username=user0";
+    var params = "action=postNewComment&content=" + content + "&username=user0";
 
     var http_request = httpRequest();
 
@@ -141,13 +140,30 @@ function postNewComment(caller) {
 }
 
 function deleteComment(caller) {
-    if (confirm('Are you sure that you want to delete this comment?')) {
-        var comments_section = document.getElementById("comments_pageid-" + pageid);
+    var url = window.commentia.APIURL + "?action=getPhrase&phrase=DIALOGS_DELETE_COMMENT";
+
+    var http_request = httpRequest();
+
+    console.log("GET request to: " + url);
+
+    http_request.onreadystatechange = function() {
+
+        if (http_request.readyState == 4) {
+            dialog_msg = http_request.responseText;
+            http_request = null;
+        }
+    }
+
+    http_request.open("GET", url, false);
+    http_request.send();
+
+    if (confirm(dialog_msg)) {
+        var comments_section = document.getElementById("comments-container");
         var comment = findCommentRoot(caller);
         var ucid = comment.getAttribute('data-ucid');
         var reply_path = comment.getAttribute('data-reply-path');
 
-        var params = "pageid=" + pageid + "&action=delete&ucid=" + ucid + "&reply_path=" + reply_path;
+        var params = "action=delete&ucid=" + ucid + "&reply_path=" + reply_path;
 
         console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
@@ -185,7 +201,7 @@ function showEditArea(caller) {
         edit_box.setAttribute('id', edit_box_id);
         edit_box.setAttribute('oninput', "autoGrow(this);");
 
-        var url = window.commentia.APIURL + "?pageid=" + pageid + "&action=getCommentMarkdown&ucid=" + ucid + "&reply_path=" + reply_path;
+        var url = window.commentia.APIURL + "?action=getCommentMarkdown&ucid=" + ucid + "&reply_path=" + reply_path;
         var http_request = httpRequest();
 
         console.log("GET request to: " + url);
@@ -237,7 +253,7 @@ function editComment(caller) {
     var edit_box = document.getElementById('edit-box-' + ucid);
     var reply_path = comment.getAttribute('data-reply-path');
 
-    var params = "pageid=" + pageid + "&action=edit&content=" + encodeURI(edit_box.value) + "&ucid=" + ucid + "&reply_path=" + reply_path;
+    var params = "action=edit&content=" + encodeURI(edit_box.value) + "&ucid=" + ucid + "&reply_path=" + reply_path;
 
     var http_request = httpRequest();
 
