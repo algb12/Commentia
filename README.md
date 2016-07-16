@@ -1,47 +1,69 @@
 # Commentia – Documentation
 
-Commentia is a plug-in which adds a comment functionality to any webpage, and does not require any database. It is flat file, uses JSON files to store data, and only requires PHP, GD and the JSON module for PHP (both, GD and php-json usually come preinstalled by default).
+Commentia is a plug-in which adds a comment functionality to any webpage, and does not require any database. It is flat file, uses JSON files to store data, and only requires PHP, GD, the JSON module, and Composer for PHP (both, GD and php-json usually come preinstalled by default, Composer is easy to install).
 
 You may wonder, what is the point of a comment plugin, if CMSes with commenting functionality already exist? Some people prefer to have a static website without any CMS, and still want commenting functionality. This plugin caters for these kinds of people.
 
-The following is a short documentation for Commentia, serving as a quick getting started guide, and providing some technical background to its technical workings:
+The following is a short documentation for Commentia, serving as a quick getting started guide, and providing some background information on its technical workings:
+
+## Dependencies
+
+### Composer
+
+The only real dependency (besides php-gd and php-json, but they're probably installed already anyways) is the Composer dependency manager – it will manage all needed dependencies all by itself.
+
+The user issues one command (`composer install`), and composer will automatically download all dependencies and dump the PSR-4 autoloader.
+
+Please read more on how to [install composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx 'Installing composer') if you don't already know how to do so.
 
 ## Installation
 
-_NOTE:_ To be updated for the autoloader
-
 ### Unpacking onto website
 
-Simply unpack Commentia onto the root-directory, or into a separate folder (such as `/var/www/example.org/public_html/commentia`).
+Unpack commentia into a separate folder (such as `/var/www/example.org/public_html/commentia`) or into the web-root, although a separate directory is recommended for security purposes.
+
+### Running Composer's install
+
+In a command line, switch to the Commentia directory with the `composer.json` file. Then, run either `composer self-update` followed by `composer install`, or replace the command `composer` with `composer.phar`, depending on whether you are using the `.phar` version of Composer or not.
+
+This should install all the needed dependencies. A `/vendor` directory and `composer.lock` file will be created. Do not delete them, they are very important.
 
 ### Modification of website code
 
 #### Initialization
 
-Then, modify your template to have the following code at the top of the page:
+Once Composer has run, modify your template to have the following code at the top of the page:
 
 ```php
 <?php
+  // Composer's autoload
+  require 'commentia-dir/vendor/autoload.php';
+
+  use Commentia\Controllers\CommentiaController;
+
   // Include and initiate Commentia with unique page-id
-  require_once('/path/to/CommentiaController.php');
-  $pageid = $x;
+  $pageid = x;
   $commentia = new CommentiaController($pageid);
 ?>
 ```
 
-Where `$x` is the right side of the assignment for the `$pageid`, which can be any function/shortcode returning an ID for the page, such as:
+Where `x` is the right side of the assignment for the `$pageid`, which can be any function/shortcode returning an ID for the page, such as:
 
 - Wordpress's `get_the_ID()`
 - Drupal's `$node->nid`
 - MODX's `[[*id]]` template tag.
 
-The above just describes some of the popular CMS's ways of getting the page ID. For static blogs, `$x` can also be a manually entered page ID. Make sure to replace `$x` with the relevant way of getting the page ID.
+And `commentia-dir` is the path to the directory Commentia is in.
+
+The above just describes some of the popular CMS's ways of getting the page ID. For static blogs, `x` can also be a manually entered page ID. Make sure to replace `x` with the relevant way of getting the page ID.
 
 It is irrelevant whether `$pageid` is a number or an alphanumeric string, as Commentia is just checking under the given page ID for comments to display.
 
 The only thing that _does_ matter is that the page ID should be unique.
 
 #### Modification of relevant tags
+
+_NOTE: Page ID may soon not need to be defined in html-tag. Revise README.md when due time._
 
 Then, modify the HTML tag to read:
 
@@ -55,8 +77,8 @@ Almost done! Now, just include 2 files in the head of the website:
 
 ```html
 <head>
-  <script src="/path/to/commentia.js"></script>
-  <link href="/path/to/commentia-default-theme.css" rel="stylesheet">
+  <script src="/commentia-dir/assets/commentia.js"></script>
+  <link href="/commentia-dir/assets/commentia-default-theme.css" rel="stylesheet">
   ...
 </head>
 ```
