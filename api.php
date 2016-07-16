@@ -31,6 +31,10 @@ use Commentia\Roles\Roles;
 
 $roles = new Roles();
 
+if (!isset($_SESSION['member_is_logged_in'])) {
+  $_SESSION['member_is_logged_in'] = false;
+}
+
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
 
