@@ -52,7 +52,7 @@ class Comments
         $roles = new Roles();
 
         if (!$is_ajax_request) {
-            $html .= ('<div class="commentia-comments_container" id="comments_pageid-'.$this->pageid.'">'."\n");
+            $html .= ('<div class="commentia-comments_container" id="comments-container">'."\n");
         }
 
         function iterateCommentData($comment)
@@ -111,17 +111,11 @@ class Comments
             $ucid = 0;
         }
 
-        $comment_post_path = &$this->comments['comments'];
-
         if (isset($reply_path) && ($reply_path !== '')) {
-            $ucid_nodes = explode('-', $reply_path);
-            foreach ($ucid_nodes as $ucid_node) {
-                $comment_post_path = &$comment_post_path["ucid-$ucid_node"];
-                if (!isset($comment_post_path['replies'])) {
-                    $comment_post_path['replies'] = array();
-                }
-                $comment_post_path = &$comment_post_path['replies'];
-            }
+            $comment_post_path = &$this->gotoComment($reply_path);
+            $comment_post_path = &$comment_post_path['replies'];
+        } else {
+            $comment_post_path = &$this->comments['comments'];
         }
 
         $comment_post_path["ucid-$ucid"] = array();
@@ -140,7 +134,7 @@ class Comments
 
     public function editComment($ucid, $reply_path, $content)
     {
-        $comment_post_path = &$this->gotoComment($ucid, $reply_path);
+        $comment_post_path = &$this->gotoComment($reply_path);
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode($content));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
@@ -151,7 +145,7 @@ class Comments
 
     public function deleteComment($ucid, $reply_path)
     {
-        $comment_post_path = &$this->gotoComment($ucid, $reply_path);
+        $comment_post_path = &$this->gotoComment($reply_path);
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode('_[[deleted]]_'));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
@@ -163,7 +157,7 @@ class Comments
 
     public function getCommentMarkdown($ucid, $reply_path)
     {
-        $comment_post_path = &$this->gotoComment($ucid, $reply_path);
+        $comment_post_path = &$this->gotoComment($reply_path);
 
         $comment_md = $this->html_to_md->parseString($comment_post_path['content']);
 
@@ -172,17 +166,18 @@ class Comments
 
     public function getCommentData($ucid, $reply_path, $entry)
     {
-        $comment_post_path = &$this->gotoComment($ucid, $reply_path);
+        $comment_post_path = &$this->gotoComment($reply_path);
 
         return $comment_post_path[$entry];
     }
 
-    private function &gotoComment($ucid, $reply_path)
+    private function &gotoComment($reply_path)
     {
         $comment_post_path = &$this->comments['comments'];
 
         if (isset($reply_path) && ($reply_path !== '')) {
             $ucid_nodes = explode('-', $reply_path);
+            $ucid = array_slice($ucid_nodes, -1)[0];
             foreach ($ucid_nodes as $ucid_node) {
                 $comment_post_path = &$comment_post_path["ucid-$ucid_node"];
                 if ($ucid_node !== $ucid) {
