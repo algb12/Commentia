@@ -1,10 +1,10 @@
 <?php
 
-# French lexicon (France)/Lexique français (France)
-# Format: define('PHRASE_NAME', 'localized phrase');
-# Don't forget to escape the single quotes (') using a backslash, such as 'J\'ai' instead of 'J'ai'
-# Author: Alexander Gilburg
-# Last updated: 15th of July 2016
+// French lexicon (France)/Lexique français (France)
+// Format: define('PHRASE_NAME', 'localized phrase');
+// Don't forget to escape the single quotes (') using a backslash, such as 'J\'ai' instead of 'J'ai'
+// Author: Alexander Gilburg
+// Last updated: 15th of July 2016
 
 define('LANG_NAME', 'French (France)');
 define('LANG_NAME_LOCALIZED', 'Français (France)');
@@ -19,7 +19,7 @@ define('COMMENT_CONTROLS_EDIT', 'modifier');
 define('COMMENT_CONTROLS_DELETE', 'supprimer');
 define('COMMENT_CONTROLS_PUBLISH', 'publier');
 
-define('DIALOGS_DELETE', 'Êtes-vous sûr que vous voulez supprimer le commentaire?');
+define('DIALOGS_DELETE_COMMENT', 'Êtes-vous sûr que vous voulez supprimer le commentaire?');
 
 define('AUTH_FORM_BUTTONS_LOG_IN', 'Connexion');
 define('AUTH_FORM_BUTTONS_LOG_OUT', 'Déconnexion');
