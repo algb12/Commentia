@@ -28,8 +28,8 @@ class CommentiaController
     {
         session_start();
 
-        if (isset($pageid)) {
-            $this->comments = new Comments(JSON_FILE_COMMENTS, $pageid);
+        if (isset($_SESSION['pageid'])) {
+            $this->comments = new Comments(JSON_FILE_COMMENTS, $_SESSION['pageid']);
         }
         $this->members = new Members(JSON_FILE_MEMBERS);
 
@@ -89,5 +89,9 @@ class CommentiaController
     public function displayAuthForm()
     {
         return $this->members->displayAuthForm();
+    }
+
+    public function getPhrase($phrase) {
+        return Lexicon::getPhrase($phrase);
     }
 }
