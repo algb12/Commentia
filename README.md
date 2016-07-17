@@ -102,9 +102,11 @@ Internally, each comment has a UCID, a **U**nique **C**omment **ID**. These are 
 
 The reply path is used to determine under which parent a reply would go under. It is just all the UCIDs down the thread chain, e.g. if comment 2 is a reply of comment 1, and comment 1 is a reply of comment 0, the reply path of comment 2 would be 0-1-2. It is referred to by the variable `$reply_path`.
 
+In the future, though, this system may change completely, as there is currently an SQLite branch in progress.
+
 ## Translatability
 
-**Note: If anyone has made good translations, it would be appreciated if they were shared with me. Just send me the file to my professional email: algb12.19@gmail.com. Thank you!
+**Note: If anyone has made good translations, it would be appreciated if they were shared with me. Just send me the file to my professional email: algb12.19@gmail.com. Thank you!**
 
 Both, translating the commenting front-end with an existing language and creating a new language is very easy. This is a list for language files currently included in the project:
 
