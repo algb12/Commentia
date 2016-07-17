@@ -28,9 +28,12 @@ class CommentiaController
     {
         session_start();
 
-        // FIXME: pageid not passed at first use
-        if (isset($_SESSION['pageid'])) {
-            $this->comments = new Comments(JSON_FILE_COMMENTS, $_SESSION['pageid']);
+        $real_pageid = (isset($_SESSION['pageid']) ? $_SESSION['pageid'] : $pageid);
+
+        if (isset($real_pageid)) {
+            $this->comments = new Comments(JSON_FILE_COMMENTS, $real_pageid);
+        } else {
+            exit('Error: Page ID not set');
         }
 
         $this->members = new Members(JSON_FILE_MEMBERS);
