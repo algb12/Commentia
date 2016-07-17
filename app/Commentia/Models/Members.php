@@ -24,9 +24,8 @@ class Members
         }
         $this->members = json_decode(file_get_contents($this->members_json), true);
 
-        if (!isset($_SESSION['member_is_logged_in'])) {
-          $_SESSION['member_is_logged_in'] = false;
-          $_SESSION['login_error_msg'] = '';
+        if (!isset($_SESSION['member_username'])) {
+            $_SESSION['member_is_logged_in'] = false;
         }
     }
 
@@ -145,6 +144,7 @@ class Members
                 session_regenerate_id();
                 header('Location:'.$_SESSION['log_in_page']);
             } else {
+                $_SESSION['member_is_logged_in'] = false;
                 $_SESSION['login_error_msg'] = 'LOGIN_AUTH_FAIL';
                 session_regenerate_id();
                 header('Location:'.$_SESSION['log_in_page']);
