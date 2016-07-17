@@ -1,16 +1,13 @@
 <?php
 
-# Members model
-# This file contains the members-related methods
-# Author: Alexander Gilburg
-# Last updated: 15th of July 2016
+// Members model
+// This file contains the members-related methods
+// Author: Alexander Gilburg
+// Last updated: 15th of July 2016
 
 namespace Commentia\Models;
 
 use Commentia\Lexicon\Lexicon;
-
-# # Auth function compatibility library under PHP v5.5.0
-# require_once 'vendor/password_compat/password.php';
 
 class Members
 {
@@ -26,6 +23,11 @@ class Members
             file_put_contents($this->members_json, '');
         }
         $this->members = json_decode(file_get_contents($this->members_json), true);
+
+        if (!isset($_SESSION['member_is_logged_in'])) {
+          $_SESSION['member_is_logged_in'] = false;
+          $_SESSION['login_error_msg'] = '';
+        }
     }
 
     private function generateAvatarThumbnail($avatar_file, $avatar_width, $avatar_height)
@@ -73,8 +75,8 @@ class Members
         imagecopyresampled(
       $avatar,
       $image,
-      0 - ($new_width - $avatar_width) / 2, # Center image horizontally
-      0 - ($new_height - $avatar_height) / 2, # Center image vertically
+      0 - ($new_width - $avatar_width) / 2, // Center image horizontally
+      0 - ($new_height - $avatar_height) / 2, // Center image vertically
       0, 0,
       $new_width, $new_height,
       $width, $height
