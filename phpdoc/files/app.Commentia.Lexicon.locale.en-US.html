@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+        function loadExternalCodeSnippets() {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                var src = pre.getAttribute('data-src');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist or is empty';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        $(document).ready(function(){
+            loadExternalCodeSnippets();
+        });
+        $('#source-view').on('shown', function () {
+            loadExternalCodeSnippets();
+        })
+    </script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Commentia.html">\Commentia</a></li>
+                                                        <li><a href="../namespaces/Composer.html">\Composer</a></li>
+                                                        <li><a href="../namespaces/Markdownify.html">\Markdownify</a></li>
+                                                        <li><a href="../namespaces/PasswordCompat.html">\PasswordCompat</a></li>
+                                                        <li><a href="../namespaces/Test.html">\Test</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">317</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1079521343"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1079521343" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1817817473"></a>
+                                <a href="../namespaces/Commentia.html" style="margin-left: 30px; padding-left: 0">Commentia</a>
+            </div>
+            <div id="namespace-1817817473" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-803618489"></a>
+                                <a href="../namespaces/Commentia.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
+            </div>
+            <div id="namespace-803618489" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Commentia.Controllers.CommentiaController.html">CommentiaController</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1824262909"></a>
+                                <a href="../namespaces/Commentia.Lexicon.html" style="margin-left: 30px; padding-left: 0">Lexicon</a>
+            </div>
+            <div id="namespace-1824262909" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Commentia.Lexicon.Lexicon.html">Lexicon</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-7150727"></a>
+                                <a href="../namespaces/Commentia.Models.html" style="margin-left: 30px; padding-left: 0">Models</a>
+            </div>
+            <div id="namespace-7150727" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Commentia.Models.Comments.html">Comments</a></li>
+                                                    <li class="class"><a href="../classes/Commentia.Models.Members.html">Members</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1625943982"></a>
+                                <a href="../namespaces/Commentia.Roles.html" style="margin-left: 30px; padding-left: 0">Roles</a>
+            </div>
+            <div id="namespace-1625943982" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Commentia.Roles.Roles.html">Roles</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-841939725"></a>
+                                <a href="../namespaces/Composer.html" style="margin-left: 30px; padding-left: 0">Composer</a>
+            </div>
+            <div id="namespace-841939725" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-835226729"></a>
+                                <a href="../namespaces/Composer.Autoload.html" style="margin-left: 30px; padding-left: 0">Autoload</a>
+            </div>
+            <div id="namespace-835226729" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Composer.Autoload.ClassLoader.html">ClassLoader</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1211714835"></a>
+                                <a href="../namespaces/Markdownify.html" style="margin-left: 30px; padding-left: 0">Markdownify</a>
+            </div>
+            <div id="namespace-1211714835" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Markdownify.Converter.html">Converter</a></li>
+                                                    <li class="class"><a href="../classes/Markdownify.ConverterExtra.html">ConverterExtra</a></li>
+                                                    <li class="class"><a href="../classes/Markdownify.Parser.html">Parser</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-643496232"></a>
+                                <a href="../namespaces/PasswordCompat.html" style="margin-left: 30px; padding-left: 0">PasswordCompat</a>
+            </div>
+            <div id="namespace-643496232" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                <a href="../namespaces/PasswordCompat.binary.html" style="margin-left: 30px; padding-left: 0">binary</a>
+            </div>
+            <div id="namespace-516441407" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-52078030"></a>
+                                <a href="../namespaces/Test.html" style="margin-left: 30px; padding-left: 0">Test</a>
+            </div>
+            <div id="namespace-52078030" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1537986122"></a>
+                                <a href="../namespaces/Test.Markdownify.html" style="margin-left: 30px; padding-left: 0">Markdownify</a>
+            </div>
+            <div id="namespace-1537986122" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Test.Markdownify.ConverterExtraTest.html">ConverterExtraTest</a></li>
+                                                    <li class="class"><a href="../classes/Test.Markdownify.ConverterTest.html">ConverterTest</a></li>
+                                                    <li class="class"><a href="../classes/Test.Markdownify.ConverterTestCase.html">ConverterTestCase</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/CommonMarkTest.html">CommonMarkTest</a></li>
+                                                    <li class="class"><a href="../classes/ComposerAutoloaderInita072538e00e00a3c60c250d5d64c595f.html">ComposerAutoloaderInita072538e00e00a3c60c250d5d64c595f</a></li>
+                                                    <li class="class"><a href="../classes/Parsedown.html">Parsedown</a></li>
+                                                    <li class="class"><a href="../classes/ParsedownTest.html">ParsedownTest</a></li>
+                                                    <li class="class"><a href="../classes/TestParsedown.html">TestParsedown</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content file">
+                    <nav>
+                                                                    </nav>
+
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                    <h1><small>app/Commentia/Lexicon/locale</small>en-US.php</h1>
+                    <p><em></em></p>
+                    
+
+                    
+                    
+                                    </div>
+
+                <aside class="span4 detailsbar">
+                    <dl>
+                                                    <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\Default</div></dd>
+                        
+                        
+                    </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                            </table>
+
+                </aside>
+            </div>
+
+                        <div class="row-fluid">
+                <section class="span8 content file">
+                    <h2>Constants</h2>
+                </section>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_LANG_NAME" name="constant_LANG_NAME" class="anchor"></a>
+            <article id="constant_LANG_NAME" class="constant">
+                <h3 class="">LANG_NAME</h3>
+                <pre class="signature">LANG_NAME</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_LANG_NAME_LOCALIZED" name="constant_LANG_NAME_LOCALIZED" class="anchor"></a>
+            <article id="constant_LANG_NAME_LOCALIZED" class="constant">
+                <h3 class="">LANG_NAME_LOCALIZED</h3>
+                <pre class="signature">LANG_NAME_LOCALIZED</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TITLES_NEW_COMMENT" name="constant_TITLES_NEW_COMMENT" class="anchor"></a>
+            <article id="constant_TITLES_NEW_COMMENT" class="constant">
+                <h3 class="">TITLES_NEW_COMMENT</h3>
+                <pre class="signature">TITLES_NEW_COMMENT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TITLES_AUTH_FORM" name="constant_TITLES_AUTH_FORM" class="anchor"></a>
+            <article id="constant_TITLES_AUTH_FORM" class="constant">
+                <h3 class="">TITLES_AUTH_FORM</h3>
+                <pre class="signature">TITLES_AUTH_FORM</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_TITLES_SIGN_UP_FORM" name="constant_TITLES_SIGN_UP_FORM" class="anchor"></a>
+            <article id="constant_TITLES_SIGN_UP_FORM" class="constant">
+                <h3 class="">TITLES_SIGN_UP_FORM</h3>
+                <pre class="signature">TITLES_SIGN_UP_FORM</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_INFO_COMMENT_BY" name="constant_COMMENT_INFO_COMMENT_BY" class="anchor"></a>
+            <article id="constant_COMMENT_INFO_COMMENT_BY" class="constant">
+                <h3 class="">COMMENT_INFO_COMMENT_BY</h3>
+                <pre class="signature">COMMENT_INFO_COMMENT_BY</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_INFO_POSTED_AT" name="constant_COMMENT_INFO_POSTED_AT" class="anchor"></a>
+            <article id="constant_COMMENT_INFO_POSTED_AT" class="constant">
+                <h3 class="">COMMENT_INFO_POSTED_AT</h3>
+                <pre class="signature">COMMENT_INFO_POSTED_AT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_CONTROLS_REPLY" name="constant_COMMENT_CONTROLS_REPLY" class="anchor"></a>
+            <article id="constant_COMMENT_CONTROLS_REPLY" class="constant">
+                <h3 class="">COMMENT_CONTROLS_REPLY</h3>
+                <pre class="signature">COMMENT_CONTROLS_REPLY</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_CONTROLS_EDIT" name="constant_COMMENT_CONTROLS_EDIT" class="anchor"></a>
+            <article id="constant_COMMENT_CONTROLS_EDIT" class="constant">
+                <h3 class="">COMMENT_CONTROLS_EDIT</h3>
+                <pre class="signature">COMMENT_CONTROLS_EDIT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_CONTROLS_DELETE" name="constant_COMMENT_CONTROLS_DELETE" class="anchor"></a>
+            <article id="constant_COMMENT_CONTROLS_DELETE" class="constant">
+                <h3 class="">COMMENT_CONTROLS_DELETE</h3>
+                <pre class="signature">COMMENT_CONTROLS_DELETE</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_COMMENT_CONTROLS_PUBLISH" name="constant_COMMENT_CONTROLS_PUBLISH" class="anchor"></a>
+            <article id="constant_COMMENT_CONTROLS_PUBLISH" class="constant">
+                <h3 class="">COMMENT_CONTROLS_PUBLISH</h3>
+                <pre class="signature">COMMENT_CONTROLS_PUBLISH</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_DIALOGS_DELETE_COMMENT" name="constant_DIALOGS_DELETE_COMMENT" class="anchor"></a>
+            <article id="constant_DIALOGS_DELETE_COMMENT" class="constant">
+                <h3 class="">DIALOGS_DELETE_COMMENT</h3>
+                <pre class="signature">DIALOGS_DELETE_COMMENT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_AUTH_FORM_BUTTONS_LOG_IN" name="constant_AUTH_FORM_BUTTONS_LOG_IN" class="anchor"></a>
+            <article id="constant_AUTH_FORM_BUTTONS_LOG_IN" class="constant">
+                <h3 class="">AUTH_FORM_BUTTONS_LOG_IN</h3>
+                <pre class="signature">AUTH_FORM_BUTTONS_LOG_IN</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_AUTH_FORM_BUTTONS_LOG_OUT" name="constant_AUTH_FORM_BUTTONS_LOG_OUT" class="anchor"></a>
+            <article id="constant_AUTH_FORM_BUTTONS_LOG_OUT" class="constant">
+                <h3 class="">AUTH_FORM_BUTTONS_LOG_OUT</h3>
+                <pre class="signature">AUTH_FORM_BUTTONS_LOG_OUT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_AUTH_FORM_LABELS_USERNAME" name="constant_AUTH_FORM_LABELS_USERNAME" class="anchor"></a>
+            <article id="constant_AUTH_FORM_LABELS_USERNAME" class="constant">
+                <h3 class="">AUTH_FORM_LABELS_USERNAME</h3>
+                <pre class="signature">AUTH_FORM_LABELS_USERNAME</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_AUTH_FORM_LABELS_PASSWORD" name="constant_AUTH_FORM_LABELS_PASSWORD" class="anchor"></a>
+            <article id="constant_AUTH_FORM_LABELS_PASSWORD" class="constant">
+                <h3 class="">AUTH_FORM_LABELS_PASSWORD</h3>
+                <pre class="signature">AUTH_FORM_LABELS_PASSWORD</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_BUTTONS_SIGN_UP" name="constant_SIGN_UP_FORM_BUTTONS_SIGN_UP" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_BUTTONS_SIGN_UP" class="constant">
+                <h3 class="">SIGN_UP_FORM_BUTTONS_SIGN_UP</h3>
+                <pre class="signature">SIGN_UP_FORM_BUTTONS_SIGN_UP</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_LABELS_USERNAME" name="constant_SIGN_UP_FORM_LABELS_USERNAME" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_LABELS_USERNAME" class="constant">
+                <h3 class="">SIGN_UP_FORM_LABELS_USERNAME</h3>
+                <pre class="signature">SIGN_UP_FORM_LABELS_USERNAME</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_LABELS_PASSWORD" name="constant_SIGN_UP_FORM_LABELS_PASSWORD" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_LABELS_PASSWORD" class="constant">
+                <h3 class="">SIGN_UP_FORM_LABELS_PASSWORD</h3>
+                <pre class="signature">SIGN_UP_FORM_LABELS_PASSWORD</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_LABELS_RETYPE_PASSWORD" name="constant_SIGN_UP_FORM_LABELS_RETYPE_PASSWORD" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_LABELS_RETYPE_PASSWORD" class="constant">
+                <h3 class="">SIGN_UP_FORM_LABELS_RETYPE_PASSWORD</h3>
+                <pre class="signature">SIGN_UP_FORM_LABELS_RETYPE_PASSWORD</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_LABELS_EMAIL" name="constant_SIGN_UP_FORM_LABELS_EMAIL" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_LABELS_EMAIL" class="constant">
+                <h3 class="">SIGN_UP_FORM_LABELS_EMAIL</h3>
+                <pre class="signature">SIGN_UP_FORM_LABELS_EMAIL</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_SIGN_UP_FORM_LABELS_AVATAR" name="constant_SIGN_UP_FORM_LABELS_AVATAR" class="anchor"></a>
+            <article id="constant_SIGN_UP_FORM_LABELS_AVATAR" class="constant">
+                <h3 class="">SIGN_UP_FORM_LABELS_AVATAR</h3>
+                <pre class="signature">SIGN_UP_FORM_LABELS_AVATAR</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_LOG_IN_WRONG_CREDENTIALS" name="constant_ERROR_LOG_IN_WRONG_CREDENTIALS" class="anchor"></a>
+            <article id="constant_ERROR_LOG_IN_WRONG_CREDENTIALS" class="constant">
+                <h3 class="">ERROR_LOG_IN_WRONG_CREDENTIALS</h3>
+                <pre class="signature">ERROR_LOG_IN_WRONG_CREDENTIALS</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_NOTICE_LOG_IN_SUCCESS" name="constant_NOTICE_LOG_IN_SUCCESS" class="anchor"></a>
+            <article id="constant_NOTICE_LOG_IN_SUCCESS" class="constant">
+                <h3 class="">NOTICE_LOG_IN_SUCCESS</h3>
+                <pre class="signature">NOTICE_LOG_IN_SUCCESS</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_MISSING_USERNAME" name="constant_ERROR_SIGN_UP_MISSING_USERNAME" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_MISSING_USERNAME" class="constant">
+                <h3 class="">ERROR_SIGN_UP_MISSING_USERNAME</h3>
+                <pre class="signature">ERROR_SIGN_UP_MISSING_USERNAME</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_MISSING_PASSWORD" name="constant_ERROR_SIGN_UP_MISSING_PASSWORD" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_MISSING_PASSWORD" class="constant">
+                <h3 class="">ERROR_SIGN_UP_MISSING_PASSWORD</h3>
+                <pre class="signature">ERROR_SIGN_UP_MISSING_PASSWORD</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_PASSWORD_MISMATCH" name="constant_ERROR_SIGN_UP_PASSWORD_MISMATCH" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_PASSWORD_MISMATCH" class="constant">
+                <h3 class="">ERROR_SIGN_UP_PASSWORD_MISMATCH</h3>
+                <pre class="signature">ERROR_SIGN_UP_PASSWORD_MISMATCH</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_INVALID_EMAIL" name="constant_ERROR_SIGN_UP_INVALID_EMAIL" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_INVALID_EMAIL" class="constant">
+                <h3 class="">ERROR_SIGN_UP_INVALID_EMAIL</h3>
+                <pre class="signature">ERROR_SIGN_UP_INVALID_EMAIL</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_USERNAME_TAKEN" name="constant_ERROR_SIGN_UP_USERNAME_TAKEN" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_USERNAME_TAKEN" class="constant">
+                <h3 class="">ERROR_SIGN_UP_USERNAME_TAKEN</h3>
+                <pre class="signature">ERROR_SIGN_UP_USERNAME_TAKEN</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ERROR_SIGN_UP_AVATAR_UPLOAD" name="constant_ERROR_SIGN_UP_AVATAR_UPLOAD" class="anchor"></a>
+            <article id="constant_ERROR_SIGN_UP_AVATAR_UPLOAD" class="constant">
+                <h3 class="">ERROR_SIGN_UP_AVATAR_UPLOAD</h3>
+                <pre class="signature">ERROR_SIGN_UP_AVATAR_UPLOAD</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_NOTICE_SIGN_UP_SUCCESS" name="constant_NOTICE_SIGN_UP_SUCCESS" class="anchor"></a>
+            <article id="constant_NOTICE_SIGN_UP_SUCCESS" class="constant">
+                <h3 class="">NOTICE_SIGN_UP_SUCCESS</h3>
+                <pre class="signature">NOTICE_SIGN_UP_SUCCESS</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">app/Commentia/Lexicon/locale/en-US.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+            
+        </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label"></h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/app/Commentia/Lexicon/locale/en-US.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Commentia.html">\Commentia</a></li>
+                                                                            <li><a href="../namespaces/Composer.html">\Composer</a></li>
+                                                                            <li><a href="../namespaces/Markdownify.html">\Markdownify</a></li>
+                                                                            <li><a href="../namespaces/PasswordCompat.html">\PasswordCompat</a></li>
+                                                                            <li><a href="../namespaces/Test.html">\Test</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on 
+Warning: date_default_timezone_get(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone. in phar:///usr/local/Cellar/phpdocumentor/2.8.5/libexec/phpDocumentor.phar/vendor/twig/twig/lib/Twig/Extension/Core.php on line 89
+July 19th, 2016 at 21:34.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
