@@ -80,8 +80,8 @@ Almost done! Now, just include 2 files in the head of the website:
 ```html
 <head>
   <script>
-  window.commentia = window.commentia || {};
-  window.commentia.APIURL = '/commentia-dir/api.php';
+    window.commentia = window.commentia || {};
+    window.commentia.APIURL = '/commentia-dir/api.php';
   </script>
   <script src="/commentia-dir/assets/commentia.js"></script>
   <link href="/commentia-dir/assets/commentia-default-theme.css" rel="stylesheet">
