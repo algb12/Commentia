@@ -1,5 +1,7 @@
-window.commentia = {};
-window.commentia.APIURL = window.commentia.URL || "api.php";
+/* Allow namespace commentia to be defined elsewhere (mainly for passing config vars) */
+window.commentia = window.commentia || {};
+/* If no APIURL provided, default to root api.php */
+window.commentia.APIURL = window.commentia.APIURL || "/api.php";
 
 function httpRequest() {
     try {
