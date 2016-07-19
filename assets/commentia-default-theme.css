@@ -10,15 +10,15 @@
     padding: 6px;
     font-size: 1em;
     width: 100%;
-    background-color: #aaddff;
+    background-color: #adf;
     border-radius: 4px;
-    color: #000000;
+    color: #000;
 }
 .commentia-comments_container button:hover {
-    background-color: #99ccee;
+    background-color: #9ce;
 }
 .commentia-comments_container button:active {
-    background-color: #88bbdd;
+    background-color: #8bd;
 }
 .commentia-comments_container {
     background: #ededed;
@@ -32,37 +32,38 @@
     box-sizing: border-box;
 }
 .commentia-comment {
-    border-left: 8px solid #ccc;
-    border-radius: 12px;
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 2px 0 2px 8px;
+    border-radius: 12px 0 0 12px;
     margin: 4px 2px 2px 2px;
     padding: 4px 4px 0 4px;
 }
-.commentia-comment_by {
+.commentia-comment_info {
+    height: 3.1em;
+    padding: 0 5px 5px;
+}
+.commentia-comment_by, .commentia-comment_timestamp {
     font-size: 0.8em;
     float: left;
-    margin: 2px;
+    line-height: 1;
+    padding: 1.44em 1.44em 1.44em 0;
 }
-.commentia-comment_timestamp {
-    font-size: 0.8em;
+.commentia-member_avatar {
+    height: 100%;
     float: left;
-    margin: 2px 5px;
+    margin-right: 12px;
 }
-.commentia-comment_content {
+.commentia-comment_content, .commentia-edit_area {
     clear: both;
     margin: 0 0 15px;
     padding: 2px;
-    border-width: 2px 0 0;
+    border-width: 1px 0 1px;
     border-color: #ccc;
     border-style: solid;
 }
 .commentia-edit_area {
     display: none;
-    clear: both;
-    margin: 0 0 15px;
-    padding: 2px;
-    border-width: 2px 0 0;
-    border-color: #ccc;
-    border-style: solid;
 }
 .commentia-edit_area button, .commentia-reply_area button {
     width: auto !important;
@@ -89,7 +90,20 @@
     margin: 6px;
 }
 .commentia-comment_controls a {
+    padding: 3px;
+    font-size: 1em;
+    text-decoration: none;
+    width: 100%;
+    background-color: #adf;
+    border-radius: 4px;
+    color: #000000;
     margin: 0 4px 0 0;
+}
+.commentia-comment_controls a:hover {
+    background-color: #9ce;
+}
+.commentia-comment_controls a:active {
+    background-color: #8bd;
 }
 .commentia-new_comment_area {
     margin: 2px;

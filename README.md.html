@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8" />
+      <title>README</title>
+      <style>.markdown-preview:not([data-use-github-style]) { padding: 2em; font-size: 1.2em; color: rgb(171, 178, 191); overflow: auto; background-color: rgb(40, 44, 52); }
+.markdown-preview:not([data-use-github-style]) > :first-child { margin-top: 0px; }
+.markdown-preview:not([data-use-github-style]) h1, .markdown-preview:not([data-use-github-style]) h2, .markdown-preview:not([data-use-github-style]) h3, .markdown-preview:not([data-use-github-style]) h4, .markdown-preview:not([data-use-github-style]) h5, .markdown-preview:not([data-use-github-style]) h6 { line-height: 1.2; margin-top: 1.5em; margin-bottom: 0.5em; color: rgb(255, 255, 255); }
+.markdown-preview:not([data-use-github-style]) h1 { font-size: 2.4em; font-weight: 300; }
+.markdown-preview:not([data-use-github-style]) h2 { font-size: 1.8em; font-weight: 400; }
+.markdown-preview:not([data-use-github-style]) h3 { font-size: 1.5em; font-weight: 500; }
+.markdown-preview:not([data-use-github-style]) h4 { font-size: 1.2em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h5 { font-size: 1.1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) h6 { font-size: 1em; font-weight: 600; }
+.markdown-preview:not([data-use-github-style]) strong { color: rgb(255, 255, 255); }
+.markdown-preview:not([data-use-github-style]) del { color: rgb(124, 135, 156); }
+.markdown-preview:not([data-use-github-style]) a, .markdown-preview:not([data-use-github-style]) a code { color: rgb(82, 139, 255); }
+.markdown-preview:not([data-use-github-style]) img { max-width: 100%; }
+.markdown-preview:not([data-use-github-style]) > p { margin-top: 0px; margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) > ul, .markdown-preview:not([data-use-github-style]) > ol { margin-bottom: 1.5em; }
+.markdown-preview:not([data-use-github-style]) blockquote { margin: 1.5em 0px; font-size: inherit; color: rgb(124, 135, 156); border-color: rgb(75, 83, 98); border-width: 4px; }
+.markdown-preview:not([data-use-github-style]) hr { margin: 3em 0px; border-top-width: 2px; border-top-style: dashed; border-top-color: rgb(75, 83, 98); background: none; }
+.markdown-preview:not([data-use-github-style]) table { margin: 1.5em 0px; }
+.markdown-preview:not([data-use-github-style]) th { color: rgb(255, 255, 255); }
+.markdown-preview:not([data-use-github-style]) th, .markdown-preview:not([data-use-github-style]) td { padding: 0.66em 1em; border: 1px solid rgb(75, 83, 98); }
+.markdown-preview:not([data-use-github-style]) code { color: rgb(255, 255, 255); background-color: rgb(58, 63, 75); }
+.markdown-preview:not([data-use-github-style]) pre.editor-colors { margin: 1.5em 0px; padding: 1em; font-size: 0.92em; border-radius: 3px; background-color: rgb(49, 54, 63); }
+.markdown-preview:not([data-use-github-style]) kbd { color: rgb(255, 255, 255); border-width: 1px 1px 2px; border-style: solid; border-color: rgb(75, 83, 98) rgb(75, 83, 98) rgb(62, 68, 81); background-color: rgb(58, 63, 75); }
+.markdown-preview[data-use-github-style] { font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif; line-height: 1.6; word-wrap: break-word; padding: 30px; font-size: 16px; color: rgb(51, 51, 51); overflow: scroll; background-color: rgb(255, 255, 255); }
+.markdown-preview[data-use-github-style] > :first-child { margin-top: 0px !important; }
+.markdown-preview[data-use-github-style] > :last-child { margin-bottom: 0px !important; }
+.markdown-preview[data-use-github-style] a:not([href]) { color: inherit; text-decoration: none; }
+.markdown-preview[data-use-github-style] .absent { color: rgb(204, 0, 0); }
+.markdown-preview[data-use-github-style] .anchor { position: absolute; top: 0px; left: 0px; display: block; padding-right: 6px; padding-left: 30px; margin-left: -30px; }
+.markdown-preview[data-use-github-style] .anchor:focus { outline: none; }
+.markdown-preview[data-use-github-style] h1, .markdown-preview[data-use-github-style] h2, .markdown-preview[data-use-github-style] h3, .markdown-preview[data-use-github-style] h4, .markdown-preview[data-use-github-style] h5, .markdown-preview[data-use-github-style] h6 { position: relative; margin-top: 1em; margin-bottom: 16px; font-weight: bold; line-height: 1.4; }
+.markdown-preview[data-use-github-style] h1 .octicon-link, .markdown-preview[data-use-github-style] h2 .octicon-link, .markdown-preview[data-use-github-style] h3 .octicon-link, .markdown-preview[data-use-github-style] h4 .octicon-link, .markdown-preview[data-use-github-style] h5 .octicon-link, .markdown-preview[data-use-github-style] h6 .octicon-link { display: none; color: rgb(0, 0, 0); vertical-align: middle; }
+.markdown-preview[data-use-github-style] h1:hover .anchor, .markdown-preview[data-use-github-style] h2:hover .anchor, .markdown-preview[data-use-github-style] h3:hover .anchor, .markdown-preview[data-use-github-style] h4:hover .anchor, .markdown-preview[data-use-github-style] h5:hover .anchor, .markdown-preview[data-use-github-style] h6:hover .anchor { padding-left: 8px; margin-left: -30px; text-decoration: none; }
+.markdown-preview[data-use-github-style] h1:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h2:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h3:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h4:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h5:hover .anchor .octicon-link, .markdown-preview[data-use-github-style] h6:hover .anchor .octicon-link { display: inline-block; }
+.markdown-preview[data-use-github-style] h1 tt, .markdown-preview[data-use-github-style] h2 tt, .markdown-preview[data-use-github-style] h3 tt, .markdown-preview[data-use-github-style] h4 tt, .markdown-preview[data-use-github-style] h5 tt, .markdown-preview[data-use-github-style] h6 tt, .markdown-preview[data-use-github-style] h1 code, .markdown-preview[data-use-github-style] h2 code, .markdown-preview[data-use-github-style] h3 code, .markdown-preview[data-use-github-style] h4 code, .markdown-preview[data-use-github-style] h5 code, .markdown-preview[data-use-github-style] h6 code { font-size: inherit; }
+.markdown-preview[data-use-github-style] h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h1 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(238, 238, 238); }
+.markdown-preview[data-use-github-style] h2 .anchor { line-height: 1; }
+.markdown-preview[data-use-github-style] h3 { font-size: 1.5em; line-height: 1.43; }
+.markdown-preview[data-use-github-style] h3 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h4 { font-size: 1.25em; }
+.markdown-preview[data-use-github-style] h4 .anchor { line-height: 1.2; }
+.markdown-preview[data-use-github-style] h5 { font-size: 1em; }
+.markdown-preview[data-use-github-style] h5 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] h6 { font-size: 1em; color: rgb(119, 119, 119); }
+.markdown-preview[data-use-github-style] h6 .anchor { line-height: 1.1; }
+.markdown-preview[data-use-github-style] p, .markdown-preview[data-use-github-style] blockquote, .markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol, .markdown-preview[data-use-github-style] dl, .markdown-preview[data-use-github-style] table, .markdown-preview[data-use-github-style] pre { margin-top: 0px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] hr { height: 4px; padding: 0px; margin: 16px 0px; border: 0px none; background-color: rgb(231, 231, 231); }
+.markdown-preview[data-use-github-style] ul, .markdown-preview[data-use-github-style] ol { padding-left: 2em; }
+.markdown-preview[data-use-github-style] ul.no-list, .markdown-preview[data-use-github-style] ol.no-list { padding: 0px; list-style-type: none; }
+.markdown-preview[data-use-github-style] ul ul, .markdown-preview[data-use-github-style] ul ol, .markdown-preview[data-use-github-style] ol ol, .markdown-preview[data-use-github-style] ol ul { margin-top: 0px; margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] li > p { margin-top: 16px; }
+.markdown-preview[data-use-github-style] dl { padding: 0px; }
+.markdown-preview[data-use-github-style] dl dt { padding: 0px; margin-top: 16px; font-size: 1em; font-style: italic; font-weight: bold; }
+.markdown-preview[data-use-github-style] dl dd { padding: 0px 16px; margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] blockquote { padding: 0px 15px; color: rgb(119, 119, 119); border-left-width: 4px; border-left-style: solid; border-left-color: rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] blockquote > :first-child { margin-top: 0px; }
+.markdown-preview[data-use-github-style] blockquote > :last-child { margin-bottom: 0px; }
+.markdown-preview[data-use-github-style] table { display: block; width: 100%; overflow: auto; word-break: keep-all; }
+.markdown-preview[data-use-github-style] table th { font-weight: bold; }
+.markdown-preview[data-use-github-style] table th, .markdown-preview[data-use-github-style] table td { padding: 6px 13px; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] table tr { border-top-width: 1px; border-top-style: solid; border-top-color: rgb(204, 204, 204); background-color: rgb(255, 255, 255); }
+.markdown-preview[data-use-github-style] table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+.markdown-preview[data-use-github-style] img { max-width: 100%; box-sizing: border-box; }
+.markdown-preview[data-use-github-style] .emoji { max-width: none; }
+.markdown-preview[data-use-github-style] span.frame { display: block; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.frame > span { display: block; float: left; width: auto; padding: 7px; margin: 13px 0px 0px; overflow: hidden; border: 1px solid rgb(221, 221, 221); }
+.markdown-preview[data-use-github-style] span.frame span img { display: block; float: left; }
+.markdown-preview[data-use-github-style] span.frame span span { display: block; padding: 5px 0px 0px; clear: both; color: rgb(51, 51, 51); }
+.markdown-preview[data-use-github-style] span.align-center { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-center > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-center span img { margin: 0px auto; text-align: center; }
+.markdown-preview[data-use-github-style] span.align-right { display: block; overflow: hidden; clear: both; }
+.markdown-preview[data-use-github-style] span.align-right > span { display: block; margin: 13px 0px 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] span.align-right span img { margin: 0px; text-align: right; }
+.markdown-preview[data-use-github-style] span.float-left { display: block; float: left; margin-right: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-left span { margin: 13px 0px 0px; }
+.markdown-preview[data-use-github-style] span.float-right { display: block; float: right; margin-left: 13px; overflow: hidden; }
+.markdown-preview[data-use-github-style] span.float-right > span { display: block; margin: 13px auto 0px; overflow: hidden; text-align: right; }
+.markdown-preview[data-use-github-style] code, .markdown-preview[data-use-github-style] tt { padding: 0.2em 0px; margin: 0px; font-size: 85%; border-radius: 3px; background-color: rgba(0, 0, 0, 0.0392157); }
+.markdown-preview[data-use-github-style] code::before, .markdown-preview[data-use-github-style] tt::before, .markdown-preview[data-use-github-style] code::after, .markdown-preview[data-use-github-style] tt::after { letter-spacing: -0.2em; content: " "; }
+.markdown-preview[data-use-github-style] code br, .markdown-preview[data-use-github-style] tt br { display: none; }
+.markdown-preview[data-use-github-style] del code { text-decoration: inherit; }
+.markdown-preview[data-use-github-style] pre > code { padding: 0px; margin: 0px; font-size: 100%; word-break: normal; white-space: pre; border: 0px; background: transparent; }
+.markdown-preview[data-use-github-style] .highlight { margin-bottom: 16px; }
+.markdown-preview[data-use-github-style] .highlight pre, .markdown-preview[data-use-github-style] pre { padding: 16px; overflow: auto; font-size: 85%; line-height: 1.45; border-radius: 3px; background-color: rgb(247, 247, 247); }
+.markdown-preview[data-use-github-style] .highlight pre { margin-bottom: 0px; word-break: normal; }
+.markdown-preview[data-use-github-style] pre { word-wrap: normal; }
+.markdown-preview[data-use-github-style] pre code, .markdown-preview[data-use-github-style] pre tt { display: inline; max-width: initial; padding: 0px; margin: 0px; overflow: initial; line-height: inherit; word-wrap: normal; border: 0px; background-color: transparent; }
+.markdown-preview[data-use-github-style] pre code::before, .markdown-preview[data-use-github-style] pre tt::before, .markdown-preview[data-use-github-style] pre code::after, .markdown-preview[data-use-github-style] pre tt::after { content: normal; }
+.markdown-preview[data-use-github-style] kbd { display: inline-block; padding: 3px 5px; font-size: 11px; line-height: 10px; color: rgb(85, 85, 85); vertical-align: middle; border-style: solid; border-width: 1px; border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(187, 187, 187); border-radius: 3px; box-shadow: rgb(187, 187, 187) 0px -1px 0px inset; background-color: rgb(252, 252, 252); }
+.markdown-preview[data-use-github-style] a { color: rgb(51, 122, 183); }
+.markdown-preview[data-use-github-style] code { color: inherit; }
+.markdown-preview[data-use-github-style] pre.editor-colors { padding: 0.8em 1em; margin-bottom: 1em; font-size: 0.85em; border-radius: 4px; overflow: auto; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors::shadow .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors::shadow .horizontal-scrollbar { visibility: hidden; }
+.scrollbars-visible-always .markdown-preview pre.editor-colors:hover::shadow .vertical-scrollbar, .scrollbars-visible-always .markdown-preview pre.editor-colors:hover::shadow .horizontal-scrollbar { visibility: visible; }
+.markdown-preview { color: rgba(171, 178, 191, 0.8); background-color: rgb(44, 49, 58); }
+.markdown-preview code { color: rgba(171, 178, 191, 0.8); background-color: rgb(49, 54, 63); }
+.markdown-preview h1, .markdown-preview h2, .markdown-preview h3 { border-color: rgba(171, 178, 191, 0.0980392); }
+.markdown-preview table tr { border-color: rgb(62, 68, 81); background: none; }
+.markdown-preview table tr:nth-child(2n) { background-color: rgb(49, 54, 63); }
+.markdown-preview table th, .markdown-preview table td { border-color: rgb(62, 68, 81); }
+.markdown-preview table th { background-color: rgb(58, 63, 75); }
+.bracket-matcher .region {
+  border-bottom: 1px dotted lime;
+  position: absolute;
+}
+
+.spell-check-misspelling .region {
+  border-bottom: 2px dotted rgba(255, 51, 51, 0.75);
+}
+
+pre.editor-colors,
+.host {
+  background-color: #282c34;
+  color: #abb2bf;
+}
+pre.editor-colors .line.cursor-line,
+.host .line.cursor-line {
+  background-color: rgba(153, 187, 255, 0.04);
+}
+pre.editor-colors .invisible,
+.host .invisible {
+  color: #abb2bf;
+}
+pre.editor-colors .cursor,
+.host .cursor {
+  border-left: 2px solid #528bff;
+}
+pre.editor-colors .selection .region,
+.host .selection .region {
+  background-color: #3e4451;
+}
+pre.editor-colors .bracket-matcher .region,
+.host .bracket-matcher .region {
+  border-bottom: 1px solid #528bff;
+  box-sizing: border-box;
+}
+pre.editor-colors .invisible-character,
+.host .invisible-character {
+  color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .indent-guide,
+.host .indent-guide {
+  color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .wrap-guide,
+.host .wrap-guide {
+  background-color: rgba(171, 178, 191, 0.15);
+}
+pre.editor-colors .gutter .line-number,
+.host .gutter .line-number {
+  color: #636d83;
+  -webkit-font-smoothing: antialiased;
+}
+pre.editor-colors .gutter .line-number.cursor-line,
+.host .gutter .line-number.cursor-line {
+  color: #abb2bf;
+  background-color: #2c313a;
+}
+pre.editor-colors .gutter .line-number.cursor-line-no-selection,
+.host .gutter .line-number.cursor-line-no-selection {
+  background-color: transparent;
+}
+pre.editor-colors .gutter .line-number .icon-right,
+.host .gutter .line-number .icon-right {
+  color: #abb2bf;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before,
+.host .gutter:not(.git-diff-icon) .line-number.git-line-removed.git-line-removed::before {
+  bottom: -3px;
+}
+pre.editor-colors .gutter:not(.git-diff-icon) .line-number.git-line-removed::after,
+.host .gutter:not(.git-diff-icon) .line-number.git-line-removed::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 25px;
+  border-bottom: 1px dotted rgba(224, 82, 82, 0.5);
+  pointer-events: none;
+}
+pre.editor-colors .gutter .line-number.folded,
+.host .gutter .line-number.folded,
+pre.editor-colors .gutter .line-number:after,
+.host .gutter .line-number:after,
+pre.editor-colors .fold-marker:after,
+.host .fold-marker:after {
+  color: #abb2bf;
+}
+.comment {
+  color: #5c6370;
+  font-style: italic;
+}
+.comment .markup.link {
+  color: #5c6370;
+}
+.entity.name.type {
+  color: #e5c07b;
+}
+.entity.other.inherited-class {
+  color: #98c379;
+}
+.keyword {
+  color: #c678dd;
+}
+.keyword.control {
+  color: #c678dd;
+}
+.keyword.operator {
+  color: #abb2bf;
+}
+.keyword.other.special-method {
+  color: #61afef;
+}
+.keyword.other.unit {
+  color: #d19a66;
+}
+.storage {
+  color: #c678dd;
+}
+.storage.type.annotation,
+.storage.type.primitive {
+  color: #c678dd;
+}
+.storage.modifier.package,
+.storage.modifier.import {
+  color: #abb2bf;
+}
+.constant {
+  color: #d19a66;
+}
+.constant.variable {
+  color: #d19a66;
+}
+.constant.character.escape {
+  color: #56b6c2;
+}
+.constant.numeric {
+  color: #d19a66;
+}
+.constant.other.color {
+  color: #56b6c2;
+}
+.constant.other.symbol {
+  color: #56b6c2;
+}
+.variable {
+  color: #e06c75;
+}
+.variable.interpolation {
+  color: #be5046;
+}
+.variable.parameter {
+  color: #abb2bf;
+}
+.string {
+  color: #98c379;
+}
+.string.regexp {
+  color: #56b6c2;
+}
+.string.regexp .source.ruby.embedded {
+  color: #e5c07b;
+}
+.string.other.link {
+  color: #e06c75;
+}
+.punctuation.definition.comment {
+  color: #5c6370;
+}
+.punctuation.definition.method-parameters,
+.punctuation.definition.function-parameters,
+.punctuation.definition.parameters,
+.punctuation.definition.separator,
+.punctuation.definition.seperator,
+.punctuation.definition.array {
+  color: #abb2bf;
+}
+.punctuation.definition.heading,
+.punctuation.definition.identity {
+  color: #61afef;
+}
+.punctuation.definition.bold {
+  color: #e5c07b;
+  font-weight: bold;
+}
+.punctuation.definition.italic {
+  color: #c678dd;
+  font-style: italic;
+}
+.punctuation.section.embedded {
+  color: #be5046;
+}
+.punctuation.section.method,
+.punctuation.section.class,
+.punctuation.section.inner-class {
+  color: #abb2bf;
+}
+.support.class {
+  color: #e5c07b;
+}
+.support.type {
+  color: #56b6c2;
+}
+.support.function {
+  color: #56b6c2;
+}
+.support.function.any-method {
+  color: #61afef;
+}
+.entity.name.function {
+  color: #61afef;
+}
+.entity.name.class,
+.entity.name.type.class {
+  color: #e5c07b;
+}
+.entity.name.section {
+  color: #61afef;
+}
+.entity.name.tag {
+  color: #e06c75;
+}
+.entity.other.attribute-name {
+  color: #d19a66;
+}
+.entity.other.attribute-name.id {
+  color: #61afef;
+}
+.meta.class {
+  color: #e5c07b;
+}
+.meta.class.body {
+  color: #abb2bf;
+}
+.meta.method-call,
+.meta.method {
+  color: #abb2bf;
+}
+.meta.definition.variable {
+  color: #e06c75;
+}
+.meta.link {
+  color: #d19a66;
+}
+.meta.require {
+  color: #61afef;
+}
+.meta.selector {
+  color: #c678dd;
+}
+.meta.separator {
+  background-color: #373b41;
+  color: #abb2bf;
+}
+.meta.tag {
+  color: #abb2bf;
+}
+.underline {
+  text-decoration: underline;
+}
+.none {
+  color: #abb2bf;
+}
+.invalid.deprecated {
+  color: #523d14 !important;
+  background-color: #e0c285 !important;
+}
+.invalid.illegal {
+  color: #ffffff !important;
+  background-color: #e05252 !important;
+}
+.markup.bold {
+  color: #d19a66;
+  font-weight: bold;
+}
+.markup.changed {
+  color: #c678dd;
+}
+.markup.deleted {
+  color: #e06c75;
+}
+.markup.italic {
+  color: #c678dd;
+  font-style: italic;
+}
+.markup.heading {
+  color: #e06c75;
+}
+.markup.heading .punctuation.definition.heading {
+  color: #61afef;
+}
+.markup.link {
+  color: #c678dd;
+}
+.markup.inserted {
+  color: #98c379;
+}
+.markup.quote {
+  color: #d19a66;
+}
+.markup.raw {
+  color: #98c379;
+}
+.source.cs .keyword.operator {
+  color: #c678dd;
+}
+.source.css .property-name,
+.source.css .property-value {
+  color: #828997;
+}
+.source.css .property-name.support,
+.source.css .property-value.support {
+  color: #abb2bf;
+}
+.source.gfm .markup {
+  -webkit-font-smoothing: auto;
+}
+.source.gfm .link .entity {
+  color: #61afef;
+}
+.source.ini .keyword.other.definition.ini {
+  color: #e06c75;
+}
+.source.java .storage.modifier.import {
+  color: #e5c07b;
+}
+.source.java .storage.type {
+  color: #e5c07b;
+}
+.source.java-properties .meta.key-pair {
+  color: #e06c75;
+}
+.source.java-properties .meta.key-pair > .punctuation {
+  color: #abb2bf;
+}
+.source.js .keyword.operator {
+  color: #56b6c2;
+}
+.source.js .keyword.operator.delete,
+.source.js .keyword.operator.in,
+.source.js .keyword.operator.of,
+.source.js .keyword.operator.instanceof,
+.source.js .keyword.operator.new,
+.source.js .keyword.operator.typeof,
+.source.js .keyword.operator.void {
+  color: #c678dd;
+}
+.source.json .meta.structure.dictionary.json > .string.quoted.json {
+  color: #e06c75;
+}
+.source.json .meta.structure.dictionary.json > .string.quoted.json > .punctuation.string {
+  color: #e06c75;
+}
+.source.json .meta.structure.dictionary.json > .value.json > .string.quoted.json,
+.source.json .meta.structure.array.json > .value.json > .string.quoted.json,
+.source.json .meta.structure.dictionary.json > .value.json > .string.quoted.json > .punctuation,
+.source.json .meta.structure.array.json > .value.json > .string.quoted.json > .punctuation {
+  color: #98c379;
+}
+.source.json .meta.structure.dictionary.json > .constant.language.json,
+.source.json .meta.structure.array.json > .constant.language.json {
+  color: #56b6c2;
+}
+.source.ruby .constant.other.symbol > .punctuation {
+  color: inherit;
+}
+.source.python .keyword.operator.logical.python {
+  color: #c678dd;
+}
+.source.python .variable.parameter {
+  color: #d19a66;
+}
+</style>
+  </head>
+  <body class='markdown-preview' data-use-github-style><h1 id="commentia-documentation">Commentia – Documentation</h1>
+<p>Commentia is a plug-in which adds a comment functionality to any webpage, and does not require any database. It is flat file, uses JSON files to store data, and only requires PHP, GD, the JSON module, and Composer for PHP (both, GD and php-json usually come preinstalled by default, Composer is easy to install).</p>
+<p>One may wonder, what is the point of a comment plugin, if CMSes with commenting functionality already exist? Some people prefer to have a static website without any CMS, and still want commenting functionality. This plugin caters for these kinds of people.</p>
+<p>The following is a short documentation for Commentia, serving as a quick getting started guide, and providing some background information on its technical workings:</p>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="composer">Composer</h3>
+<p>The only real dependency (besides php-gd and php-json, but they&#39;re probably installed already anyways) is the Composer dependency manager – it will manage all needed dependencies all by itself.</p>
+<p>The user issues one command (<code>composer install</code>), and composer will automatically download all dependencies and dump the PSR-4 autoloader.</p>
+<p>If need be, please read more on how to <a href="https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx" title="Installing composer">install composer</a>.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="unpacking-onto-website">Unpacking onto website</h3>
+<p>Unpack commentia into a separate folder (such as <code>/var/www/example.org/public_html/commentia</code>) or into the web-root, although a separate directory is recommended for security purposes.</p>
+<h3 id="running-composer-s-install">Running Composer&#39;s install</h3>
+<p>In a command line, switch to the Commentia directory with the <code>composer.json</code> file. Then, run either <code>composer self-update</code> followed by <code>composer install</code>, or replace the command <code>composer</code> with <code>composer.phar</code>, depending on whether the <code>.phar</code> version of Composer is used or not.</p>
+<p>This should install all the needed dependencies. A <code>/vendor</code> directory and <code>composer.lock</code> file will be created. Do not delete them, they are very important.</p>
+<h3 id="modification-of-website-code">Modification of website code</h3>
+<h4 id="initialization">Initialization</h4>
+<p>Once Composer has run, modify the website template or website to have the following code at the top of the page:</p>
+<pre class="editor-colors lang-php"><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="punctuation section embedded begin php"><span>&lt;?php</span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span class="punctuation whitespace comment leading php"><span>&nbsp;&nbsp;</span></span><span class="comment line double-slash php"><span class="punctuation definition comment php"><span>//</span></span><span>&nbsp;Composer&#39;s&nbsp;autoload</span><span>&nbsp;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span>&nbsp;&nbsp;</span><span class="meta include php"><span class="keyword control import include php"><span>require</span></span><span>&nbsp;</span><span class="string quoted single php"><span class="punctuation definition string begin php"><span>&#39;</span></span><span class="meta string-contents quoted single php"><span>commentia-dir/vendor/autoload.php</span></span><span class="punctuation definition string end php"><span>&#39;</span></span></span></span><span class="punctuation terminator expression php"><span>;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span>&nbsp;</span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span class="meta use php"><span>&nbsp;&nbsp;</span><span class="keyword other use php"><span>use</span></span><span>&nbsp;</span><span class="support other namespace use php"><span>Commentia</span><span class="punctuation separator inheritance php"><span>\</span></span><span>Controllers</span><span class="punctuation separator inheritance php"><span>\</span></span><span>CommentiaController</span></span></span><span class="punctuation terminator expression php"><span>;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span>&nbsp;</span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span class="punctuation whitespace comment leading php"><span>&nbsp;&nbsp;</span></span><span class="comment line double-slash php"><span class="punctuation definition comment php"><span>//</span></span><span>&nbsp;Include&nbsp;and&nbsp;initiate&nbsp;Commentia&nbsp;with&nbsp;unique&nbsp;page-id</span><span>&nbsp;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span>&nbsp;&nbsp;</span><span class="variable other php"><span class="punctuation definition variable php"><span>$</span></span><span>pageid</span></span><span>&nbsp;</span><span class="keyword operator assignment php"><span>=</span></span><span>&nbsp;</span><span class="constant other php"><span>x</span></span><span class="punctuation terminator expression php"><span>;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="source php"><span>&nbsp;&nbsp;</span><span class="variable other php"><span class="punctuation definition variable php"><span>$</span></span><span>commentia</span></span><span>&nbsp;</span><span class="keyword operator assignment php"><span>=</span></span><span>&nbsp;</span><span class="keyword other new php"><span>new</span></span><span>&nbsp;</span><span class="support class php"><span>CommentiaController</span></span><span>(</span><span class="variable other php"><span class="punctuation definition variable php"><span>$</span></span><span>pageid</span></span><span>)</span><span class="punctuation terminator expression php"><span>;</span></span></span></span></span></div><div class="line"><span class="text html php"><span class="meta embedded block php"><span class="punctuation section embedded end php"><span class="source php"><span>?</span></span><span>&gt;</span></span></span><span class="punctuation whitespace embedded trailing php"><span>&nbsp;</span></span></span></div></pre>
+<p>Where <code>x</code> is the right side of the assignment for the <code>$pageid</code>, which can be any function/shortcode returning an ID for the page, such as:</p>
+<ul>
+<li>Wordpress&#39;s <code>get_the_ID()</code></li>
+<li>Drupal&#39;s <code>$node-&gt;nid</code></li>
+<li>MODX&#39;s <code>[[*id]]</code> template tag.</li>
+</ul>
+<p>And <code>commentia-dir</code> is the path to the directory Commentia is in.</p>
+<p>Throughout other parts of this README, the term <code>commentia-dir</code> will be referred to exactly as that.</p>
+<p>The above just describes some of the popular CMS&#39;s ways of getting the page ID. For static blogs, <code>x</code> can also be a manually entered page ID. Make sure to replace <code>x</code> with the relevant way of getting the page ID.</p>
+<p>It is irrelevant whether <code>$pageid</code> is a number or an alphanumeric string, as Commentia is just checking under the given page ID for comments to display.</p>
+<p>The only thing that <em>does</em> matter is that the page ID should be unique.</p>
+<h4 id="modification-of-relevant-tags">Modification of relevant tags</h4>
+<p><em>NOTE: Page ID may soon not need to be defined in html-tag. Revise README.md when due time.</em></p>
+<p>Then, modify the HTML tag to read:</p>
+<pre class="editor-colors lang-html"><div class="line"><span class="text html basic"><span class="meta tag structure any html"><span class="punctuation definition tag html"><span>&lt;</span></span><span class="entity name tag structure any html"><span>html</span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>data-pageid</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>&lt;?=$pageid;?&gt;</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag html"><span>&gt;</span></span></span></span></div></pre>
+<p>The <code>&lt;?=$pageid;?&gt;</code> is the PHP echo shortcut. The data-pageid attribute is used by commentia.js for the AJAX requests to the API.</p>
+<p>Almost done! Now, just include 2 files in the head of the website:</p>
+<pre class="editor-colors lang-html"><div class="line"><span class="text html basic"><span class="meta tag structure any html"><span class="punctuation definition tag html"><span>&lt;</span></span><span class="entity name tag structure any html"><span>head</span></span><span class="punctuation definition tag html"><span>&gt;</span></span></span></span></div><div class="line"><span class="text html basic"><span>&nbsp;&nbsp;</span><span class="punctuation definition tag html"><span>&lt;</span></span><span class="entity name tag script html"><span>script</span></span><span class="source js embedded html"><span>&nbsp;</span><span class="entity other attribute-name html"><span>src</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>/commentia-dir/assets/commentia.js</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag html"><span>&gt;</span><span>&lt;/</span></span><span class="entity name tag script html"><span>script</span></span></span><span class="punctuation definition tag html"><span>&gt;</span></span><span>&nbsp;</span></span></div><div class="line"><span class="text html basic"><span>&nbsp;&nbsp;</span><span class="meta tag inline any html"><span class="punctuation definition tag begin html"><span>&lt;</span></span><span class="entity name tag inline any html"><span>link</span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>href</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>/commentia-dir/assets/commentia-default-theme.css</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span>&nbsp;</span><span class="entity other attribute-name html"><span>rel</span></span><span>=</span><span class="string quoted double html"><span class="punctuation definition string begin html"><span>&quot;</span></span><span>stylesheet</span><span class="punctuation definition string end html"><span>&quot;</span></span></span><span class="punctuation definition tag end html"><span>&gt;</span></span></span></span></div><div class="line"><span class="text html basic"><span>&nbsp;&nbsp;...</span></span></div><div class="line"><span class="text html basic"><span class="meta tag structure any html"><span class="punctuation definition tag html"><span>&lt;/</span></span><span class="entity name tag structure any html"><span>head</span></span><span class="punctuation definition tag html"><span>&gt;</span></span></span></span></div></pre>
+<p>Now, there should be a working instance of Commentia on any page, if the previous changes were done in a common template.</p>
+<h4 id="displaying-the-comments-section-and-login-form">Displaying the comments section and login form</h4>
+<p>To display the comments section and login form, use the following code:</p>
+<pre class="editor-colors lang-html"><div class="line"><span class="text html basic"><span>&lt;?=$commentia-&gt;displayComments();?&gt;</span></span></div><div class="line"><span class="text html basic"><span>&lt;?=$commentia-&gt;displayAuthForm();?&gt;</span></span></div></pre>
+<h2 id="technical-details">Technical details</h2>
+<p>Internally, each comment has a UCID, a <strong>U</strong>nique <strong>C</strong>omment <strong>ID</strong>. These are referred to as <code>$ucid</code> in the code. Each new comment would increase the <code>$last_ucid</code> by 1, and the UCID of a new comment would merely be the <code>$last_ucid + 1</code>.</p>
+<p>The reply path is used to determine under which parent a reply would go under. It is just all the UCIDs down the thread chain, e.g. if comment 2 is a reply of comment 1, and comment 1 is a reply of comment 0, the reply path of comment 2 would be 0-1-2. It is referred to by the variable <code>$reply_path</code>.</p>
+<p>In the future, though, this system may change completely, as there is currently an SQLite branch in progress.</p>
+<h2 id="translatability">Translatability</h2>
+<p><strong>Note: If anyone has made good translations, it would be appreciated if they were shared with me. Just send me the file to my professional email: algb12.19@gmail.com. Thank you!</strong></p>
+<p>Both, translating the commenting front-end with an existing language and creating a new language is very easy. This is a list for language files currently included in the project:</p>
+<ul>
+<li>American English/American English): <code>en-US.php</code></li>
+<li>German (Germany)/Deutsch (Deutschland): <code>de-DE.php</code></li>
+<li>French (France)/Français (France): <code>fr-FR.php</code></li>
+</ul>
+<h3 id="-a-name-switch-language-switching-the-front-end-language-a-"><a name="switch-language">Switching the front-end language</a></h3>
+<p>In order to switch the front-end language, all that has to be done is a modification of one line in the <code>/commentia-dir/app/data/config.php</code> file. The lexicon locale, <code>LEX_LOCALE</code>, is always the name of the language file <em>without</em> the <code>.php</code> extension.</p>
+<p>The name of the language file always adheres to the language tag according to the <a href="https://tools.ietf.org/html/rfc5646" title="RFC 5646 standard">RFC 5646</a> standard, with the extension <code>.php</code> appended to it.</p>
+<p>E.g., for American English, the line would read</p>
+<pre class="editor-colors lang-php"><div class="line"><span class="text html php"><span>define(&#39;LEX_LOCALE&#39;,&nbsp;&#39;en-US&#39;);</span></span></div></pre>
+<p>And for German it would be</p>
+<pre class="editor-colors lang-php"><div class="line"><span class="text html php"><span>define(&#39;LEX_LOCALE&#39;,&nbsp;&#39;de-DE&#39;);</span></span></div></pre>
+<p>A full list of languages and their locales/culture codes can be found <a href="http://download1.parallels.com/SiteBuilder/Windows/docs/3.2/en_US/sitebulder-3.2-win-sdk-localization-pack-creation-guide/30801.htm" title="List of Culture Codes">here</a>.</p>
+<h3 id="creating-a-new-language">Creating a new language</h3>
+<p>In order to create a new language, the <code>en-US.php</code> file has to be copied and renamed to the correct language for the target language, plus the <code>.php</code> extension in the same locale directory.</p>
+<p>For example, if the target language is Chinese (China), the language code would be <code>zh-CN</code>, so the new file would be called <code>zh-CN.php</code> accordingly.</p>
+<p>Open up the new language file and the <code>en-US.php</code> file side-by-side, and start translating. The format of each phrase is as follows: <code>define(&#39;PHRASE_IDENTIFIER&#39;, &#39;Localized phrase&#39;)</code>, where <code>PHRASE_IDENTIFIER</code> is an uppercase, underscore-separated string, clearly describing the meaning of a phrase, such as <code>COMMENT_INFO_COMMENT_BY</code>. Generally, the phrase identifier follows the pattern <code>CATEGORY_OBJECT</code>, e.g. <code>COMMENT_INFO</code> is the category and <code>COMMENT_BY</code> is the object. It is also why the phrases are grouped the way they are in the lexicon files. The localized phrase is just the translation.</p>
+<p>To use the newly created language file, read the previous section on <a href="#switch-language">switching the front-end language</a>.</p></body>
+</html>

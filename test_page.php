@@ -2,7 +2,7 @@
 
 <?php
   // Disable these 4 lines if you don't want error-reporting
-  error_reporting(E_STRICT);
+  error_reporting(E_ALL);
   ini_set('error_reporting', -1);
   ini_set('display_errors', 1);
   ini_set('html_errors', 1);
@@ -32,9 +32,10 @@
   <hr>
   <div>
     <?=$commentia->displayComments(false);?>
-    <?=$commentia->displayAuthForm();?>
   </div>
   <!-- Debug (will be removed) -->
   <button type="button" name="refreshComments" onclick="refreshComments()">Refresh comments</button>
+  <?=$commentia->displayAuthForm();?>
+  <?=$commentia->displaySignUpForm();?>
 </body>
 </html>

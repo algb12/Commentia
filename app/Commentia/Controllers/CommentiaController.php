@@ -1,22 +1,20 @@
 <?php
 
-// Commentia controller
-// This file routes the functions to the relevant classes/controls the program flow.
-// It contains a blueprint of every publically accessible function.
-// Author: Alexander Gilburg
-// Last updated: 15th of July 2016
+///////////////////////////////////////////////////////////////////////////////////////
+// Commentia controller                                                              //
+// This file routes the functions to the relevant classes/controls the program flow. //
+// It contains a blueprint of every publically accessible function.                  //
+// Author: Alexander Gilburg                                                         //
+///////////////////////////////////////////////////////////////////////////////////////
+
 
 namespace Commentia\Controllers;
 
 require_once __DIR__.'/../../../vendor/autoload.php';
 
-require_once __DIR__.'/../../data/config.php';
-
 use Commentia\Models\Comments;
 use Commentia\Models\Members;
 use Commentia\Lexicon\Lexicon;
-
-Lexicon::load(LEX_LOCALE);
 
 class CommentiaController
 {
@@ -24,19 +22,28 @@ class CommentiaController
     public $comments;
     public $params = array();
 
+    /**
+     * Initiates a new controller instance for the relevant pageid.
+     *
+     * @param string $pageid The page ID for the comments (see README.md)
+     */
     public function __construct($pageid)
     {
         session_start();
 
         $real_pageid = (isset($_SESSION['pageid']) ? $_SESSION['pageid'] : $pageid);
 
+        require_once __DIR__.'/../../data/config.php';
+
+        Lexicon::load(LEX_LOCALE);
+
         if (isset($real_pageid)) {
-            $this->comments = new Comments(JSON_FILE_COMMENTS, $real_pageid);
+            $this->comments = new Comments($real_pageid);
         } else {
             exit('Error: Page ID not set');
         }
 
-        $this->members = new Members(JSON_FILE_MEMBERS);
+        $this->members = new Members();
 
         $this->params = array();
         foreach ($_GET as $key => $value) {
@@ -91,12 +98,23 @@ class CommentiaController
         return $this->members->logoutMember();
     }
 
+    public function signUpMember($username, $password, $retyped_password, $email, $avatar_file)
+    {
+        return $this->members->signUpMember($username, $password, $retyped_password, $email, $avatar_file);
+    }
+
     public function displayAuthForm()
     {
         return $this->members->displayAuthForm();
     }
 
-    public function getPhrase($phrase) {
+    public function displaySignUpForm()
+    {
+        return $this->members->displaySignUpForm();
+    }
+
+    public function getPhrase($phrase)
+    {
         return Lexicon::getPhrase($phrase);
     }
 }
