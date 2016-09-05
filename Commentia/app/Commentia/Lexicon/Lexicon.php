@@ -19,7 +19,9 @@ class Lexicon
      */
     public static function load($locale)
     {
-        require __DIR__.'/locale/'.$locale.'.php';
+        if (!require __DIR__.'/locale/'.$locale.'.php') {
+            $this->load('en_US');
+        }
     }
 
     /**

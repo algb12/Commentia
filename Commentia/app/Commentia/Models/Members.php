@@ -2,7 +2,8 @@
 
 ////////////////////////////////////////////////////
 // Members model                                  //
-// This file contains the members-related methods //
+// This file contains the members model,          //
+// And the methods used to interact with them.    //
 // Author: Alexander Gilburg                      //
 ////////////////////////////////////////////////////
 
@@ -203,7 +204,7 @@ class Members
         if (empty($username) || $username === '') {
             $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_USERNAME."<br>\n";
             $error_encountered = true;
-        } elseif (isset($this->members['members'][$username])) {
+        } elseif ($this->getMemberData($username)) {
             $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_USERNAME_TAKEN."<br>\n";
             $error_encountered = true;
         }
@@ -213,6 +214,11 @@ class Members
             $error_encountered = true;
         } elseif ($password !== $retyped_password) {
             $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_MISMATCH."<br>\n";
+            $error_encountered = true;
+        }
+
+        if (strlen($password) < MIN_PASSWORD_LEN) {
+            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_INSECURE."<br>\n";
             $error_encountered = true;
         }
 
@@ -272,12 +278,16 @@ class Members
      *
      * @return [type] [description]
      */
-    public function getMemberData($username, $entry)
+    public function getMemberData($username, $entry = null)
     {
-        if ($entry === 'avatar_file') {
-            $result = str_replace('{AVATAR_DIR}', ABS_PATH_PREFIX.AVATAR_DIR, $this->members['members'][$username][$entry]);
+        if ($entry !== null) {
+            if ($entry === 'avatar_file') {
+                $result = str_replace('{AVATAR_DIR}', ABS_PATH_PREFIX.AVATAR_DIR, $this->members['members'][$username][$entry]);
+            } else {
+                $result = $this->members['members'][$username][$entry];
+            }
         } else {
-            $result = $this->members['members'][$username][$entry];
+            $result = $this->members['members'][$username];
         }
 
         return $result;
@@ -364,14 +374,14 @@ class Members
         $html = '<h3>'.TITLES_AUTH_FORM.'</h3>';
         if ($_SESSION['member_is_logged_in']) {
             $html .= '
-            <form class="commentia-logout-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
+            <form class="commentia-logout_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
                 <input type="hidden" name="action" value="logoutMember">
                 <input type="submit" name="log-out" value="'.AUTH_FORM_BUTTONS_LOG_OUT.'">
             </form>
             <p>Logged in as '.$_SESSION['member_username'].' with role '.$_SESSION['member_role'].'</p>';
         } else {
             $html .= '
-            <form class="commentia-login-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
+            <form class="commentia-login_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
                 <table>
                     <tbody>
                         <tr>
@@ -408,7 +418,7 @@ class Members
         $sign_up_error_msg = isset($_SESSION['sign_up_error_msg']) ? $_SESSION['sign_up_error_msg'] : '';
         $html = '<h3>'.TITLES_SIGN_UP_FORM.'</h3>';
         $html .= '
-        <form class="commentia-signup-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST" enctype="multipart/form-data">
+        <form class="commentia-signup_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST" enctype="multipart/form-data">
             <table>
                 <tbody>
                     <tr>
@@ -429,11 +439,11 @@ class Members
                     </tr>
                     <tr>
                         <td>'.SIGN_UP_FORM_LABELS_AVATAR.'</td>
-                        <td><input type="file" name="avatar_img"></td>
                     </tr>
                 </tbody>
             </table>
-            <input type="hidden" name="action" value="signUpMember">
+            <input type="file" name="avatar_img">
+            <input type="hidden" name="action" value="signUpMember"><br><br>
             <input type="submit" name="log-in" value="'.SIGN_UP_FORM_BUTTONS_SIGN_UP.'">
         </form>
         <p>'.$sign_up_error_msg.'</p>';

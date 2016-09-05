@@ -32,6 +32,8 @@
     window.commentia = window.commentia || {};
     window.commentia.APIURL = '<?=$commentia_dir?>api.php';
   </script>
+  <!-- Only needed for demo -->
+  <link href="<?=$commentia_dir?>assets/style.example.css" rel="stylesheet">
   <!-- Commentia AJAX script + CSS for comments section -->
   <script src="<?=$commentia_dir?>assets/commentia.js"></script>
   <link href="<?=$commentia_dir?>assets/commentia-default-theme.css" rel="stylesheet">
@@ -45,5 +47,6 @@
   </div>
   <?=$commentia->displayAuthForm();?>
   <?=$commentia->displaySignUpForm();?>
+  <button onclick='refreshComments()'>Refresh comments</button>
 </body>
 </html>

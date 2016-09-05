@@ -73,8 +73,7 @@ if (isset($_SESSION['pageid'])
     && isset($_GET['ucid'])
     && $_SESSION['member_is_logged_in']) {
         $ucid = $_GET['ucid'];
-        $reply_path = $_GET['reply_path'];
-        echo $commentia->getCommentMarkdown($ucid, $reply_path);
+        echo $commentia->getCommentMarkdown($ucid);
     }
 }
 
@@ -88,28 +87,26 @@ if (isset($_SESSION['pageid'])
     || ($action === 'postNewComment'))
     && isset($_POST['content'])) {
         $content = $_POST['content'];
-        $reply_path = $_POST['reply_path'];
+        $childof = $_POST['childof'];
 
-        $commentia->createNewComment($content, $reply_path);
+        $commentia->createNewComment($content, $childof);
     }
 
-    if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], $_POST['reply_path'], 'creator_username'))
+    if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], 'creator_username'))
     || $roles->memberIsAdmin())
     && ($action === 'edit')
     && isset($_POST['content'])
     && isset($_POST['ucid'])) {
         $content = $_POST['content'];
         $ucid = $_POST['ucid'];
-        $reply_path = $_POST['reply_path'];
-        $commentia->editComment($ucid, $reply_path, $content);
+        $commentia->editComment($ucid, $content);
     }
 
-    if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], $_POST['reply_path'], 'creator_username'))
+    if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], 'creator_username'))
     || $roles->memberIsAdmin())
     && ($action === 'delete')
     && isset($_POST['ucid'])) {
         $ucid = $_POST['ucid'];
-        $reply_path = $_POST['reply_path'];
-        $commentia->deleteComment($ucid, $reply_path);
+        $commentia->deleteComment($ucid);
     }
 }

@@ -8,6 +8,9 @@
 define('LANG_NAME', 'French (France)');
 define('LANG_NAME_LOCALIZED', 'Français (France)');
 
+// Different options accepted by date(): http://php.net/manual/en/function.date.php
+define('DATETIME_LOCALIZED', 'd-m-Y H:i:s');
+
 define('TITLES_NEW_COMMENT', 'Nouveau commentaire:');
 define('TITLES_AUTH_FORM', 'Authentification');
 define('TITLES_SIGN_UP_FORM', 'Inscription');
@@ -43,6 +46,7 @@ define('NOTICE_LOG_IN_SUCCESS', 'Avis: utilisateur connecté avec succès.');
 define('ERROR_SIGN_UP_MISSING_USERNAME', 'Erreur: S\'il vous plaît entrez un nom d\'utilisateur.');
 define('ERROR_SIGN_UP_MISSING_PASSWORD', 'Erreur: S\'il vous plaît entrez un mot de passe.');
 define('ERROR_SIGN_UP_PASSWORD_MISMATCH', 'Erreur: Les mots de passe ne correspondent pas. S\'il vous plaît ré-entrez votre mot de passe.');
+define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Erreur: Le mot de passe doit être d\'au moins ' . MIN_PASSWORD_LEN . ' caractères. S\'il vous plaît choisir un mot de passe plus long.');
 define('ERROR_SIGN_UP_INVALID_EMAIL', 'Erreur: S\'il vous plaît entrez une adresse email valide');
 define('ERROR_SIGN_UP_USERNAME_TAKEN', 'Erreur: Nom d\'utilisateur déja pris. S\'il vous plaît entrez un nom d\'utilisateur différent.');
 define('ERROR_SIGN_UP_AVATAR_UPLOAD', 'Erreur: Quelque chose a mal tourné lors du téléchargement de l\'image de l\'avatar.');

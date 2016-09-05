@@ -9,15 +9,21 @@
 
 
 
-// Locale for language to be used by lexicon
+// Locale for language to be used by lexicon (default: en-US)
 // Available languages are in the /app/Commentia/Lexicon/locale directory
 define('LEX_LOCALE', 'en-US');
 
-// Relative path to JSON file containing comments
+// Timezone used by PHP (default: UTC)
+define('TIMEZONE', 'Europe/Berlin');
+
+// Path to JSON file containing comments
 define('JSON_FILE_COMMENTS', __DIR__.'/db/comments.example.json');
 
-// Relative path to JSON file containing members
+// Path to JSON file containing members
 define('JSON_FILE_MEMBERS', __DIR__.'/db/members.example.json');
 
-// Relative path to avatar directory (with trailing slash)
+// Relative path to avatar directory from this file (with trailing slash)
 define('AVATAR_DIR', 'app/data/avatars/');
+
+// Minimum password length for sign up
+define('MIN_PASSWORD_LEN', 8);

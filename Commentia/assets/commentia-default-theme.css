@@ -1,23 +1,44 @@
 /* The Commentia CSS file used for theming the comment section */
 
-body {
-    font-family: Avenir, "Open Sans", Helvetica, sans-ferif;
-    font-size: 1em;
-}
-
 .commentia-comments_container * {
     margin: 0;
+    font-size: 1em;
+    font-family: inherit;
 }
-.commentia-comments_container button {
-    border: none;
+.commentia-comments_container button,
+.commentia-login_form input[type=submit],
+.commentia-logout_form input[type=submit],
+.commentia-signup_form input[type=submit] {
     -webkit-appearance: none;
     margin: 0;
     padding: 6px;
     font-size: 1em;
-    width: 100%;
-    background-color: #adf;
+    border: 1px solid #000;
     border-radius: 4px;
     color: #000;
+}
+.commentia-login_form table, .commentia-login_form form,
+.commentia-logout_form table, .commentia-logout_form form,
+.commentia-signup_form table, .commentia-signup_form form {
+    width: 100%;
+    max-width: 350px;
+    white-space: nowrap;
+}
+.commentia-login_form input[type=text],
+.commentia-login_form input[type=password],
+.commentia-login_form input[type=email],
+.commentia-logout_form input[type=text],
+.commentia-logout_form input[type=password],
+.commentia-logout_form input[type=email],
+.commentia-signup_form input[type=text],
+.commentia-signup_form input[type=password],
+.commentia-signup_form input[type=email] {
+    width: 100%;
+    box-sizing: border-box;
+}
+.commentia-comments_container button {
+    background-color: #adf;
+    width: 100%;
 }
 .commentia-comments_container button:hover {
     background-color: #9ce;
@@ -81,7 +102,9 @@ body {
 .commentia-comment_content p {
     margin-top: 10px;
 }
-.commentia-comment_content h1, .commentia-comment_content h2, .commentia-comment_content h3, .commentia-comment_content h4, .commentia-comment_content h5, .commentia-comment_content h6 {
+.commentia-comment_content h1, .commentia-comment_content h2,
+.commentia-comment_content h3, .commentia-comment_content h4,
+.commentia-comment_content h5, .commentia-comment_content h6 {
     margin: 15px 2px 5px;
 }
 .commentia-comment_content blockquote {
@@ -100,6 +123,7 @@ body {
     text-decoration: none;
     width: 100%;
     background-color: #adf;
+    border: 1px solid #000;
     border-radius: 4px;
     color: #000000;
     margin: 0 4px 0 0;
@@ -121,4 +145,31 @@ body {
     max-height: 800px;
     width: 100%;
     box-sizing: border-box;
+}
+.commentia-login_form input[type=submit] {
+    background-color: #bfa;
+}
+.commentia-login_form input[type=submit]:hover {
+    background-color: #ae9;
+}
+.commentia-login_form input[type=submit]:active {
+    background-color: #9d8;
+}
+.commentia-signup_form input[type=submit] {
+    background-color: #fea;
+}
+.commentia-signup_form input[type=submit]:hover {
+    background-color: #ed9;
+}
+.commentia-signup_form input[type=submit]:active {
+    background-color: #dc8;
+}
+.commentia-logout_form input[type=submit] {
+    background-color: #fca;
+}
+.commentia-logout_form input[type=submit]:hover {
+    background-color: #eb9;
+}
+.commentia-logout_form input[type=submit]:active {
+    background-color: #da8;
 }

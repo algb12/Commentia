@@ -2,10 +2,10 @@
 
 /////////////////////////////////////////////////////
 // Comments model                                  //
-// This file contains the comments-related methods //
+// This file defines the comments model,           //
+// And the methods used to interact with them.     //
 // Author: Alexander Gilburg                       //
 /////////////////////////////////////////////////////
-
 
 namespace Commentia\Models;
 
@@ -47,8 +47,6 @@ class Comments
         $this->comments_global = json_decode(file_get_contents($this->comments_json), true);
         $this->pageid = $pageid;
         $this->comments = &$this->comments_global["pageid-$this->pageid"];
-
-        date_default_timezone_set('UTC');
     }
 
     /**
@@ -73,45 +71,12 @@ class Comments
          *
          * @param array $comment An array containing all the comment data
          */
-        function iterateCommentData($comment)
-        {
-            global $html;
-            global $lexicon;
-            global $roles;
-            $members = new Members(JSON_FILE_MEMBERS);
-            foreach ($comment as $comment_data) {
-                $html .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'"'.' data-reply-path="'.$comment_data['reply_path'].'">'."\n");
-                $html .= ('<div class="commentia-comment_info">'."\n");
-                $html .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
-                $html .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
-                $datetime = DateTime::createFromFormat(DateTime::ISO8601, $comment_data['timestamp']);
-                $html .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date_format($datetime, 'Y-m-d H:i:s').'</p>'."\n");
-                $html .= ('</div>'."\n");
-                $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
-                $html .= ('<div class="commentia-edit_area"></div>'."\n");
 
-                if (!$comment_data['is_deleted']) {
-                    if ($_SESSION['member_is_logged_in']) {
-                        $html .= ('<p class="commentia-comment_controls">
-            <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
-                        if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
-                            $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
-                            $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
-                        }
-                        $html .= ('</p>'."\n");
-                    }
-                }
-
-                $html .= ('<div class="commentia-reply_area"></div>'."\n");
-                if (isset($comment_data['replies'])) {
-                    iterateCommentData($comment_data['replies']);
-                }
-                $html .= ('</div>'."\n");
+        foreach ($this->comments['comments'] as $comment) {
+            if (isset($this->comments['comments']['ucid-'.$comment['ucid']])) {
+                $this->renderCommentView($comment['ucid']);
+                unset($this->comments['comments']['ucid-'.$comment['ucid']]);
             }
-        }
-
-        foreach ($this->comments as $comment) {
-            iterateCommentData($comment);
         }
 
         if ($_SESSION['member_is_logged_in']) {
@@ -122,12 +87,64 @@ class Comments
     }
 
     /**
+     * Outputs the comment markup (including children).
+     *
+     * @param string $ucid    UCID of comment (unique comment ID)
+     */
+    public function renderCommentView($ucid) {
+
+      global $html;
+      global $lexicon;
+      global $roles;
+
+      $members = new Members(JSON_FILE_MEMBERS);
+
+      $comment_data = $this->comments['comments']['ucid-'.$ucid];
+      $html .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
+      $html .= ('<div class="commentia-comment_info">'."\n");
+      $html .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
+      $html .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
+      date_default_timezone_set(TIMEZONE);
+      $html .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
+      date_default_timezone_set('UTC');
+      $html .= ('</div>'."\n");
+      $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
+      $html .= ('<div class="commentia-edit_area"></div>'."\n");
+
+      if (!$comment_data['is_deleted']) {
+          if ($_SESSION['member_is_logged_in']) {
+              $html .= ('<p class="commentia-comment_controls">
+                             <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
+              if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
+                  $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
+                  $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
+              }
+              $html .= ('</p>'."\n");
+          }
+      }
+
+      $html .= ('<div class="commentia-reply_area"></div>'."\n");
+
+      if ($comment_data['children']) {
+          foreach($comment_data['children'] as $child) {
+              if (isset($this->comments['comments']['ucid-'.$child])) {
+                  $this->renderCommentView($child);
+                  unset($this->comments['comments']['ucid-'.$child]);
+              }
+          }
+      }
+
+      $html .= ('</div>'."\n");
+
+    }
+
+    /**
      * Creates a new comment/reply.
      *
      * @param string $content    Text/content of the comment to be created
-     * @param string $reply_path Reply path (used to determine under which comment the reply should go, if set)
+     * @param int    $childof    The UCID of the parent comment if reply
      */
-    public function createNewComment($content, $reply_path)
+    public function createNewComment($content, $childof)
     {
         if ($this->comments_global['last_ucid'] !== '') {
             $ucid = $this->comments_global['last_ucid'] + 1;
@@ -135,12 +152,7 @@ class Comments
             $ucid = 0;
         }
 
-        if (isset($reply_path) && ($reply_path !== '')) {
-            $comment_post_path = &$this->gotoComment($reply_path);
-            $comment_post_path = &$comment_post_path['replies'];
-        } else {
-            $comment_post_path = &$this->comments['comments'];
-        }
+        $comment_post_path = &$this->comments['comments'];
 
         $comment_post_path["ucid-$ucid"] = array();
         $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
@@ -148,7 +160,11 @@ class Comments
         $comment_post_path["ucid-$ucid"]['timestamp'] = date(DateTime::ISO8601);
         $comment_post_path["ucid-$ucid"]['creator_username'] = $_SESSION['member_username'];
         $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
-        $comment_post_path["ucid-$ucid"]['reply_path'] = (isset($reply_path) && !empty($reply_path) ? $reply_path."-$ucid" : "$ucid");
+        $comment_post_path["ucid-$ucid"]['children'] = array();
+
+        if ($childof) {
+            $comment_post_path["ucid-$childof"]['children'][] = $ucid;
+        }
 
         $this->comments_global['last_ucid'] = $ucid;
         $this->comments_global['last_modified'] = date(DateTime::ISO8601);
@@ -160,12 +176,11 @@ class Comments
      * Updates comment content with supplied value.
      *
      * @param int    $ucid       Unique comment ID
-     * @param string $reply_path Reply path (used here to find the comment to be edited if it has a parent)
      * @param string $content    New content to be put into comment text
      */
-    public function editComment($ucid, $reply_path, $content)
+    public function editComment($ucid, $content)
     {
-        $comment_post_path = &$this->gotoComment($reply_path);
+        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode($content));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
@@ -178,11 +193,10 @@ class Comments
      * Sets is_deleted flag of comment to true, overwrites content with the string '[[deleted]]'.
      *
      * @param int    $ucid       Unique comment ID
-     * @param string $reply_path Reply path (used here to find the comment to be deleted if it has a parent)
      */
-    public function deleteComment($ucid, $reply_path)
+    public function deleteComment($ucid)
     {
-        $comment_post_path = &$this->gotoComment($reply_path);
+        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode('_[[deleted]]_'));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
@@ -196,11 +210,10 @@ class Comments
      * Used by the frontend to get the comment's markdown for editing.
      *
      * @param int    $ucid       Unique comment ID
-     * @param string $reply_path Reply path (used here to find the comment to be queried if it has a parent)
      */
-    public function getCommentMarkdown($ucid, $reply_path)
+    public function getCommentMarkdown($ucid)
     {
-        $comment_post_path = &$this->gotoComment($reply_path);
+        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
 
         $comment_md = $this->html_to_md->parseString($comment_post_path['content']);
 
@@ -211,41 +224,15 @@ class Comments
      * Returns a specified entry for a comment.
      *
      * @param int    $ucid       Unique comment ID
-     * @param string $reply_path Reply path (used here to find the comment to be queried if it has a parent)
      * @param string $entry      The entry that should be retrieved (e.g. creator_username, content, is_deleted etc.)
      *
      * @return mixed Returns the wanted entry
      */
-    public function getCommentData($ucid, $reply_path, $entry)
+    public function getCommentData($ucid, $entry)
     {
-        $comment_post_path = &$this->gotoComment($reply_path);
+        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
 
         return $comment_post_path[$entry];
-    }
-
-    /**
-     * Goes to a comment along a reply path and returns the comment's location in the array.
-     *
-     * @param string $reply_path Reply path (a cascade of comment ucids, from parent to child, delimited by a dash)
-     *
-     * @return array The comment's location in the comments array
-     */
-    private function &gotoComment($reply_path)
-    {
-        $comment_post_path = &$this->comments['comments'];
-
-        if (isset($reply_path) && ($reply_path !== '')) {
-            $ucid_nodes = explode('-', $reply_path);
-            $ucid = array_slice($ucid_nodes, -1)[0];
-            foreach ($ucid_nodes as $ucid_node) {
-                $comment_post_path = &$comment_post_path["ucid-$ucid_node"];
-                if ($ucid_node !== $ucid) {
-                    $comment_post_path = &$comment_post_path['replies'];
-                }
-            }
-        }
-
-        return $comment_post_path;
     }
 
     /**

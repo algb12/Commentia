@@ -92,13 +92,13 @@ function findCommentRoot(el) {
 
 function postReply(caller) {
     var comment = findCommentRoot(caller);
+
     var ucid = comment.getAttribute('data-ucid');
-    var reply_path = comment.getAttribute('data-reply-path');
     var reply_box_id = 'reply-box-' + ucid;
 
     var comments_section = document.getElementById("comments-container");
     var content = encodeURI(document.getElementById(reply_box_id).value);
-    var params = "action=reply&content=" + content + "&reply_path=" + reply_path + "&username=user0";
+    var params = "action=reply&content=" + content + "&childof=" + ucid + "&username=user0";
 
     console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
 
@@ -122,7 +122,7 @@ function postNewComment(caller) {
 
     var comments_section = document.getElementById("comments-container");
     var content = encodeURI(document.getElementById(comment_box_id).value);
-    var params = "action=postNewComment&content=" + content + "&username=user0";
+    var params = "action=postNewComment&content=" + content;
 
     var http_request = httpRequest();
 

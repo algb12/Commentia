@@ -7,7 +7,6 @@
 // Author: Alexander Gilburg                                                         //
 ///////////////////////////////////////////////////////////////////////////////////////
 
-
 namespace Commentia\Controllers;
 
 require_once __DIR__.'/../../../vendor/autoload.php';
@@ -15,6 +14,8 @@ require_once __DIR__.'/../../../vendor/autoload.php';
 use Commentia\Models\Comments;
 use Commentia\Models\Members;
 use Commentia\Lexicon\Lexicon;
+use Google_Client;
+$gclient = new Google_Client();
 
 class CommentiaController
 {
@@ -31,14 +32,16 @@ class CommentiaController
     {
         session_start();
 
-        define('ABS_PATH_PREFIX', $abs_path_prefix);
-        $_SESSION['abs_path_prefix'] = ABS_PATH_PREFIX;
-
-        $real_pageid = (isset($_SESSION['pageid']) ? $_SESSION['pageid'] : $pageid);
+        date_default_timezone_set('UTC');
 
         require_once __DIR__.'/../../data/config.php';
 
         Lexicon::load(LEX_LOCALE);
+
+        define('ABS_PATH_PREFIX', $abs_path_prefix);
+        $_SESSION['abs_path_prefix'] = ABS_PATH_PREFIX;
+
+        $real_pageid = (isset($_SESSION['pageid']) ? $_SESSION['pageid'] : $pageid);
 
         if (isset($real_pageid)) {
             $this->comments = new Comments($real_pageid);
@@ -61,29 +64,29 @@ class CommentiaController
         return $this->comments->displayComments($is_ajax_request);
     }
 
-    public function createNewComment($content, $reply_path)
+    public function createNewComment($content, $childof)
     {
-        return $this->comments->createNewComment($content, $reply_path);
+        return $this->comments->createNewComment($content, $childof);
     }
 
-    public function editComment($ucid, $reply_path, $content)
+    public function editComment($ucid, $content)
     {
-        return $this->comments->editComment($ucid, $reply_path, $content);
+        return $this->comments->editComment($ucid, $content);
     }
 
-    public function deleteComment($ucid, $reply_path)
+    public function deleteComment($ucid)
     {
-        return $this->comments->deleteComment($ucid, $reply_path);
+        return $this->comments->deleteComment($ucid);
     }
 
-    public function getCommentMarkdown($ucid, $reply_path)
+    public function getCommentMarkdown($ucid)
     {
-        return $this->comments->getCommentMarkdown($ucid, $reply_path);
+        return $this->comments->getCommentMarkdown($ucid);
     }
 
-    public function getCommentData($ucid, $reply_path, $entry)
+    public function getCommentData($ucid, $entry)
     {
-        return $this->comments->getCommentData($ucid, $reply_path, $entry);
+        return $this->comments->getCommentData($ucid, $entry);
     }
 
     public function getMemberData($username, $entry)
