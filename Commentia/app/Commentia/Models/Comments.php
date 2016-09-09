@@ -13,6 +13,8 @@ use Parsedown;
 use Markdownify\Converter;
 use Commentia\Lexicon\Lexicon;
 use Commentia\Roles\Roles;
+use Commentia\Metadata\Metadata;
+
 use DateTime;
 
 class Comments
@@ -24,6 +26,8 @@ class Comments
     public $md_to_html;
     public $html_to_md;
     public $members;
+    public $metadata_json = JSON_FILE_METADATA;
+    public $metadata = array();
 
     /**
      * Initiates MD <=> HTML converters, checks for JSON file (if none, will create one), assigns content of JSON file to array for PHP use.
@@ -36,6 +40,8 @@ class Comments
 
         $this->html_to_md = new Converter();
 
+        $this->metadata = new Metadata();
+
         if (empty($this->comments_json)) {
             exit('Error: No comments JSON file set.');
         }
@@ -46,7 +52,14 @@ class Comments
 
         $this->comments_global = json_decode(file_get_contents($this->comments_json), true);
         $this->pageid = $pageid;
-        $this->comments = &$this->comments_global["pageid-$this->pageid"];
+        $this->comments = &$this->comments_global['comments'];
+
+        // Traverse array, remove comments from other pages
+        foreach ($this->comments as $comment_key => &$comment) {
+            if ($comment['pageid'] !== $this->pageid) {
+                unset($this->comments[$comment_key]);
+            }
+        }
     }
 
     /**
@@ -72,10 +85,10 @@ class Comments
          * @param array $comment An array containing all the comment data
          */
 
-        foreach ($this->comments['comments'] as $comment) {
-            if (isset($this->comments['comments']['ucid-'.$comment['ucid']])) {
+        foreach ($this->comments as $comment) {
+            if (isset($this->comments['ucid-'.$comment['ucid']])) {
                 $this->renderCommentView($comment['ucid']);
-                unset($this->comments['comments']['ucid-'.$comment['ucid']]);
+                unset($this->comments['ucid-'.$comment['ucid']]);
             }
         }
 
@@ -99,7 +112,7 @@ class Comments
 
       $members = new Members(JSON_FILE_MEMBERS);
 
-      $comment_data = $this->comments['comments']['ucid-'.$ucid];
+      $comment_data = $this->comments['ucid-'.$ucid];
       $html .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
       $html .= ('<div class="commentia-comment_info">'."\n");
       $html .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
@@ -127,9 +140,9 @@ class Comments
 
       if ($comment_data['children']) {
           foreach($comment_data['children'] as $child) {
-              if (isset($this->comments['comments']['ucid-'.$child])) {
+              if (isset($this->comments['ucid-'.$child])) {
                   $this->renderCommentView($child);
-                  unset($this->comments['comments']['ucid-'.$child]);
+                  unset($this->comments['ucid-'.$child]);
               }
           }
       }
@@ -146,13 +159,13 @@ class Comments
      */
     public function createNewComment($content, $childof)
     {
-        if ($this->comments_global['last_ucid'] !== '') {
-            $ucid = $this->comments_global['last_ucid'] + 1;
+        if ($this->metadata->getMetadata('last_ucid') !== '') {
+            $ucid = $this->metadata->getMetadata('last_ucid') + 1;
         } else {
             $ucid = 0;
         }
 
-        $comment_post_path = &$this->comments['comments'];
+        $comment_post_path = &$this->comments;
 
         $comment_post_path["ucid-$ucid"] = array();
         $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
@@ -161,13 +174,14 @@ class Comments
         $comment_post_path["ucid-$ucid"]['creator_username'] = $_SESSION['member_username'];
         $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
         $comment_post_path["ucid-$ucid"]['children'] = array();
+        $comment_post_path["ucid-$ucid"]['pageid'] = $this->pageid;
 
         if ($childof) {
             $comment_post_path["ucid-$childof"]['children'][] = $ucid;
         }
 
-        $this->comments_global['last_ucid'] = $ucid;
-        $this->comments_global['last_modified'] = date(DateTime::ISO8601);
+        $this->metadata->setMetadata('last_ucid', $ucid);
+        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
 
         $this->updateComments($this->comments_json);
     }
@@ -180,11 +194,11 @@ class Comments
      */
     public function editComment($ucid, $content)
     {
-        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
+        $comment_post_path = &$this->comments["ucid-$ucid"];
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode($content));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
-        $this->comments_global['last_modified'] = date(DateTime::ISO8601);
+        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
 
         $this->updateComments($this->comments_json);
     }
@@ -196,12 +210,12 @@ class Comments
      */
     public function deleteComment($ucid)
     {
-        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
+        $comment_post_path = &$this->comments["ucid-$ucid"];
 
         $comment_post_path['content'] = $this->md_to_html->text(urldecode('_[[deleted]]_'));
         $comment_post_path['timestamp'] = date(DateTime::ISO8601);
         $comment_post_path['is_deleted'] = true;
-        $this->comments_global['last_modified'] = date(DateTime::ISO8601);
+        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
 
         $this->updateComments($this->comments_json);
     }
@@ -213,7 +227,7 @@ class Comments
      */
     public function getCommentMarkdown($ucid)
     {
-        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
+        $comment_post_path = &$this->comments["ucid-$ucid"];
 
         $comment_md = $this->html_to_md->parseString($comment_post_path['content']);
 
@@ -230,7 +244,7 @@ class Comments
      */
     public function getCommentData($ucid, $entry)
     {
-        $comment_post_path = &$this->comments['comments']["ucid-$ucid"];
+        $comment_post_path = &$this->comments["ucid-$ucid"];
 
         return $comment_post_path[$entry];
     }

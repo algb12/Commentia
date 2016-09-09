@@ -9,6 +9,7 @@
 
 namespace Commentia\Models;
 
+use Commentia\Metadata\Metadata;
 use DateTime;
 
 class Members
@@ -22,6 +23,8 @@ class Members
      */
     public function __construct()
     {
+        $this->metadata = new Metadata();
+
         if (empty($this->members_json)) {
             exit('Error: No members JSOn file set.');
         }
@@ -182,7 +185,7 @@ class Members
         $this->members['members'][$username]['is_banned'] = false;
         $this->members['members'][$username]['role'] = $role;
         $this->members['members'][$username]['member_since'] = date(DateTime::ISO8601);
-        $this->members['last_modified'] = date(DateTime::ISO8601);
+        $this->metadata->setMetadata('last_modified_members',  date(DateTime::ISO8601));
         $this->updateMembers($this->members_json);
 
         return 1;
@@ -266,7 +269,7 @@ class Members
     public function deleteMember($username)
     {
         unset($this->members['members'][$username]);
-        $this->members['last_modified'] = date(DateTime::ISO8601);
+        $this->metadata->setMetadata('last_modified_members', date(DateTime::ISO8601));
         $this->updateMembers($this->members_json);
     }
 

@@ -14,6 +14,7 @@ require_once __DIR__.'/../../../vendor/autoload.php';
 use Commentia\Models\Comments;
 use Commentia\Models\Members;
 use Commentia\Lexicon\Lexicon;
+use Commentia\Lexicon\Metadata;
 use Google_Client;
 $gclient = new Google_Client();
 

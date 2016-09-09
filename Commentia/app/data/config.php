@@ -13,7 +13,7 @@
 // Available languages are in the /app/Commentia/Lexicon/locale directory
 define('LEX_LOCALE', 'en-US');
 
-// Timezone used by PHP (default: UTC)
+// Timezone used by PHP (default: UTC; display time only, all times stored in UTC)
 define('TIMEZONE', 'Europe/Berlin');
 
 // Path to JSON file containing comments
@@ -21,6 +21,9 @@ define('JSON_FILE_COMMENTS', __DIR__.'/db/comments.example.json');
 
 // Path to JSON file containing members
 define('JSON_FILE_MEMBERS', __DIR__.'/db/members.example.json');
+
+// Path to JSON file containing metadata for comments, members and Commentia itself
+define('JSON_FILE_METADATA', __DIR__.'/db/metadata.example.json');
 
 // Relative path to avatar directory from this file (with trailing slash)
 define('AVATAR_DIR', 'app/data/avatars/');
