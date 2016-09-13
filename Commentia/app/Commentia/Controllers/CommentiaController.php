@@ -4,7 +4,7 @@
 // Commentia controller                                                              //
 // This file routes the functions to the relevant classes/controls the program flow. //
 // It contains a blueprint of every publically accessible function.                  //
-// Author: Alexander Gilburg                                                         //
+// Author: algb12.19@gmail.com                                                         //
 ///////////////////////////////////////////////////////////////////////////////////////
 
 namespace Commentia\Controllers;

@@ -3,7 +3,7 @@
 // German lexicon (Germany)/Deutsches Lexicon (Deutschland)
 // Format: define('PHRASE_NAME', 'localized phrase');
 // Don't forget to escape the single quotes (') using a backslash, such as 'J\'ai' instead of 'J'ai'
-// Author: Alexander Gilburg
+// Author: algb12.19@gmail.com
 
 define('LANG_NAME', 'German (Germany)');
 define('LANG_NAME_LOCALIZED', 'Deutsch (Deutschland)');

@@ -4,7 +4,7 @@
 // Members model                                  //
 // This file contains the members model,          //
 // And the methods used to interact with them.    //
-// Author: Alexander Gilburg                      //
+// Author: algb12.19@gmail.com                      //
 ////////////////////////////////////////////////////
 
 namespace Commentia\Models;

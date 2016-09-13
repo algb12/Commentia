@@ -2,7 +2,7 @@
 
 ///////////////////////////////
 // Commentia phrase lexica   //
-// Author: Alexander Gilburg //
+// Author: algb12.19@gmail.com //
 ///////////////////////////////
 
 

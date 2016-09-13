@@ -4,7 +4,7 @@
 // Commentia API                                                                                      //
 // This should be the ONLY entry point directly from a website.                                       //
 // Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated. //
-// Author: Alexander Gilburg                                                                          //
+// Author: algb12.19@gmail.com                                                                          //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

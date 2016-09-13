@@ -3,7 +3,7 @@
 // French lexicon (France)/Lexique français (France)
 // Format: define('PHRASE_NAME', 'localized phrase');
 // Don't forget to escape the single quotes (') using a backslash, such as 'J\'ai' instead of 'J'ai'
-// Author: Alexander Gilburg
+// Author: algb12.19@gmail.com
 
 define('LANG_NAME', 'French (France)');
 define('LANG_NAME_LOCALIZED', 'Français (France)');

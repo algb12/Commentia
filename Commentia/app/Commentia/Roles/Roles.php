@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////
 // Member roles                                             //
 // This class has methods which return the role of a member //
-// Author: Alexander Gilburg                                //
+// Author: algb12.19@gmail.com                                //
 //////////////////////////////////////////////////////////////
 
 

@@ -4,7 +4,7 @@
 // Comments model                                  //
 // This file defines the comments model,           //
 // And the methods used to interact with them.     //
-// Author: Alexander Gilburg                       //
+// Author: algb12.19@gmail.com                       //
 /////////////////////////////////////////////////////
 
 namespace Commentia\Models;
