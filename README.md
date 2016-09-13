@@ -139,7 +139,7 @@ Open up the new language file and the `en-US.php` file side-by-side, and start t
 
 To use the newly created language file, read the previous section on [switching the front-end language](#switch-language).
 
-### Readiness fir production use
+## Readiness for production use
 
 Even though the system was tested thoroughly to not contain any bugs (please do open up issues if any are found), it did not undergo formal tests (e.g. PHPunit).
 
