@@ -10,30 +10,20 @@
 namespace Commentia\Models;
 
 use Commentia\Metadata\Metadata;
+use Commentia\DBHandler\DBHandler;
 use DateTime;
 
 class Members
 {
-    public $members_json = JSON_FILE_MEMBERS;
+    public $db;
     public $members = array();
 
     /**
-     * Checks if JSON_FILE_MEMBERS defined in the config file exists. If not, it creates a new JSON file
-     * Also does some security stuff for log in.
+     * Initializes DB, checks if user is logged in
      */
     public function __construct()
     {
-        $this->metadata = new Metadata();
-
-        if (empty($this->members_json)) {
-            exit('Error: No members JSOn file set.');
-        }
-
-        if (!file_exists($this->members_json)) {
-            file_put_contents($this->members_json, '');
-        }
-
-        $this->members = json_decode(file_get_contents($this->members_json), true);
+        $this->db = new DBHandler(DB);
 
         if (!isset($_SESSION['member_username'])) {
             $_SESSION['member_is_logged_in'] = false;
@@ -58,6 +48,7 @@ class Members
         if (!file_exists($src)) {
             throw new InvalidArgumentException('File "'.$src.'" not found.');
         }
+
         switch (strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
             case 'jpeg':
             case 'jpg':
@@ -153,7 +144,6 @@ class Members
                 imagetruecolortopalette($dest_image, true, 255);
                 imagegif($dest_image, $image_file);
             break;
-
             default:
                 throw new InvalidArgumentException('File "'.$src.'" is not valid jpg, png or gif image.');
             break;
@@ -163,11 +153,11 @@ class Members
             unlink($src);
         }
 
-        return '{AVATAR_DIR}'.basename($image_file);
+        return basename($image_file);
     }
 
     /**
-     * Writes new account data to JSON.
+     * Writes new account data to DB.
      *
      * @param string $username    The username used to log in
      * @param string $password    The password to be hashed and used for log in
@@ -177,18 +167,25 @@ class Members
      */
     private function createNewMember($username, $password, $email, $role, $avatar_file)
     {
-        $this->members['members'][$username] = array();
-        $this->members['members'][$username]['username'] = $username;
-        $this->members['members'][$username]['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
-        $this->members['members'][$username]['email'] = $email;
-        $this->members['members'][$username]['avatar_file'] = $this->generateAvatarThumbnail($avatar_file, 150, 150);
-        $this->members['members'][$username]['is_banned'] = false;
-        $this->members['members'][$username]['role'] = $role;
-        $this->members['members'][$username]['member_since'] = date(DateTime::ISO8601);
-        $this->metadata->setMetadata('last_modified_members',  date(DateTime::ISO8601));
-        $this->updateMembers($this->members_json);
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $avatar_file = $this->generateAvatarThumbnail($avatar_file, 150, 150);
+        $is_banned = false;
+        $member_since = date(DateTime::ISO8601);
 
-        return 1;
+        $stmt = $this->db->prepare('INSERT INTO members (username, password_hash, email, avatar_file, is_banned, role, member_since) VALUES (
+                                    :username, :password_hash, :email, :avatar_file, :is_banned, :role, :member_since);');
+
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password_hash', $password_hash);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':avatar_file', $avatar_file);
+        $stmt->bindValue(':is_banned', $is_banned);
+        $stmt->bindValue(':role', $role);
+        $stmt->bindValue(':member_since', $member_since);
+
+        $stmt->execute();
+
+        return true;
     }
 
     /**
@@ -207,7 +204,7 @@ class Members
         if (empty($username) || $username === '') {
             $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_USERNAME."<br>\n";
             $error_encountered = true;
-        } elseif ($this->getMemberData($username)) {
+        } elseif ($this->getMemberData($username, 'username')) {
             $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_USERNAME_TAKEN."<br>\n";
             $error_encountered = true;
         }
@@ -268,9 +265,9 @@ class Members
      */
     public function deleteMember($username)
     {
-        unset($this->members['members'][$username]);
-        $this->metadata->setMetadata('last_modified_members', date(DateTime::ISO8601));
-        $this->updateMembers($this->members_json);
+        $stmt = $this->db->prepare('DELETE FROM members WHERE username = :username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
     }
 
     /**
@@ -281,16 +278,18 @@ class Members
      *
      * @return [type] [description]
      */
-    public function getMemberData($username, $entry = null)
+    public function getMemberData($username, $entry)
     {
-        if ($entry !== null) {
-            if ($entry === 'avatar_file') {
-                $result = str_replace('{AVATAR_DIR}', ABS_PATH_PREFIX.AVATAR_DIR, $this->members['members'][$username][$entry]);
-            } else {
-                $result = $this->members['members'][$username][$entry];
-            }
+        $stmt = $this->db->prepare('SELECT * FROM members WHERE username = :username');
+        $stmt->bindValue(':username', $username);
+        $res = $stmt->execute();
+
+        $entry_data = $res->fetchArray(SQLITE3_ASSOC)[$entry];
+
+        if ($entry === 'avatar_file') {
+            $result = ABS_PATH_PREFIX.AVATAR_DIR.$entry_data;
         } else {
-            $result = $this->members['members'][$username];
+            $result = $entry_data;
         }
 
         return $result;
@@ -305,28 +304,11 @@ class Members
      */
     public function setMemberData($username, $entry, $data)
     {
-        $this->members['members'][$username][$entry] = $data;
-        $this->updateMembers($this->members_json);
-    }
-
-    /**
-     * Updates the members JSON files.
-     *
-     * @param string $members_json Path to the members JSON file
-     */
-    private function updateMembers($members_json)
-    {
-        if (!is_writable(dirname($members_json))) {
-            exit('Error: Directory not writable.');
-        }
-
-        $fp = fopen($members_json, 'w+');
-        flock($fp, LOCK_EX);
-        if (flock($fp, LOCK_EX)) {
-            fwrite($fp, json_encode($this->members));
-        }
-        flock($fp, LOCK_UN);
-        fclose($fp);
+        $stmt = $this->db->prepare('UPDATE members SET :entry = :data WHERE username = :username');
+        $stmt->bindValue(':entry', $entry);
+        $stmt->bindValue(':data', $data);
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
     }
 
     /**
@@ -342,11 +324,13 @@ class Members
                 $_SESSION['member_is_logged_in'] = true;
                 $_SESSION['member_username'] = $username;
                 $_SESSION['member_role'] = $this->getMemberData($username, 'role');
+                // TODO: Login success message localization
                 $_SESSION['login_error_msg'] = 'LOGIN_AUTH_SUCCESS';
                 session_regenerate_id();
                 header('Location:'.$_SESSION['log_in_page']);
             } else {
                 $_SESSION['member_is_logged_in'] = false;
+                // TODO: Login fail message localization
                 $_SESSION['login_error_msg'] = 'LOGIN_AUTH_FAIL';
                 session_regenerate_id();
                 header('Location:'.$_SESSION['log_in_page']);
@@ -447,7 +431,7 @@ class Members
             </table>
             <input type="file" name="avatar_img">
             <input type="hidden" name="action" value="signUpMember"><br><br>
-            <input type="submit" name="log-in" value="'.SIGN_UP_FORM_BUTTONS_SIGN_UP.'">
+            <input type="submit" name="sign-up" value="'.SIGN_UP_FORM_BUTTONS_SIGN_UP.'">
         </form>
         <p>'.$sign_up_error_msg.'</p>';
 
@@ -461,7 +445,7 @@ class Members
     /**
      * When called, sets login page to a session variable (because $_SERVER['REQUEST_URI'] is very unreliable).
      */
-    private function setLoginPage()
+    public function setLoginPage()
     {
         $isSecure = false;
 

@@ -14,51 +14,39 @@ use Markdownify\Converter;
 use Commentia\Lexicon\Lexicon;
 use Commentia\Roles\Roles;
 use Commentia\Metadata\Metadata;
+use Commentia\DBHandler\DBHandler;
 
 use DateTime;
 
 class Comments
 {
-    public $comments_json = JSON_FILE_COMMENTS;
     public $comments = array();
-    public $comments_global = array();
     public $pageid;
     public $md_to_html;
     public $html_to_md;
+    public $db;
     public $members;
-    public $metadata_json = JSON_FILE_METADATA;
-    public $metadata = array();
+    public $html_output;
 
     /**
-     * Initiates MD <=> HTML converters, checks for JSON file (if none, will create one), assigns content of JSON file to array for PHP use.
+     * Initiates MD <=> HTML converters, checks for DB file (if none, will create one), arranges and assigns content of DB file to array for PHP use.
      *
      * @param string $pageid ID of page on which comments should be displayed
      */
     public function __construct($pageid)
     {
+        $this->pageid = $pageid;
+        $this->db = new DBHandler(DB);
         $this->md_to_html = new Parsedown();
-
         $this->html_to_md = new Converter();
 
-        $this->metadata = new Metadata();
+        $stmt = $this->db->prepare('SELECT * FROM comments WHERE pageid = :pageid');
+        $stmt->bindValue(':pageid', $pageid);
+        $res = $stmt->execute();
 
-        if (empty($this->comments_json)) {
-            exit('Error: No comments JSON file set.');
-        }
-
-        if (!file_exists($this->comments_json)) {
-            file_put_contents($this->comments_json, '');
-        }
-
-        $this->comments_global = json_decode(file_get_contents($this->comments_json), true);
-        $this->pageid = $pageid;
-        $this->comments = &$this->comments_global['comments'];
-
-        // Traverse array, remove comments from other pages
-        foreach ($this->comments as $comment_key => &$comment) {
-            if ($comment['pageid'] !== $this->pageid) {
-                unset($this->comments[$comment_key]);
-            }
+        while ($r = $res->fetchArray(SQLITE3_ASSOC)) {
+            $this->comments['ucid-'.$r['ucid']] = $r;
+            $this->comments['ucid-'.$r['ucid']]['children'] = json_decode($this->comments['ucid-'.$r['ucid']]['children']);
         }
     }
 
@@ -71,8 +59,6 @@ class Comments
      */
     public function displayComments()
     {
-        global $html;
-
         global $lexicon;
         $lexicon = new Lexicon(LEX_LOCALE);
 
@@ -93,10 +79,10 @@ class Comments
         }
 
         if ($_SESSION['member_is_logged_in']) {
-            $html .= ('<div class="commentia-new_comment_area">'."\n".'<h4>'.TITLES_NEW_COMMENT.'</h4>'."\n".'<textarea id="comment-box" oninput="autoGrow(this);"></textarea>'."\n".'<button id="post-comment-button" onclick="postNewComment(this);">'.COMMENT_CONTROLS_PUBLISH.'</button>'."\n".'</div>'."\n");
+            $this->html_output .= ('<div class="commentia-new_comment_area">'."\n".'<h4>'.TITLES_NEW_COMMENT.'</h4>'."\n".'<textarea id="comment-box" oninput="autoGrow(this);"></textarea>'."\n".'<button id="post-comment-button" onclick="postNewComment(this);">'.COMMENT_CONTROLS_PUBLISH.'</button>'."\n".'</div>'."\n");
         }
 
-        return $html;
+        return $this->html_output;
     }
 
     /**
@@ -105,38 +91,38 @@ class Comments
      * @param string $ucid    UCID of comment (unique comment ID)
      */
     public function renderCommentView($ucid) {
-
-      global $html;
       global $lexicon;
       global $roles;
 
-      $members = new Members(JSON_FILE_MEMBERS);
+      $members = new Members();
+
+      // TODO: implement SQLite3 comment display
 
       $comment_data = $this->comments['ucid-'.$ucid];
-      $html .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
-      $html .= ('<div class="commentia-comment_info">'."\n");
-      $html .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
-      $html .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
+      $this->html_output .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
+      $this->html_output .= ('<div class="commentia-comment_info">'."\n");
+      $this->html_output .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
+      $this->html_output .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
       date_default_timezone_set(TIMEZONE);
-      $html .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
+      $this->html_output .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
       date_default_timezone_set('UTC');
-      $html .= ('</div>'."\n");
-      $html .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
-      $html .= ('<div class="commentia-edit_area"></div>'."\n");
+      $this->html_output .= ('</div>'."\n");
+      $this->html_output .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
+      $this->html_output .= ('<div class="commentia-edit_area"></div>'."\n");
 
       if (!$comment_data['is_deleted']) {
           if ($_SESSION['member_is_logged_in']) {
-              $html .= ('<p class="commentia-comment_controls">
+              $this->html_output .= ('<p class="commentia-comment_controls">
                              <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
               if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
-                  $html .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
-                  $html .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
+                  $this->html_output .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
+                  $this->html_output .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
               }
-              $html .= ('</p>'."\n");
+              $this->html_output .= ('</p>'."\n");
           }
       }
 
-      $html .= ('<div class="commentia-reply_area"></div>'."\n");
+      $this->html_output .= ('<div class="commentia-reply_area"></div>'."\n");
 
       if ($comment_data['children']) {
           foreach($comment_data['children'] as $child) {
@@ -147,7 +133,7 @@ class Comments
           }
       }
 
-      $html .= ('</div>'."\n");
+      $this->html_output .= ('</div>'."\n");
 
     }
 
@@ -159,31 +145,49 @@ class Comments
      */
     public function createNewComment($content, $childof)
     {
-        if ($this->metadata->getMetadata('last_ucid') !== '') {
-            $ucid = $this->metadata->getMetadata('last_ucid') + 1;
+        $res = $this->db->query('SELECT MAX(ucid) FROM comments');
+        $last_ucid = $res->fetchArray(SQLITE3_ASSOC)['MAX(ucid)'];
+
+        if (is_numeric($last_ucid)) {
+            $ucid = $last_ucid + 1;
         } else {
             $ucid = 0;
         }
 
-        $comment_post_path = &$this->comments;
+        $content = $this->md_to_html->text(htmlspecialchars(urldecode($content)));
+        $timestamp = date(DateTime::ISO8601);
+        $creator_username = $_SESSION['member_username'];
+        $is_deleted = 0;
+        $children = '';
+        $pageid = $this->pageid;
 
-        $comment_post_path["ucid-$ucid"] = array();
-        $comment_post_path["ucid-$ucid"]['ucid'] = $ucid;
-        $comment_post_path["ucid-$ucid"]['content'] = $this->md_to_html->text(htmlspecialchars(urldecode("$content")));
-        $comment_post_path["ucid-$ucid"]['timestamp'] = date(DateTime::ISO8601);
-        $comment_post_path["ucid-$ucid"]['creator_username'] = $_SESSION['member_username'];
-        $comment_post_path["ucid-$ucid"]['is_deleted'] = false;
-        $comment_post_path["ucid-$ucid"]['children'] = array();
-        $comment_post_path["ucid-$ucid"]['pageid'] = $this->pageid;
+        $stmt = $this->db->prepare('INSERT INTO comments (ucid, content, timestamp, creator_username, is_deleted, children, pageid) VALUES (
+                                    :ucid, :content, :timestamp, :creator_username, :is_deleted, :children, :pageid);');
 
-        if ($childof) {
-            $comment_post_path["ucid-$childof"]['children'][] = $ucid;
+        $stmt->bindValue(':ucid', $ucid);
+        $stmt->bindValue(':content', $content);
+        $stmt->bindValue(':timestamp', $timestamp);
+        $stmt->bindValue(':creator_username', $creator_username);
+        $stmt->bindValue(':is_deleted', $is_deleted);
+        $stmt->bindValue(':children', $children);
+        $stmt->bindValue(':pageid', $pageid);
+
+        $stmt->execute();
+
+        if (isset($childof)) {
+            $stmt = $this->db->prepare('SELECT children FROM comments WHERE ucid = :childof');
+            $stmt->bindValue(':childof', $childof);
+            $res = $stmt->execute();
+
+            $children = json_decode($res->fetchArray(SQLITE3_ASSOC)['children']);
+            $children[] = $ucid;
+            $children_new = json_encode($children);
+
+            $stmt = $this->db->prepare('UPDATE comments SET children = :children_new WHERE ucid = :childof');
+            $stmt->bindValue(':children_new', $children_new);
+            $stmt->bindValue(':childof', $childof);
+            $stmt->execute();
         }
-
-        $this->metadata->setMetadata('last_ucid', $ucid);
-        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
-
-        $this->updateComments($this->comments_json);
     }
 
     /**
@@ -194,13 +198,13 @@ class Comments
      */
     public function editComment($ucid, $content)
     {
-        $comment_post_path = &$this->comments["ucid-$ucid"];
-
-        $comment_post_path['content'] = $this->md_to_html->text(urldecode($content));
-        $comment_post_path['timestamp'] = date(DateTime::ISO8601);
-        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
-
-        $this->updateComments($this->comments_json);
+        $content = $this->md_to_html->text(htmlspecialchars(urldecode($content)));
+        $timestamp = date(DateTime::ISO8601);
+        $stmt = $this->db->prepare('UPDATE comments SET content = :content, timestamp = :timestamp WHERE ucid = :ucid');
+        $stmt->bindValue(':content', $content);
+        $stmt->bindValue(':timestamp', $timestamp);
+        $stmt->bindValue(':ucid', $ucid);
+        $stmt->execute();
     }
 
     /**
@@ -210,27 +214,24 @@ class Comments
      */
     public function deleteComment($ucid)
     {
-        $comment_post_path = &$this->comments["ucid-$ucid"];
-
-        $comment_post_path['content'] = $this->md_to_html->text(urldecode('_[[deleted]]_'));
-        $comment_post_path['timestamp'] = date(DateTime::ISO8601);
-        $comment_post_path['is_deleted'] = true;
-        $this->metadata->setMetadata('last_modified_comments', date(DateTime::ISO8601));
-
-        $this->updateComments($this->comments_json);
+        $content = $this->md_to_html->text(htmlspecialchars(urldecode('_[[deleted]]_')));
+        $timestamp = date(DateTime::ISO8601);
+        $stmt = $this->db->prepare('UPDATE comments SET content = :content, timestamp = :timestamp, is_deleted = 1 WHERE ucid = :ucid');
+        $stmt->bindValue(':content', $content);
+        $stmt->bindValue(':timestamp', $timestamp);
+        $stmt->bindValue(':ucid', $ucid);
+        $stmt->execute();
     }
 
     /**
-     * Used by the frontend to get the comment's markdown for editing.
+     * Used by the frontend to get the comment's Markdown for editing.
      *
      * @param int    $ucid       Unique comment ID
      */
     public function getCommentMarkdown($ucid)
     {
         $comment_post_path = &$this->comments["ucid-$ucid"];
-
         $comment_md = $this->html_to_md->parseString($comment_post_path['content']);
-
         return $comment_md;
     }
 
@@ -245,27 +246,6 @@ class Comments
     public function getCommentData($ucid, $entry)
     {
         $comment_post_path = &$this->comments["ucid-$ucid"];
-
         return $comment_post_path[$entry];
-    }
-
-    /**
-     * Updates the comments JSON with the current comments array.
-     *
-     * @param string $comments_json The path to the comments JSON file
-     */
-    private function updateComments($comments_json)
-    {
-        if (!is_writable(dirname($comments_json))) {
-            exit('Error: Directory not writable.');
-        }
-
-        $fp = fopen($comments_json, 'w+');
-        flock($fp, LOCK_EX);
-        if (flock($fp, LOCK_EX)) {
-            fwrite($fp, json_encode($this->comments_global));
-        }
-        flock($fp, LOCK_UN);
-        fclose($fp);
     }
 }

@@ -25,6 +25,9 @@ define('JSON_FILE_MEMBERS', __DIR__.'/db/members.example.json');
 // Path to JSON file containing metadata for comments, members and Commentia itself
 define('JSON_FILE_METADATA', __DIR__.'/db/metadata.example.json');
 
+// Path to SQLite DB containing comments
+define('DB', __DIR__.'/db/commentia.db');
+
 // Relative path to avatar directory from this file (with trailing slash)
 define('AVATAR_DIR', 'app/data/avatars/');
 

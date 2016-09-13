@@ -1,8 +1,8 @@
 # Commentia – Documentation
 
-Commentia is a plug-in which adds a comment functionality to any webpage, and does not require any database. It is flat file, uses JSON files to store data, and only requires PHP, GD, the JSON module, and Composer for PHP (both, GD and php-json usually come preinstalled by default, Composer is easy to install).
+Commentia is a plugin which adds a comment functionality to any webpage, and does not require any database server, but uses a flat file, SQLite3 DB to store data, and only requires PHP, GD, the SQLite3 module installed/enabled on the server, and Composer for PHP dependency bootstrapping and autoloader generation (both, GD and SQLite3 module usually come preinstalled by default, Composer is easy to install).
 
-One may wonder, what is the point of a comment plugin, if CMSes with commenting functionality already exist? Some people prefer to have a static website without any CMS, and still want commenting functionality. This plugin caters for these kinds of people.
+Even though CMSs with commenting functionality already exist, some people prefer to have a static website without any CMS, and still want commenting functionality. This plugin caters for these kinds of people. Also, this plugin is fully self-contained, that is, comments and users don't get stored in the website database, if it runs on one.
 
 The following is a short documentation for Commentia, serving as a quick getting started guide, and providing some background information on its technical workings:
 
@@ -10,7 +10,7 @@ The following is a short documentation for Commentia, serving as a quick getting
 
 ### Composer
 
-The only real dependency (besides php-gd and php-json, but they're probably installed already anyways) is the Composer dependency manager – it will manage all needed dependencies all by itself.
+The only real dependency (besides php-gd and php-sqlite3, but they're probably installed already anyways) is the Composer dependency manager – it will manage all needed dependencies all by itself.
 
 The user issues one command (`composer install`), and composer will automatically download all dependencies and dump the PSR-4 autoloader.
 
@@ -36,14 +36,19 @@ Once Composer has run, modify the website template or website to have the follow
 
 ```php
 <?php
-  // Composer's autoload
-  require 'commentia-dir/vendor/autoload.php';
+    // Path to Commentia with trailing slash (root-relative)
+    $commentia_dir = '/path/to/Commentia/';
 
-  use Commentia\Controllers\CommentiaController;
+    // Page ID
+    $pageid = x;
 
-  // Include and initiate Commentia with unique page-id
-  $pageid = x;
-  $commentia = new CommentiaController($pageid);
+    // Composer's autoload
+    require $commentia_dir.'vendor/autoload.php';
+
+    use Commentia\Controllers\CommentiaController;
+
+    // Include and initiate Commentia with unique page ID and path to Commentia
+    $commentia = new CommentiaController($pageid, $commentia_dir);
 ?>
 ```
 
@@ -53,11 +58,11 @@ Where `x` is the right side of the assignment for the `$pageid`, which can be an
 - Drupal's `$node->nid`
 - MODX's `[[*id]]` template tag.
 
-And `commentia-dir` is the path to the directory Commentia is in.
+And `$commentia_dir` is the path to the directory Commentia is in.
 
-Throughout other parts of this README, the term `commentia-dir` will be referred to exactly as that.
+Throughout other parts of this README, the term `commentia_dir` will be referred to exactly as that. It should be a root-relative and not absolute path, as the same path will be used for loading of resources such as comment area CSS and avatar images.
 
-The above just describes some of the popular CMS's ways of getting the page ID. For static blogs, `x` can also be a manually entered page ID. Make sure to replace `x` with the relevant way of getting the page ID.
+The above just describes some of the popular CMSs' ways of getting the page ID. For static blogs, `x` can also be any manually entered page ID. Make sure to replace `x` with the relevant way of getting the page ID.
 
 It is irrelevant whether `$pageid` is a number or an alphanumeric string, as Commentia is just checking under the given page ID for comments to display.
 
@@ -65,48 +70,34 @@ The only thing that _does_ matter is that the page ID should be unique.
 
 #### Modification of relevant tags
 
-_NOTE: Page ID may soon not need to be defined in html-tag. Revise README.md when due time._
-
-Then, modify the HTML tag to read:
+Now, just include 2 files in the head of the website, using the syntax which will locate the files in the `$commentia_dir` automatically. If, as supposed to, a root relative path is used, this code will automatically load all needed resources for Commentia. For this, modify the `<head>` tag as follows:
 
 ```html
-<html data-pageid="<?=$pageid;?>">
+    <script>
+        window.commentia = window.commentia || {};
+        window.commentia.APIURL = '<?=$commentia_dir?>api.php';
+    </script>
+    <!-- Commentia AJAX script + CSS for comments section -->
+    <script src="<?=$commentia_dir?>assets/commentia.js"></script>
+    <link href="<?=$commentia_dir?>assets/commentia-default-theme.css" rel="stylesheet">
 ```
 
-The `<?=$pageid;?>` is the PHP echo shortcut. The data-pageid attribute is used by commentia.js for the AJAX requests to the API.
-
-Almost done! Now, just include 2 files in the head of the website:
-
-```html
-<head>
-  <script>
-    window.commentia = window.commentia || {};
-    window.commentia.APIURL = '/commentia-dir/api.php';
-  </script>
-  <script src="/commentia-dir/assets/commentia.js"></script>
-  <link href="/commentia-dir/assets/commentia-default-theme.css" rel="stylesheet">
-  ...
-</head>
-```
-
-Now, there should be a working instance of Commentia on any page, if the previous changes were done in a common template.
+Now, there should be a working instance of Commentia. Mind that for a folder-based structure, pages nested in folders may need `$commentia_dir` to be adjusted accordingly.
 
 #### Displaying the comments section and login form
 
-To display the comments section and login form, use the following code:
+To display the comments section and login/signup form, use the following code:
 
 ```html
-<?=$commentia->displayComments();?>
-<?=$commentia->displayAuthForm();?>
+    <?=$commentia->displayComments();?>
+    <?=$commentia->displayAuthForm();?>
 ```
 
 ## Technical details
 
-Internally, each comment has a UCID, a **U**nique **C**omment **ID**. These are referred to as `$ucid` in the code. Each new comment would increase the `$last_ucid` by 1, and the UCID of a new comment would merely be the `$last_ucid + 1`.
+Internally, each comment has a UCID, a **U**nique **C**omment **ID**. These are referred to as `$ucid` in the code. Each new comment would get a UCID of the last UCID + 1.
 
-The reply path is used to determine under which parent a reply would go under. It is just all the UCIDs down the thread chain, e.g. if comment 2 is a reply of comment 1, and comment 1 is a reply of comment 0, the reply path of comment 2 would be 0-1-2. It is referred to by the variable `$reply_path`.
-
-In the future, though, this system may change completely, as there is currently an SQLite branch in progress.
+Manual changes can be made to the SQLite3 database by using an SQLite editor. A recommended editor is the [DB Browser for SQLite](http://sqlitebrowser.org).
 
 ## Translatability
 
@@ -118,9 +109,9 @@ Both, translating the commenting front-end with an existing language and creatin
   * German (Germany)/Deutsch (Deutschland): `de-DE.php`
   * French (France)/Français (France): `fr-FR.php`
 
-### <a name='switch-language'>Switching the front-end language</a>
+###<a name='switch-language'>Switching the front-end language</a>
 
-In order to switch the front-end language, all that has to be done is a modification of one line in the `/commentia-dir/app/data/config.php` file. The lexicon locale, `LEX_LOCALE`, is always the name of the language file _without_ the `.php` extension.
+In order to switch the front-end language, all that has to be done is a modification of one line in the `/commentia_dir/app/data/config.php` file. The lexicon locale, `LEX_LOCALE`, is always the name of the language file _without_ the `.php` extension.
 
 The name of the language file always adheres to the language tag according to the [RFC 5646](https://tools.ietf.org/html/rfc5646 'RFC 5646 standard') standard, with the extension `.php` appended to it.
 
@@ -147,3 +138,9 @@ For example, if the target language is Chinese (China), the language code would 
 Open up the new language file and the `en-US.php` file side-by-side, and start translating. The format of each phrase is as follows: `define('PHRASE_IDENTIFIER', 'Localized phrase')`, where `PHRASE_IDENTIFIER` is an uppercase, underscore-separated string, clearly describing the meaning of a phrase, such as `COMMENT_INFO_COMMENT_BY`. Generally, the phrase identifier follows the pattern `CATEGORY_OBJECT`, e.g. `COMMENT_INFO` is the category and `COMMENT_BY` is the object. It is also why the phrases are grouped the way they are in the lexicon files. The localized phrase is just the translation.
 
 To use the newly created language file, read the previous section on [switching the front-end language](#switch-language).
+
+### Readiness fir production use
+
+Even though the system was tested thoroughly to not contain any bugs (please do open up issues if any are found), it did not undergo formal tests (e.g. PHPunit).
+
+Unit tests are planned for future releases of Commentia.
