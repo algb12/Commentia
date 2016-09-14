@@ -46,7 +46,7 @@ define('NOTICE_LOG_IN_SUCCESS', 'Notice: User logged in successfully.');
 define('ERROR_SIGN_UP_MISSING_USERNAME', 'Error: Please enter a username.');
 define('ERROR_SIGN_UP_MISSING_PASSWORD', 'Error: Please enter a password.');
 define('ERROR_SIGN_UP_PASSWORD_MISMATCH', 'Error: Passwords do not match. Please re-enter your password.');
-define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Error: Password must be at least ' . MIN_PASSWORD_LEN . ' characters long. Please choose a longer password.');
+define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Error: Password must be at least ' . COMMENTIA_MIN_PASSWORD_LEN . ' characters long. Please choose a longer password.');
 define('ERROR_SIGN_UP_INVALID_EMAIL', 'Error: Please enter a valid email.');
 define('ERROR_SIGN_UP_USERNAME_TAKEN', 'Error: Username already taken. Please enter a different username.');
 define('ERROR_SIGN_UP_AVATAR_UPLOAD', 'Error: Something went wrong with the avatar image-upload.');

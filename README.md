@@ -111,20 +111,20 @@ Both, translating the commenting front-end with an existing language and creatin
 
 ###<a name='switch-language'>Switching the front-end language</a>
 
-In order to switch the front-end language, all that has to be done is a modification of one line in the `/commentia_dir/app/data/config.php` file. The lexicon locale, `LEX_LOCALE`, is always the name of the language file _without_ the `.php` extension.
+In order to switch the front-end language, all that has to be done is a modification of one line in the `/commentia_dir/app/data/config.php` file. The lexicon locale, `COMMENTIA_LEX_LOCALE`, is always the name of the language file _without_ the `.php` extension.
 
 The name of the language file always adheres to the language tag according to the [RFC 5646](https://tools.ietf.org/html/rfc5646 'RFC 5646 standard') standard, with the extension `.php` appended to it.
 
 E.g., for American English, the line would read
 
 ```php
-define('LEX_LOCALE', 'en-US');
+define('COMMENTIA_LEX_LOCALE', 'en-US');
 ```
 
 And for German it would be
 
 ```php
-define('LEX_LOCALE', 'de-DE');
+define('COMMENTIA_LEX_LOCALE', 'de-DE');
 ```
 
 A full list of languages and their locales/culture codes can be found [here](http://download1.parallels.com/SiteBuilder/Windows/docs/3.2/en_US/sitebulder-3.2-win-sdk-localization-pack-creation-guide/30801.htm 'List of Culture Codes').

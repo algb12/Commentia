@@ -23,7 +23,7 @@ class Members
      */
     public function __construct()
     {
-        $this->db = new DBHandler(DB);
+        $this->db = new DBHandler(COMMENTIA_DB);
 
         if (!isset($_SESSION['__COMMENTIA__']['member_username'])) {
             $_SESSION['__COMMENTIA__']['member_is_logged_in'] = false;
@@ -88,7 +88,7 @@ class Members
 
         $dest_image = imagecreatetruecolor($dest_w, $dest_h);
 
-        $image_file_no_ext = (AVATAR_DIR.uniqid('avatar_', true));
+        $image_file_no_ext = (COMMENTIA_AVATAR_DIR.uniqid('avatar_', true));
 
         switch (strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
             case 'jpeg':
@@ -217,7 +217,7 @@ class Members
             $error_encountered = true;
         }
 
-        if (strlen($password) < MIN_PASSWORD_LEN) {
+        if (strlen($password) < COMMENTIA_MIN_PASSWORD_LEN) {
             $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_INSECURE."<br>\n";
             $error_encountered = true;
         }
@@ -228,7 +228,7 @@ class Members
         }
 
         if (!empty($_FILES['avatar_img']['tmp_name'])) {
-            $uploads_dir = AVATAR_DIR;
+            $uploads_dir = COMMENTIA_AVATAR_DIR;
             $upload_img_tmp = $_FILES['avatar_img']['tmp_name'];
             $is_image = getimagesize($_FILES['avatar_img']['tmp_name']) ? true : false;
             $filesize = $_FILES['avatar_img']['size'];
@@ -287,7 +287,7 @@ class Members
         $entry_data = $res->fetchArray(SQLITE3_ASSOC)[$entry];
 
         if ($entry === 'avatar_file') {
-            $result = ABS_PATH_PREFIX.AVATAR_DIR.$entry_data;
+            $result = ABS_PATH_PREFIX.COMMENTIA_AVATAR_DIR.$entry_data;
         } else {
             $result = $entry_data;
         }

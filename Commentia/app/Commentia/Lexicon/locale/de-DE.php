@@ -46,7 +46,7 @@ define('NOTICE_LOG_IN_SUCCESS', 'Hinweis: Benutzer erfolgreich angemeldet.');
 define('ERROR_SIGN_UP_MISSING_USERNAME', 'Fehler: Bitte geben Sie einen Benutzernamen ein.');
 define('ERROR_SIGN_UP_MISSING_PASSWORD', 'Fehler: Bitte geben Sie ein Passwort ein.');
 define('ERROR_SIGN_UP_PASSWORD_MISMATCH', 'Fehler: Die Passwörter stimmen nicht überein. Bitte geben Sie Ihr Passwort erneut ein.');
-define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Fehler: Das Passwort ist muss mindestens ' . MIN_PASSWORD_LEN . ' zeichen lang sein. Bitte wählen Sie ein längeres Passwort.');
+define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Fehler: Das Passwort ist muss mindestens ' . COMMENTIA_MIN_PASSWORD_LEN . ' zeichen lang sein. Bitte wählen Sie ein längeres Passwort.');
 define('ERROR_SIGN_UP_INVALID_EMAIL', 'Fehler: Bitte geben Sie eine gültige E-Mail Addresse ein.');
 define('ERROR_SIGN_UP_USERNAME_TAKEN', 'Fehler: Benutzername bereits vergeben. Bitte wählen Sie einen anderen Benutzernamen.');
 define('ERROR_SIGN_UP_AVATAR_UPLOAD', 'Fehler: Irgendetwas ist beim Hochladen des Benutzerbildes schief gelaufen.');

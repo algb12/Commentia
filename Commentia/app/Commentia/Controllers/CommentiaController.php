@@ -35,7 +35,7 @@ class CommentiaController
 
         require_once __DIR__.'/../../data/config.php';
 
-        Lexicon::load(LEX_LOCALE);
+        Lexicon::load(COMMENTIA_LEX_LOCALE);
 
         define('ABS_PATH_PREFIX', $abs_path_prefix);
         $_SESSION['__COMMENTIA__']['abs_path_prefix'] = ABS_PATH_PREFIX;

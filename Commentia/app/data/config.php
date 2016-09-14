@@ -4,32 +4,26 @@
 // Commentia config                                               //
 // These are the settings to be adjusted by the webmaster.        //
 // Member role settings can be found in the MembersRoles.php file //
-// Author: Alexander Gilburg                                      //
+// Author: algb12.19@gmail.com                                      //
 ////////////////////////////////////////////////////////////////////
 
 
 
 // Locale for language to be used by lexicon (default: en-US)
 // Available languages are in the /app/Commentia/Lexicon/locale directory
-define('LEX_LOCALE', 'en-US');
+define('COMMENTIA_LEX_LOCALE', 'en-US');
 
 // Timezone used by PHP (default: UTC; display time only, all times stored in UTC)
-define('TIMEZONE', 'Europe/Berlin');
-
-// Path to JSON file containing comments
-define('JSON_FILE_COMMENTS', __DIR__.'/db/comments.example.json');
-
-// Path to JSON file containing members
-define('JSON_FILE_MEMBERS', __DIR__.'/db/members.example.json');
-
-// Path to JSON file containing metadata for comments, members and Commentia itself
-define('JSON_FILE_METADATA', __DIR__.'/db/metadata.example.json');
+define('COMMENTIA_TIMEZONE', 'Europe/Berlin');
 
 // Path to SQLite DB containing comments
-define('DB', __DIR__.'/db/commentia.db');
+define('COMMENTIA_DB', __DIR__.'/db/commentia.db');
+
+// Root-relative path to default avatar file
+define('COMMENTIA_AVATAR_DEFAULT', 'app/data/avatars/placeholder/avatar_placeholder.jpg');
 
 // Relative path to avatar directory from this file (with trailing slash)
-define('AVATAR_DIR', 'app/data/avatars/');
+define('COMMENTIA_AVATAR_DIR', 'app/data/avatars/');
 
 // Minimum password length for sign up
-define('MIN_PASSWORD_LEN', 8);
+define('COMMENTIA_MIN_PASSWORD_LEN', 8);

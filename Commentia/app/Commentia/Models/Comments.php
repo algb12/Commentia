@@ -36,7 +36,7 @@ class Comments
     public function __construct($pageid)
     {
         $this->pageid = $pageid;
-        $this->db = new DBHandler(DB);
+        $this->db = new DBHandler(COMMENTIA_DB);
         $this->md_to_html = new Parsedown();
         $this->html_to_md = new Converter();
 
@@ -60,7 +60,7 @@ class Comments
     public function displayComments()
     {
         global $lexicon;
-        $lexicon = new Lexicon(LEX_LOCALE);
+        $lexicon = new Lexicon(COMMENTIA_LEX_LOCALE);
 
         global $roles;
         $roles = new Roles();
@@ -101,7 +101,7 @@ class Comments
       $this->html_output .= ('<div class="commentia-comment_info">'."\n");
       $this->html_output .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
       $this->html_output .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
-      date_default_timezone_set(TIMEZONE);
+      date_default_timezone_set(COMMENTIA_TIMEZONE);
       $this->html_output .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
       date_default_timezone_set('UTC');
       $this->html_output .= ('</div>'."\n");

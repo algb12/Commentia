@@ -46,7 +46,7 @@ define('NOTICE_LOG_IN_SUCCESS', 'Примечание: Пользователь 
 define('ERROR_SIGN_UP_MISSING_USERNAME', 'Ошибка: Пожалуйста, введите имя пользователя.');
 define('ERROR_SIGN_UP_MISSING_PASSWORD', 'Ошибка: Пожалуйста, введите пароль.');
 define('ERROR_SIGN_UP_PASSWORD_MISMATCH', 'Ошибка: Пароли не совпадают, пожалуйста повторите ввод  пароля.');
-define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Ошибка: Пароль должен быть длиной не менее ' . MIN_PASSWORD_LEN . ' символов. Пожалуйста, выберите более длинный пароль.');
+define('ERROR_SIGN_UP_PASSWORD_INSECURE', 'Ошибка: Пароль должен быть длиной не менее ' . COMMENTIA_MIN_PASSWORD_LEN . ' символов. Пожалуйста, выберите более длинный пароль.');
 define('ERROR_SIGN_UP_INVALID_EMAIL', 'Ошибка: Пожалуйста, введите действительный адрес электронной почты.');
 define('ERROR_SIGN_UP_USERNAME_TAKEN', 'Ошибка: Имя пользователя уже занято. Пожалуйста, введите другое имя пользователя.');
 define('ERROR_SIGN_UP_AVATAR_UPLOAD', 'Ошибка: Что-то заладилось во время загрузки фотографии аватара.');
