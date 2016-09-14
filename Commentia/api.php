@@ -3,14 +3,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Commentia API                                                                                      //
 // This should be the ONLY entry point directly from a website.                                       //
-// Anything after the $_SESSION['member_is_logged_in'] check can only be executed ince authenticated. //
+// Anything after the $_SESSION['__COMMENTIA__']['member_is_logged_in'] check can only be executed ince authenticated. //
 // Author: algb12.19@gmail.com                                                                          //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 session_start();
 
-$_SESSION['member_is_logged_in'] = true;
+$_SESSION['__COMMENTIA__']['member_is_logged_in'] = true;
 
 require_once 'vendor/autoload.php';
 
@@ -18,9 +18,9 @@ require_once 'vendor/autoload.php';
 use Commentia\Controllers\CommentiaController;
 
 // Instantiate the controller
-if (isset($_SESSION['pageid'])) {
-    $commentia = new CommentiaController($_SESSION['pageid'], $_SESSION['abs_path_prefix']);
-    $pageid = $_SESSION['pageid'];
+if (isset($_SESSION['__COMMENTIA__']['pageid'])) {
+    $commentia = new CommentiaController($_SESSION['__COMMENTIA__']['pageid'], $_SESSION['__COMMENTIA__']['abs_path_prefix']);
+    $pageid = $_SESSION['__COMMENTIA__']['pageid'];
 }
 
 // Require member roles
@@ -53,9 +53,9 @@ if (isset($_POST['action'])) {
     }
 }
 
-if (isset($_SESSION['pageid'])
+if (isset($_SESSION['__COMMENTIA__']['pageid'])
 && isset($_GET['action'])) {
-    $pageid = $_SESSION['pageid'];
+    $pageid = $_SESSION['__COMMENTIA__']['pageid'];
     $action = $_GET['action'];
 
     if ($action === 'display') {
@@ -63,7 +63,7 @@ if (isset($_SESSION['pageid'])
     }
 
     if ($action === 'getPhrase'
-    && $_SESSION['member_is_logged_in']) {
+    && $_SESSION['__COMMENTIA__']['member_is_logged_in']) {
         if (isset($_GET['phrase'])) {
             echo $commentia->getPhrase($_GET['phrase']);
         }
@@ -71,16 +71,16 @@ if (isset($_SESSION['pageid'])
 
     if (($action === 'getCommentMarkdown')
     && isset($_GET['ucid'])
-    && $_SESSION['member_is_logged_in']) {
+    && $_SESSION['__COMMENTIA__']['member_is_logged_in']) {
         $ucid = $_GET['ucid'];
         echo $commentia->getCommentMarkdown($ucid);
     }
 }
 
-if (isset($_SESSION['pageid'])
+if (isset($_SESSION['__COMMENTIA__']['pageid'])
 && isset($_POST['action'])
-&& $_SESSION['member_is_logged_in']) {
-    $pageid = $_SESSION['pageid'];
+&& $_SESSION['__COMMENTIA__']['member_is_logged_in']) {
+    $pageid = $_SESSION['__COMMENTIA__']['pageid'];
     $action = $_POST['action'];
 
     if ((($action === 'reply')

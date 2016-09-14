@@ -25,12 +25,12 @@ class Members
     {
         $this->db = new DBHandler(DB);
 
-        if (!isset($_SESSION['member_username'])) {
-            $_SESSION['member_is_logged_in'] = false;
+        if (!isset($_SESSION['__COMMENTIA__']['member_username'])) {
+            $_SESSION['__COMMENTIA__']['member_is_logged_in'] = false;
         }
 
-        if (!isset($_SESSION['login_error_msg'])) {
-            $_SESSION['login_error_msg'] = '';
+        if (!isset($_SESSION['__COMMENTIA__']['login_error_msg'])) {
+            $_SESSION['__COMMENTIA__']['login_error_msg'] = '';
         }
     }
 
@@ -202,28 +202,28 @@ class Members
         $error_encountered = false;
 
         if (empty($username) || $username === '') {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_USERNAME."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_USERNAME."<br>\n";
             $error_encountered = true;
         } elseif ($this->getMemberData($username, 'username')) {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_USERNAME_TAKEN."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_USERNAME_TAKEN."<br>\n";
             $error_encountered = true;
         }
 
         if (empty($password) || $password === '') {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_PASSWORD."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_MISSING_PASSWORD."<br>\n";
             $error_encountered = true;
         } elseif ($password !== $retyped_password) {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_MISMATCH."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_MISMATCH."<br>\n";
             $error_encountered = true;
         }
 
         if (strlen($password) < MIN_PASSWORD_LEN) {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_INSECURE."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_PASSWORD_INSECURE."<br>\n";
             $error_encountered = true;
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_INVALID_EMAIL."<br>\n";
+            $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_INVALID_EMAIL."<br>\n";
             $error_encountered = true;
         }
 
@@ -239,7 +239,7 @@ class Members
                 move_uploaded_file($upload_img_tmp, $tmp_img_store_name);
                 $avatar_file = $tmp_img_store_name;
             } else {
-                $_SESSION['sign_up_error_msg'] .= ERROR_SIGN_UP_AVATAR_UPLOAD."<br>\n";
+                $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= ERROR_SIGN_UP_AVATAR_UPLOAD."<br>\n";
                 $error_encountered = true;
             }
         } else {
@@ -252,10 +252,10 @@ class Members
             $member_created = $this->createNewMember($username, $password, $email, $role, $avatar_file);
 
             if ($member_created) {
-                $_SESSION['sign_up_error_msg'] .= NOTICE_SIGN_UP_SUCCESS."<br>\n";
+                $_SESSION['__COMMENTIA__']['sign_up_error_msg'] .= NOTICE_SIGN_UP_SUCCESS."<br>\n";
             }
         }
-        header('Location:'.$_SESSION['log_in_page']);
+        header('Location:'.$_SESSION['__COMMENTIA__']['log_in_page']);
     }
 
     /**
@@ -321,19 +321,19 @@ class Members
     {
         if (isset($username) && isset($password)) {
             if (password_verify($password, $this->getMemberData($username, 'password_hash'))) {
-                $_SESSION['member_is_logged_in'] = true;
-                $_SESSION['member_username'] = $username;
-                $_SESSION['member_role'] = $this->getMemberData($username, 'role');
+                $_SESSION['__COMMENTIA__']['member_is_logged_in'] = true;
+                $_SESSION['__COMMENTIA__']['member_username'] = $username;
+                $_SESSION['__COMMENTIA__']['member_role'] = $this->getMemberData($username, 'role');
                 // TODO: Login success message localization
-                $_SESSION['login_error_msg'] = 'LOGIN_AUTH_SUCCESS';
+                $_SESSION['__COMMENTIA__']['login_error_msg'] = 'LOGIN_AUTH_SUCCESS';
                 session_regenerate_id();
-                header('Location:'.$_SESSION['log_in_page']);
+                header('Location:'.$_SESSION['__COMMENTIA__']['log_in_page']);
             } else {
-                $_SESSION['member_is_logged_in'] = false;
+                $_SESSION['__COMMENTIA__']['member_is_logged_in'] = false;
                 // TODO: Login fail message localization
-                $_SESSION['login_error_msg'] = 'LOGIN_AUTH_FAIL';
+                $_SESSION['__COMMENTIA__']['login_error_msg'] = 'LOGIN_AUTH_FAIL';
                 session_regenerate_id();
-                header('Location:'.$_SESSION['log_in_page']);
+                header('Location:'.$_SESSION['__COMMENTIA__']['log_in_page']);
             }
         }
     }
@@ -343,12 +343,12 @@ class Members
      */
     public function logoutMember()
     {
-        $_SESSION['member_is_logged_in'] = false;
-        unset($_SESSION['member_username']);
-        unset($_SESSION['member_role']);
-        $_SESSION['login_error_msg'] = 'LOGOUT';
+        $_SESSION['__COMMENTIA__']['member_is_logged_in'] = false;
+        unset($_SESSION['__COMMENTIA__']['member_username']);
+        unset($_SESSION['__COMMENTIA__']['member_role']);
+        $_SESSION['__COMMENTIA__']['login_error_msg'] = 'LOGOUT';
         session_regenerate_id();
-        header('Location:'.$_SESSION['log_in_page']);
+        header('Location:'.$_SESSION['__COMMENTIA__']['log_in_page']);
     }
 
     /**
@@ -359,13 +359,13 @@ class Members
     public function displayAuthForm()
     {
         $html = '<h3>'.TITLES_AUTH_FORM.'</h3>';
-        if ($_SESSION['member_is_logged_in']) {
+        if ($_SESSION['__COMMENTIA__']['member_is_logged_in']) {
             $html .= '
             <form class="commentia-logout_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
                 <input type="hidden" name="action" value="logoutMember">
                 <input type="submit" name="log-out" value="'.AUTH_FORM_BUTTONS_LOG_OUT.'">
             </form>
-            <p>Logged in as '.$_SESSION['member_username'].' with role '.$_SESSION['member_role'].'</p>';
+            <p>Logged in as '.$_SESSION['__COMMENTIA__']['member_username'].' with role '.$_SESSION['__COMMENTIA__']['member_role'].'</p>';
         } else {
             $html .= '
             <form class="commentia-login_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
@@ -385,8 +385,8 @@ class Members
                 <input type="submit" name="log-in" value="'.AUTH_FORM_BUTTONS_LOG_IN.'">
             </form>';
         }
-        $html .= '<p>'.$_SESSION['login_error_msg'].'</p>';
-        $_SESSION['login_error_msg'] = '';
+        $html .= '<p>'.$_SESSION['__COMMENTIA__']['login_error_msg'].'</p>';
+        $_SESSION['__COMMENTIA__']['login_error_msg'] = '';
 
         $isSecure = false;
 
@@ -402,7 +402,7 @@ class Members
      */
     public function displaySignUpForm()
     {
-        $sign_up_error_msg = isset($_SESSION['sign_up_error_msg']) ? $_SESSION['sign_up_error_msg'] : '';
+        $sign_up_error_msg = isset($_SESSION['__COMMENTIA__']['sign_up_error_msg']) ? $_SESSION['__COMMENTIA__']['sign_up_error_msg'] : '';
         $html = '<h3>'.TITLES_SIGN_UP_FORM.'</h3>';
         $html .= '
         <form class="commentia-signup_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST" enctype="multipart/form-data">
@@ -435,7 +435,7 @@ class Members
         </form>
         <p>'.$sign_up_error_msg.'</p>';
 
-        $_SESSION['sign_up_error_msg'] = '';
+        $_SESSION['__COMMENTIA__']['sign_up_error_msg'] = '';
 
         $this->setLoginPage();
 
@@ -457,6 +457,6 @@ class Members
 
         $REQUEST_PROTOCOL = $isSecure ? 'https' : 'http';
 
-        $_SESSION['log_in_page'] = $REQUEST_PROTOCOL.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+        $_SESSION['__COMMENTIA__']['log_in_page'] = $REQUEST_PROTOCOL.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
     }
 }

@@ -78,7 +78,7 @@ class Comments
             }
         }
 
-        if ($_SESSION['member_is_logged_in']) {
+        if ($_SESSION['__COMMENTIA__']['member_is_logged_in']) {
             $this->html_output .= ('<div class="commentia-new_comment_area">'."\n".'<h4>'.TITLES_NEW_COMMENT.'</h4>'."\n".'<textarea id="comment-box" oninput="autoGrow(this);"></textarea>'."\n".'<button id="post-comment-button" onclick="postNewComment(this);">'.COMMENT_CONTROLS_PUBLISH.'</button>'."\n".'</div>'."\n");
         }
 
@@ -96,8 +96,6 @@ class Comments
 
       $members = new Members();
 
-      // TODO: implement SQLite3 comment display
-
       $comment_data = $this->comments['ucid-'.$ucid];
       $this->html_output .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
       $this->html_output .= ('<div class="commentia-comment_info">'."\n");
@@ -111,7 +109,7 @@ class Comments
       $this->html_output .= ('<div class="commentia-edit_area"></div>'."\n");
 
       if (!$comment_data['is_deleted']) {
-          if ($_SESSION['member_is_logged_in']) {
+          if ($_SESSION['__COMMENTIA__']['member_is_logged_in']) {
               $this->html_output .= ('<p class="commentia-comment_controls">
                              <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
               if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
@@ -156,7 +154,7 @@ class Comments
 
         $content = $this->md_to_html->text(htmlspecialchars(urldecode($content)));
         $timestamp = date(DateTime::ISO8601);
-        $creator_username = $_SESSION['member_username'];
+        $creator_username = $_SESSION['__COMMENTIA__']['member_username'];
         $is_deleted = 0;
         $children = '';
         $pageid = $this->pageid;
@@ -245,7 +243,11 @@ class Comments
      */
     public function getCommentData($ucid, $entry)
     {
-        $comment_post_path = &$this->comments["ucid-$ucid"];
-        return $comment_post_path[$entry];
+        $stmt = $this->db->prepare('SELECT * FROM comments WHERE ucid = :ucid');
+        $stmt->bindValue(':ucid', $ucid);
+        $res = $stmt->execute();
+
+        $result = $res->fetchArray(SQLITE3_ASSOC)[$entry];
+        return $result;
     }
 }

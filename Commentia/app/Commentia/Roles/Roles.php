@@ -20,7 +20,7 @@ class Roles
      */
     public function memberHasUsername($creator_username)
     {
-        return $creator_username === $_SESSION['member_username'];
+        return $creator_username === $_SESSION['__COMMENTIA__']['member_username'];
     }
 
     /**
@@ -30,6 +30,6 @@ class Roles
      */
     public function memberIsAdmin()
     {
-        return $_SESSION['member_role'] === 'admin';
+        return $_SESSION['__COMMENTIA__']['member_role'] === 'admin';
     }
 }

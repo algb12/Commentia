@@ -15,8 +15,6 @@ use Commentia\Models\Comments;
 use Commentia\Models\Members;
 use Commentia\Lexicon\Lexicon;
 use Commentia\Lexicon\Metadata;
-use Google_Client;
-$gclient = new Google_Client();
 
 class CommentiaController
 {
@@ -40,9 +38,9 @@ class CommentiaController
         Lexicon::load(LEX_LOCALE);
 
         define('ABS_PATH_PREFIX', $abs_path_prefix);
-        $_SESSION['abs_path_prefix'] = ABS_PATH_PREFIX;
+        $_SESSION['__COMMENTIA__']['abs_path_prefix'] = ABS_PATH_PREFIX;
 
-        $real_pageid = (isset($_SESSION['pageid']) ? $_SESSION['pageid'] : $pageid);
+        $real_pageid = (isset($_SESSION['__COMMENTIA__']['pageid']) ? $_SESSION['__COMMENTIA__']['pageid'] : $pageid);
 
         if (isset($real_pageid)) {
             $this->comments = new Comments($real_pageid);
@@ -57,7 +55,7 @@ class CommentiaController
             $this->params[$key] = $value;
         }
 
-        $_SESSION['pageid'] = $pageid;
+        $_SESSION['__COMMENTIA__']['pageid'] = $pageid;
     }
 
     public function displayComments($is_ajax_request)
