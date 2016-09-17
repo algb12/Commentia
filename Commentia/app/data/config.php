@@ -19,6 +19,9 @@ define('COMMENTIA_TIMEZONE', 'Europe/Berlin');
 // Path to SQLite DB containing comments
 define('COMMENTIA_DB', __DIR__.'/db/commentia.db');
 
+// Whether to enable guest mode or not
+define('COMMENTIA_ENABLE_GUEST', TRUE);
+
 // Root-relative path to default avatar file
 define('COMMENTIA_AVATAR_DEFAULT', 'app/data/avatars/placeholder/avatar_placeholder.jpg');
 

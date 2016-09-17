@@ -102,6 +102,15 @@ if (isset($_SESSION['__COMMENTIA__']['pageid'])
         $commentia->editComment($ucid, $content);
     }
 
+    if (($roles->memberIsLoggedIn())
+    && ($action === 'updateRating')
+    && isset($_POST['direction'])
+    && isset($_POST['ucid'])) {
+        $direction = $_POST['direction'];
+        $ucid = $_POST['ucid'];
+        $commentia->updateRating($ucid, $direction);
+    }
+
     if (($roles->memberHasUsername($commentia->getCommentData($_POST['ucid'], 'creator_username'))
     || $roles->memberIsAdmin())
     && ($action === 'delete')

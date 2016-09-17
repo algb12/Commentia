@@ -25,6 +25,7 @@ class DBHandler extends SQLite3
              creator_username TEXT,
              is_deleted BOOLEAN,
              children TEXT,
+             rating INT,
              pageid INT)'
         );
 
@@ -35,7 +36,15 @@ class DBHandler extends SQLite3
              avatar_file TEXT,
              is_banned BOOLEAN,
              role TEXT,
+             upvoted_comments TEXT,
+             downvoted_comments TEXT,
              member_since DATETIME)'
+        );
+
+        $this->exec('CREATE TABLE IF NOT EXISTS votes(
+             voter TEXT PRIMARY KEY,
+             comment INT,
+             direction INT)'
         );
     }
 }

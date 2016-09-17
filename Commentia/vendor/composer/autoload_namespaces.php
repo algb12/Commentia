@@ -10,6 +10,6 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Markdownify' => array($vendorDir . '/pixel418/markdownify/src'),
-    'Google_Service_' => array($vendorDir . '/google/apiclient-services'),
+    'Google_Service_' => array($vendorDir . '/google/apiclient-services/src'),
     'Google_' => array($vendorDir . '/google/apiclient/src'),
 );

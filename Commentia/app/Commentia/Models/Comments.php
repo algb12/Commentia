@@ -98,29 +98,34 @@ class Comments
 
       $comment_data = $this->comments['ucid-'.$ucid];
       $this->html_output .= ('<div class="commentia-comment"'.' data-ucid="'.$comment_data['ucid'].'">'."\n");
-      $this->html_output .= ('<div class="commentia-comment_info">'."\n");
-      $this->html_output .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-member_avatar">'."\n");
-      $this->html_output .= ('<p class="commentia-comment_by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
+      $this->html_output .= ('<div class="commentia-comment-info">'."\n");
+      $this->html_output .= ('<img src='.$members->getMemberData($comment_data['creator_username'], 'avatar_file').' class="commentia-comment-info__member-avatar">'."\n");
+      $this->html_output .= ('<p class="commentia-comment-info__by">'.COMMENT_INFO_COMMENT_BY.' '.($comment_data['creator_username']).', </p>'."\n");
       date_default_timezone_set(COMMENTIA_TIMEZONE);
-      $this->html_output .= ('<p class="commentia-comment_timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
+      $this->html_output .= ('<p class="commentia-comment-info__timestamp">'.COMMENT_INFO_POSTED_AT.' '.date(DATETIME_LOCALIZED,strtotime($comment_data['timestamp'])).'</p>'."\n");
       date_default_timezone_set('UTC');
       $this->html_output .= ('</div>'."\n");
-      $this->html_output .= ('<div class="commentia-comment_content">'.$comment_data['content'].'</div>'."\n");
-      $this->html_output .= ('<div class="commentia-edit_area"></div>'."\n");
+      $this->html_output .= ('<div class="commentia-comment__content">'.$comment_data['content'].'</div>'."\n");
+      $this->html_output .= ('<div class="commentia-comment__edit-area"></div>'."\n");
 
       if (!$comment_data['is_deleted']) {
           if ($_SESSION['__COMMENTIA__']['member_is_logged_in']) {
-              $this->html_output .= ('<p class="commentia-comment_controls">
-                             <a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
+              $this->html_output .= ('<p class="commentia-comment-controls">');
+              $this->html_output .= ('<a href="javascript:void(0)" onclick="showReplyArea(this)">'.COMMENT_CONTROLS_REPLY.'</a>');
               if ($roles->memberHasUsername($comment_data['creator_username']) || $roles->memberIsAdmin()) {
                   $this->html_output .= ('<a href="javascript:void(0)" onclick="showEditArea(this)">'.COMMENT_CONTROLS_EDIT.'</a>');
                   $this->html_output .= ('<a href="javascript:void(0)" onclick="deleteComment(this)">'.COMMENT_CONTROLS_DELETE.'</a>');
               }
               $this->html_output .= ('</p>'."\n");
           }
+          $this->html_output .= ('<div class="commentia-rating-controls">');
+          $this->html_output .= ('<a href="javascript:void(0)" onclick="updateRating(this, \'up\')" class="commentia-rating-controls__arrow commentia-rating-controls__arrow--up"></a>');
+          $this->html_output .= ('<a href="javascript:void(0)" onclick="updateRating(this, \'down\')" class="commentia-rating-controls__arrow commentia-rating-controls__arrow--down"></a>');
+          $this->html_output .= ('</div>');
+          $this->html_output .= ('<span class="commentia-rating-indicator">'.(int) $comment_data['rating'].'</span>');
       }
 
-      $this->html_output .= ('<div class="commentia-reply_area"></div>'."\n");
+      $this->html_output .= ('<div class="commentia-comment__reply-area"></div>'."\n");
 
       if ($comment_data['children']) {
           foreach($comment_data['children'] as $child) {
@@ -218,6 +223,22 @@ class Comments
         $stmt->bindValue(':content', $content);
         $stmt->bindValue(':timestamp', $timestamp);
         $stmt->bindValue(':ucid', $ucid);
+        $stmt->execute();
+    }
+
+    public function updateRating($ucid, $direction) {
+        $rating = (int) $this->comments['ucid-'.$ucid]['rating'];
+        if ($direction === 'up') {
+          file_put_contents('updaterating', ' ');
+            $rating += 1;
+        }
+        if ($direction === 'down') {
+            $rating -= 1;
+        }
+
+        $stmt = $this->db->prepare('UPDATE comments SET rating = :rating WHERE ucid = :ucid');
+        $stmt->bindValue(':ucid', $ucid);
+        $stmt->bindValue(':rating', $rating);
         $stmt->execute();
     }
 

@@ -79,7 +79,7 @@ function showReplyArea(caller) {
         cancel_button.setAttribute('id', cancel_button_id);
         cancel_button.setAttribute('onclick', 'hideReplyArea(this);');
         reply_area.appendChild(cancel_button);
-        comment.getElementsByClassName('commentia-reply_area')[0].appendChild(reply_area);
+        comment.getElementsByClassName('commentia-comment__reply-area')[0].appendChild(reply_area);
     }
     document.getElementById(reply_area_id).style.display = "block";
 }
@@ -204,9 +204,9 @@ function showEditArea(caller) {
         http_request.onreadystatechange = function() {
 
             if (http_request.readyState === 4) {
-                comment.getElementsByClassName('commentia-comment_content')[0].style.display = "none";
-                comment.getElementsByClassName('commentia-edit_area')[0].appendChild(edit_area);
-                comment.getElementsByClassName('commentia-edit_area')[0].style.display = "block";
+                comment.getElementsByClassName('commentia-comment__content')[0].style.display = "none";
+                comment.getElementsByClassName('commentia-comment__edit-area')[0].appendChild(edit_area);
+                comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "block";
                 edit_box.innerHTML = http_request.responseText;
                 document.getElementById(edit_box_id).style.height = document.getElementById(edit_box_id).scrollHeight + 'px';
                 http_request = null;
@@ -230,16 +230,16 @@ function showEditArea(caller) {
         cancel_button.setAttribute('onclick', 'hideEditArea(this);');
         edit_area.appendChild(cancel_button);
     } else {
-        comment.getElementsByClassName('commentia-comment_content')[0].style.display = "none";
-        comment.getElementsByClassName('commentia-edit_area')[0].style.display = "block";
+        comment.getElementsByClassName('commentia-comment__content')[0].style.display = "none";
+        comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "block";
     }
 }
 
 function hideEditArea(caller) {
     var comment = findCommentRoot(caller);
 
-    comment.getElementsByClassName('commentia-edit_area')[0].style.display = "none";
-    comment.getElementsByClassName('commentia-comment_content')[0].style.display = "block";
+    comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "none";
+    comment.getElementsByClassName('commentia-comment__content')[0].style.display = "block";
 }
 
 function editComment(caller) {

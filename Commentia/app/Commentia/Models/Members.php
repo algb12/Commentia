@@ -361,14 +361,14 @@ class Members
         $html = '<h3>'.TITLES_AUTH_FORM.'</h3>';
         if ($_SESSION['__COMMENTIA__']['member_is_logged_in']) {
             $html .= '
-            <form class="commentia-logout_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
+            <form class="commentia__logout-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
                 <input type="hidden" name="action" value="logoutMember">
                 <input type="submit" name="log-out" value="'.AUTH_FORM_BUTTONS_LOG_OUT.'">
             </form>
             <p>Logged in as '.$_SESSION['__COMMENTIA__']['member_username'].' with role '.$_SESSION['__COMMENTIA__']['member_role'].'</p>';
         } else {
             $html .= '
-            <form class="commentia-login_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
+            <form class="commentia__login-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST">
                 <table>
                     <tbody>
                         <tr>
@@ -405,7 +405,7 @@ class Members
         $sign_up_error_msg = isset($_SESSION['__COMMENTIA__']['sign_up_error_msg']) ? $_SESSION['__COMMENTIA__']['sign_up_error_msg'] : '';
         $html = '<h3>'.TITLES_SIGN_UP_FORM.'</h3>';
         $html .= '
-        <form class="commentia-signup_form" action="'.ABS_PATH_PREFIX.'api.php" method="POST" enctype="multipart/form-data">
+        <form class="commentia__signup-form" action="'.ABS_PATH_PREFIX.'api.php" method="POST" enctype="multipart/form-data">
             <table>
                 <tbody>
                     <tr>

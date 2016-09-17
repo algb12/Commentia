@@ -42,7 +42,7 @@
 <body>
   <h3>Comments:</h3>
   <hr>
-  <div class="commentia-comments_container" id="comments-container">
+  <div class="commentia__comments-container" id="commentia__comments-container">
     <?=$commentia->displayComments(false);?>
   </div>
   <?=$commentia->displayAuthForm();?>

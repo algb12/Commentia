@@ -32,4 +32,24 @@ class Roles
     {
         return $_SESSION['__COMMENTIA__']['member_role'] === 'admin';
     }
+
+    /**
+     * Returns whether member is logged in or not.
+     *
+     * @return bool Whether member is logged in or not
+     */
+    public function memberIsLoggedIn()
+    {
+        return $_SESSION['__COMMENTIA__']['member_is_logged_in'];
+    }
+
+    /**
+     * Returns the username of the currently logged in member.
+     *
+     * @return string Username of currently logged in member
+     */
+    public function getLoggedInMember()
+    {
+        return $_SESSION['__COMMENTIA__']['member_username'];
+    }
 }

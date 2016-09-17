@@ -24,7 +24,7 @@ function httpRequest() {
 }
 
 function refreshComments() {
-    var comments_section = document.getElementById("comments-container");
+    var comments_section = document.getElementById("commentia__comments-container");
     var url = window.commentia.APIURL + "?action=display";
 
     var http_request = httpRequest();
@@ -72,7 +72,7 @@ function showReplyArea(caller) {
         cancel_button.setAttribute('id', cancel_button_id);
         cancel_button.setAttribute('onclick', 'hideReplyArea(this);');
         reply_area.appendChild(cancel_button);
-        comment.getElementsByClassName('commentia-reply_area')[0].appendChild(reply_area);
+        comment.getElementsByClassName('commentia-comment__reply-area')[0].appendChild(reply_area);
     }
     document.getElementById(reply_area_id).style.display = "block";
 }
@@ -96,7 +96,7 @@ function postReply(caller) {
     var ucid = comment.getAttribute('data-ucid');
     var reply_box_id = 'reply-box-' + ucid;
 
-    var comments_section = document.getElementById("comments-container");
+    var comments_section = document.getElementById("commentia__comments-container");
     var content = encodeURI(document.getElementById(reply_box_id).value);
     var params = "action=reply&content=" + content + "&childof=" + ucid + "&username=user0";
 
@@ -120,7 +120,7 @@ function postReply(caller) {
 function postNewComment(caller) {
     var comment_box_id = 'comment-box';
 
-    var comments_section = document.getElementById("comments-container");
+    var comments_section = document.getElementById("commentia__comments-container");
     var content = encodeURI(document.getElementById(comment_box_id).value);
     var params = "action=postNewComment&content=" + content;
 
@@ -160,7 +160,7 @@ function deleteComment(caller) {
     http_request.send();
 
     if (confirm(dialog_msg)) {
-        var comments_section = document.getElementById("comments-container");
+        var comments_section = document.getElementById("commentia__comments-container");
         var comment = findCommentRoot(caller);
         var ucid = comment.getAttribute('data-ucid');
         var reply_path = comment.getAttribute('data-reply-path');
@@ -183,6 +183,31 @@ function deleteComment(caller) {
         http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         http_request.send(params);
     }
+}
+
+function updateRating(caller, direction) {
+    var comments_section = document.getElementById("commentia__comments-container");
+    var comment = findCommentRoot(caller);
+
+    var ucid = comment.getAttribute('data-ucid');
+
+    var params = "action=updateRating&ucid=" + ucid + "&direction=" + direction;
+
+    console.log("POST request to: " + window.commentia.APIURL + " with params: " + params);
+
+    var http_request = httpRequest();
+
+    http_request.onreadystatechange = function() {
+
+        if (http_request.readyState == 4) {
+            refreshComments();
+            http_request = null;
+        }
+    }
+
+    http_request.open("POST", window.commentia.APIURL, true);
+    http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http_request.send(params);
 }
 
 function showEditArea(caller) {
@@ -211,9 +236,9 @@ function showEditArea(caller) {
         http_request.onreadystatechange = function() {
 
             if (http_request.readyState == 4) {
-                comment.getElementsByClassName('commentia-comment_content')[0].style.display = "none";
-                comment.getElementsByClassName('commentia-edit_area')[0].appendChild(edit_area);
-                comment.getElementsByClassName('commentia-edit_area')[0].style.display = "block";
+                comment.getElementsByClassName('commentia-comment__content')[0].style.display = "none";
+                comment.getElementsByClassName('commentia-comment__edit-area')[0].appendChild(edit_area);
+                comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "block";
                 edit_box.innerHTML = http_request.responseText;
                 document.getElementById(edit_box_id).style.height = document.getElementById(edit_box_id).scrollHeight + 'px';
                 http_request = null;
@@ -237,16 +262,16 @@ function showEditArea(caller) {
         cancel_button.setAttribute('onclick', 'hideEditArea(this);');
         edit_area.appendChild(cancel_button);
     } else {
-        comment.getElementsByClassName('commentia-comment_content')[0].style.display = "none";
-        comment.getElementsByClassName('commentia-edit_area')[0].style.display = "block";
+        comment.getElementsByClassName('commentia-comment__content')[0].style.display = "none";
+        comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "block";
     }
 }
 
 function hideEditArea(caller) {
     var comment = findCommentRoot(caller);
 
-    comment.getElementsByClassName('commentia-edit_area')[0].style.display = "none";
-    comment.getElementsByClassName('commentia-comment_content')[0].style.display = "block";
+    comment.getElementsByClassName('commentia-comment__edit-area')[0].style.display = "none";
+    comment.getElementsByClassName('commentia-comment__content')[0].style.display = "block";
 }
 
 function editComment(caller) {

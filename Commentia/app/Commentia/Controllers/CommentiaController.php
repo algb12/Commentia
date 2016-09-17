@@ -73,6 +73,11 @@ class CommentiaController
         return $this->comments->editComment($ucid, $content);
     }
 
+    public function updateRating($ucid, $direction)
+    {
+        return $this->comments->updateRating($ucid, $direction);
+    }
+
     public function deleteComment($ucid)
     {
         return $this->comments->deleteComment($ucid);
